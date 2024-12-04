@@ -1,3 +1,8 @@
+/*
+	名字:	阿裡可的秘信
+	地圖:	長老公館
+	描述:	211000001
+*/
 
 var status = -1;
 
@@ -7,10 +12,6 @@ function end(mode, type, selection) {
 		qm.dispose();
 		return;
 	case 0:
-		if (status > 1) {
-		qm.dispose();
-		return;
-		}
 		status--;
 		break;
 	case 1:
@@ -24,17 +25,15 @@ function end(mode, type, selection) {
 			qm.dispose();
 			return;
 			}
-			qm.sendNext("I've been waiting for you to come back. How are things going? Is this #v4032619# Alike’s letter? Let me take a look.");
+			qm.sendNext("I've been waiting for you. Do you have Arec's answer? Please give me his letter.");
 			break;
 	case 1:
-		qm.sendNextPrev("We finally got Arico's approval, which was a big moment for us, and it's a time when you go through changes.");
+		qm.sendNextPrevS("We have finally received Arec's official recognition. This is an important moment for us. It's also time that you experience a change.", 1);
 		break;
 	case 2:
-		qm.sendYesNo("You have been working very hard to contribute to the future of Kagemusha. In recognition of your efforts, are you willing to be promoted to a new position again?\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0# \r\n#v1132021# #t1132021# 1");
-		break;
-	case 3:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2374)).getStatus() < 2) {
 		if (qm.getPlayer().getInventory(Packages.client.inventory.MapleInventoryType.EQUIP).getNumFreeSlot() < 1) {
-			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.serverNotice(1, "Please check for space in your inventory."));
+			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(1, "Please check and see if you have an empty slot available at your equip. inventory."));
 			qm.dispose();
 			return;
 			}
@@ -42,7 +41,10 @@ function end(mode, type, selection) {
 			qm.getPlayer().changeJob(432);
 			qm.gainItem(4032619, -1);
 			qm.gainItem(1132021, 1);
-			qm.sendOk("From now on, you are a Blade Specialist, and you will carry the hope of the Dual Blade and open up a new future for the Secret Garden.");
-			qm.dispose();
+			}
+			qm.sendPrevS("Now that we have Arec's recognition, you can make a job advancement by going to see him when you reach Lv. 70. Finally, a new future has been opened for the Dual Blades.", 1);
+			break;
+	case 3:
+		qm.dispose();
 }
 }

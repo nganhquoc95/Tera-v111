@@ -1,30 +1,52 @@
-//Job Advance Marauder
+/*
+	名字:	格鬥家
+	地圖:	長老公館
+	描述:	211000001
+*/
+
 var status = -1;
 
-function end(mode, type, selection) {       
-    status++;   
-    
-    if (mode != 1){            
-        if(type == 1 && mode == 0)
-            status -= 2;
-        else{
-            qm.dispose();
-            return;
-        }
-    }
-    
-    if (status == 0 && qm.haveItem(4031059, 1)){
-        qm.sendNext("I am impressed, you surpassed the test.\r\nOnly few are talented enough.");
-    }else if (status == 1){
-        qm.sendNext("You have proven yourself to be worthy, I shall mold your body into a #bMarauder#k.");       
-    }else if (status == 2){
-        qm.gainItem(4031059, -1);
-        qm.changeJob(511);
-        qm.sendOk("You are now a #bMarauder#k");
-        qm.forceCompleteQuest(); 
-        qm.dispose();
-    }else{
-        qm.forceStartQuest(); 
-        qm.dispose();
-    }         
+function end(mode, type, selection) {
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 0) {
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(1445)).getStatus() < 1) {
+			Packages.server.quest.MapleQuest.getInstance(1445).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.dispose();
+			return;
+			}
+			qm.sendNext("You passed the test safely. Good! I bet you were surprised to see #bKyrin#k there, huh? That was #bKyrin from another dimension#k, a copy from another world. I guess she takes your skills quite seriously.");
+			break;
+	case 1:
+		qm.sendYesNo("The fight with the true Pirate, Kyrin, has give you the strength of a true Pirate. Can you feel it? All that is left is the Job Advancement. Are you prepared to become a Marauder, an even stronger Pirate?");
+		break;
+	case 2:
+		if (qm.getPlayer().getInventory(Packages.client.inventory.MapleInventoryType.EQUIP).getNumFreeSlot() < 1) {
+			qm.sendNext("The Job Advancement cannot continue because you either have no room in your Equip tab, or you do not have a Black Charm.");
+			qm.dispose();
+			return;
+			}
+			qm.gainItem(1142109, 1);
+			qm.gainItem(4031059, -1);
+			qm.getPlayer().changeJob(511);
+			Packages.server.quest.MapleQuest.getInstance(1445).forceComplete(qm.getPlayer(), qm.getNpc());
+			qm.sendOk("You are now a #bMarauder#k, the master of #bfists and knuckles#k. As a true Marauder, use your strength to the fullest!");
+			break;
+	case 3:
+		qm.dispose();
+}
 }

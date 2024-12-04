@@ -1,82 +1,47 @@
 /*
-    This file is part of the HeavenMS MapleStory Server
-    Copyleft (L) 2016 - 2019 RonanLana
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	武公的測試
+	地圖:	武陵道場後路
+	描述:	925040000
 */
 
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if (status == 0) {
-            qm.sendNext("If you want to know more about the Seal Rock of Mu Lung, you will need to pass my test. Prove your valor overpowering me in melee combat, only then I shall recognize you as a worthy knight.");
-        } else {
-            var mapobj = qm.getWarpMap(925040001);
-            if(mapobj.countPlayers() == 0) {
-                mapobj.resetPQ(1);
-                
-                qm.warp(925040001, 0);
-                qm.forceStartQuest();
-            }
-            else {
-                qm.sendOk("Someone is already attempting a challenge. Wait for them to finish before you enter.");
-            }
-
-            
-            qm.dispose();
-        }
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 1) {
+		qm.sendNext("If you object to my test, that must mean you don't have confidence in yourself. I can't tell anything about the Seal Stone to someone like that.");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNextS("Seal Stone... It's an item that has been protected in #m250000000# for a long time. And now, someone is after it.", 8);
+		break;
+	case 1:
+		qm.sendNextPrevS("Please tell me everything you know about the Seal Stone.", 2);
+		break;
+	case 2:
+		qm.sendAcceptDecline("I can't do that. How do I know that you're not as dangerous as #o9300351#? I must first test you. Do you want to take my #btest#k?");
+		break;
+	case 3:
+		if (qm.getMap(925040001).getCharacters().size() < 1) {
+			Packages.server.quest.MapleQuest.getInstance(21746).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.getMap(925040001).resetFully();
+			qm.getPlayer().changeMap(qm.getMap(925040001), qm.getMap(925040001).getPortal(1));
+			qm.dispose();
+			return;
+			}
+			qm.sendNext("Hmm, someone is already using the special floor at the Mu Lung Dojo. Please wait.");
+			qm.dispose();
 }
-
-function end(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if (status == 0) {
-            qm.sendNext("Oh, you brought the ink. Now let me pour it, cautiously.... Almost there, almost. ... ..... Kyaaa! Th-the letter. It says: 'I'll be there to take your Seal Rock of Mu Lung.'");
-        } else if (status == 1) {
-            qm.gainItem(4032342, -8);
-            qm.gainItem(4220151, -1);
-            qm.gainExp(10000);
-            
-            qm.forceCompleteQuest();
-            qm.dispose();
-        }
-    }
 }

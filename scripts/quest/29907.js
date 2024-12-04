@@ -1,18 +1,16 @@
-
-var status = -1;
+/*
+	名字:	正式騎士
+	地圖:	耶雷弗
+	描述:	130000000
+*/
 
 function start(mode, type, selection) {
-	if (qm.getPlayer().getJob() > 1000 && qm.getPlayer().getJob() % 100 > 0 && qm.getPlayer().getJob() < 2000) {
-		qm.forceStartQuest();
-	}
+	Packages.server.quest.MapleQuest.getInstance(29907).forceComplete(qm.getPlayer(), qm.getNpc());
+	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Official Knight> has been rewarded."));
+	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Official Knight> has been rewarded."));
 	qm.dispose();
 }
 
 function end(mode, type, selection) {
-	if (qm.canHold(1142067,1) && !qm.haveItem(1142067,1) && qm.getPlayer().getJob() > 1000 && qm.getPlayer().getJob() % 100 > 0 && qm.getPlayer().getJob() < 2000) {
-		qm.gainItem(1142067,1);
-		qm.forceStartQuest();
-		qm.forceCompleteQuest();
-	}
 	qm.dispose();
 }

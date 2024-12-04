@@ -1,32 +1,54 @@
+/*
+	名字:	和莫斯提馬的契約
+	地圖:	秘密廣場
+	描述:	310010000
+*/
+
 var status = -1;
 
 function end(mode, type, selection) {
-    if (mode == 0) {
-	if (status == 0) {
-	    qm.sendNext("This is an important decision to make.");
-	    qm.safeDispose();
-	    return;
-	}
-	status--;
-    } else {
-	status++;
-    }
-    if (status == 0) {
-	qm.sendYesNo("Have you made your decision? The decision will be final, so think carefully before deciding what to do. Are you sure you want to become a Demon Slayer?");
-    } else if (status == 1) {
-	qm.sendNext("I have just molded your body to make it perfect for a Demon Slayer. If you wish to become more powerful, use Stat Window (S) to raise the appropriate stats. If you arn't sure what to raise, just click on #bAuto#k.");
-	if (qm.getJob() == 3100) {
-	    qm.expandInventory(1, 4);
-	    qm.expandInventory(2, 4);
-	    qm.expandInventory(4, 4);
-		qm.teachSkill(31100007, 1, 1);
-	    qm.changeJob(3110);
-	}
-	qm.forceCompleteQuest();
-    } else if (status == 2) {
-	qm.sendNextPrev("I have also expanded your inventory slot counts for your equipment and etc. inventory. Use those slots wisely and fill them up with items required for Resistance to carry.");
-    } else if (status == 3) {
-	qm.sendNextPrev("Now... I want you to go out there and show the world how the Resistance operate.");
-	qm.safeDispose();
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendNext("You're still not sure about this?");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(23212)).getStatus() < 1) {
+			Packages.server.quest.MapleQuest.getInstance(23212).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.dispose();
+			return;
+			}
+		if (qm.getPlayer().getInventory(Packages.client.inventory.MapleInventoryType.EQUIP).getNumFreeSlot() < 1) {
+			qm.sendOk("You'll need to empty at least #b2 slots#k in your #bEquip tab#k before you can complete your job advancement.");
+			qm.dispose();
+			return;
+			}
+			qm.sendYesNo("Everything is ready. Let us begin the contract ritual. Focus your mind.");
+			break;
+	case 1:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(23212)).getStatus() < 2) {
+			Packages.server.quest.MapleQuest.getInstance(23212).forceComplete(qm.getPlayer(), qm.getNpc());
+			qm.getPlayer().changeJob(3110);
+			qm.gainItem(1142342, 1);
+			}
+			qm.sendNextS("#b(You feel a strange energy flowing into you.)", 17);
+			break;
+	case 2:
+		qm.sendPrevS("Contract completed. Great! Now, don't say anything. Just speak... directly into MY MIND.", 1);
+		break;
+	case 3:
+		qm.dispose();
+}
 }

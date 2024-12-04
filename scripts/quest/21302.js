@@ -1,65 +1,53 @@
 /*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	製作紅珠玉
+	地圖:	瑞恩村
+	描述:	140000000
 */
-importPackage(Packages.client);
-importPackage(Packages.config);
 
 var status = -1;
 
 function end(mode, type, selection) {
-    status++;
-    if (mode != 1){
-        if (mode == 0 && type == 1)
-            qm.sendNext("Hey! At least say you tried!");
-        qm.dispose();
-        return;
-    }
-    if (status == 0) {
-        qm.sendNext("Wait.. Isn't that.. Did you remember how to make Red Jade?\r\nWow... you may be stupid and prone to amnesia, but this is why I can't abandon you. Now give me the jade!"); //Giant Polearm
-    } else if (status == 1) {
-        qm.sendNextPrev("Okay, now that I have the Red Jade back on, let me work on reawakening more of your abilities. I mean, your level's gone much higher since the last time we met, so I am sure I can work my magic a bit more this time!");
-    } else if (status == 2) {
-        if(!qm.isQuestCompleted(21302)) {
-            if(!qm.canHold(1142131)) {
-                qm.sendOk("Wow, your #bequip#k inventory is full. I need you to make at least 1 empty slot to complete this quest.");
-                qm.dispose();
-                return;
-            }
-            
-            if(qm.haveItem(4032312, 1)) {
-                qm.gainItem(4032312, -1);
-            }
-            
-            qm.gainItem(1142131, true);
-            qm.changeJobById(2111);
-            
-            if (YamlConfig.config.server.USE_FULL_ARAN_SKILLSET) {
-                qm.teachSkill(21110002, 0, 20, -1);   //full swing
-            }
-
-            qm.completeQuest();
-        }
-        
-        qm.sendNext("Come on, keep training so you can get all your abilities back, and that way we can explore together once more!");    
-    } else if (status == 3) {
-        qm.dispose();
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 0) {
+		qm.sendNext("What's with the joke? Don't even try it. You were never funny!");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(21302)).getStatus() < 1) {
+			Packages.server.quest.MapleQuest.getInstance(21302).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.dispose();
+			return;
+			}
+			qm.sendNext("Oh, isn't that... Hey, did you remember how to make the Red Jade? You may be a dummy who has amnesia, but this is why I can't leave you. Now hurry. give me the gem!");
+			break;
+	case 1:
+		qm.sendYesNo("Okay, now that I have the power of Red Jade, I'll restore more of your abilities. Your level has gotten much higher since the last time we met, so I'm sure I can work my magic a bit more this time!");
+		break;
+	case 2:
+		if (qm.getPlayer().getInventory(Packages.client.inventory.MapleInventoryType.EQUIP).getNumFreeSlot() < 1) {
+			qm.sendOk("Hey... You don't have any empty slots in your Equip tab. Empty one out, will you?");
+			qm.dispose();
+			return;
+			}
+			qm.removeAll(4032312);
+			qm.gainItem(1142131, 1);
+			qm.getPlayer().changeJob(2111);
+			Packages.server.quest.MapleQuest.getInstance(21302).forceComplete(qm.getPlayer(), qm.getNpc());
+			qm.sendNext("Please get back all of your abilities soon. I want to explore with you like we did in the good old days.");
+			break;
+	case 3:
+		qm.dispose();
+}
 }

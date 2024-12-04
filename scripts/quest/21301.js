@@ -1,32 +1,57 @@
+/*
+	名字:	捉拿小偷！
+	地圖:	瑞恩村
+	描述:	140000000
+*/
+
 var status = -1;
 
 function end(mode, type, selection) {
-	status++;
-    if(mode == 0 && type == 0)
-        status -= 2;
-    else if (mode != 1) {
-        //if (mode == 0)
-            qm.sendNext("#b(You need to think about this for a second...)#k");
-        qm.dispose();
-        return;
-    }
-	
-	if (status == 0) {
-        qm.sendNext("Did you manage to slay #o9001013#? Hahaha... you're my master, indeed. Okay, now give me the Red Jade that you found there. I'll have to put it back on the body, and... wait, why aren't you saying a word? Don't tell me... that you didn't bring that back!");
-    } else if (status == 1) {
-		qm.sendNextPrev("What?! You really didn't bring back the Red Jade? Why? Did you just completely forget it? Ahh... even with the curse of the Black Mage, and the amount of time that has passed and all, never did I think my master would turn out to be stupid...");
-	} else if (status == 2) {
-		qm.sendNextPrev("No, no, I can't let this put me in despair. This is when I should remain calm and in control, unlike my master...\r\noosah..." );
-	} else if (status == 3) {
-		qm.sendNextPrev("Even if you go back there now, the thief probably made its way out of there. This means you'll have to make the Red Jade anew. You've made one before, so you do remember the materials required to make one, right? Now go...");
-	} else if (status == 4) {
-		qm.sendNextPrev("\r\n\r\n\r\nTHIS GUY HAS DEFINITELY LOST ALL MEMORIES!");
-	} else if (status == 5) {
-		qm.sendNextPrev("...No hope, no dreams... Nooooo!!");
-	} else if (status == 6) {
-		qm.completeQuest();
-                qm.sendNextPrev("#b(Maha is beginning to really get hysterical. I better leave right this minute. Maybe Lilin can do something about it.)", 2);
-	} else if (status == 7) {
-            qm.dispose();
-        }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendNext("That's a lie. I know you avoid eye contact when you lie! Old habits die hard!");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(21301)).getStatus() < 1) {
+			Packages.server.quest.MapleQuest.getInstance(21301).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.dispose();
+			return;
+			}
+			qm.sendYesNo("Did you slay the #o9001013#? Yippy! You're my master, indeed! Now, give me the Red Jade you found! I'll reattach it and... Wait, why aren't you saying anything? Don't tell me you didn't bring it back.");
+			break;
+	case 1:
+		qm.sendNextS("What? You didn't bring the Red Jade?! Why not? Did you forget?! Yikes, I never thought the Black Mage's curse would turn you into a dummy...", 8);
+		break;
+	case 2:
+		qm.sendNextPrevS("No. I can't let this drive me to despair. Now more than ever, I must stay optimistic and alert. Argh...", 8);
+		break;
+	case 3:
+		qm.sendNextPrevS("You can go back if you want, but I'm sure the thief has already fled the scene. You'll just have to make a new Red Jade. You've made one before, so you remember the required materials, don't you? So hurry it up.", 8);
+		break;
+	case 4:
+		qm.sendNextPrev("#v4001173#");
+		break;
+	case 5:
+		qm.sendNextPrevS("No hope, No dreams. Noooo!", 8);
+		break;
+	case 6:
+		qm.sendNextPrevS("#b(#p1201002# is becoming volatile. You should leave the premise for now. You're sure #p1201000# could help you somehow.)", 2);
+		break;
+	case 7:
+		Packages.server.quest.MapleQuest.getInstance(21301).forceComplete(qm.getPlayer(), qm.getNpc());
+		qm.dispose();
+}
 }

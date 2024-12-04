@@ -1,28 +1,38 @@
+/*
+	名字:	小小一步
+	地圖:	瑞恩村
+	描述:	140000000
+*/
+
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == 1) {
-	status++;
-    } else {
-	if (status == 2) {
-	    qm.dispose();
-	    return;
-	}
-	status--;
-    }
-    if (status == 0) {
-	qm.sendNextS("How did the training go? The Penguin Teacher #p1202006# likes to exaggerate and it worried me knowing that he has bouts of Alzheimer's, but I'm sure he helped you. He's been studying the skills of heroes for a very long time.", 8);
-    } else if (status == 1) {
-	qm.sendNextPrevS("#b(You tell her that you were able to remember the Combo Ability skill.)#k", 2);
-    } else if (status == 2) {
-	qm.askAcceptDecline("That's great! Honestly, though, I think it has less to do with the method of #p1202006#'s training and more to do with your body remembering its old abilities. #bI'm sure your body will remember more skills as you continue to train#k!  \r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0# 500 exp");
-    } else if (status == 3) {
-	qm.forceCompleteQuest();
-	qm.gainExp(500);
-	qm.dispose();
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 0) {
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNextS("How did the training go? The Penguin Teacher #p1202006# likes to exaggerate and it worried me knowing that he has bouts of Alzheimer's, but I'm sure he helped you. He's been studying the skills of heroes for a very long time.", 8);
+		break;
+	case 1:
+		qm.sendAcceptDecline("More than that, #p1202006#'s training methods were so good, it probably reminded your body of its old abilities. Though you were weakened by your long time in the ice, I'm confident that #bmany more abilities will awaken within you as you continue your training#k! \r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0# 500 exp");
+		break;
+	case 2:
+		Packages.server.quest.MapleQuest.getInstance(21704).forceComplete(qm.getPlayer(), qm.getNpc());
+		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(21704));
+		qm.gainExp(500);
+		qm.dispose();
 }
-
-function end(mode, type, selection) {
-    qm.dispose();
 }

@@ -1,18 +1,16 @@
-
-var status = -1;
+/*
+	名字:	終極弓箭手
+	地圖:	維多利亞港
+	描述:	104000000
+*/
 
 function start(mode, type, selection) {
-	if (qm.getPlayer().getLevel() >= 200 && ((qm.getPlayer().getJob() / 100) | 0) == 3) {
-		qm.forceStartQuest();
-	}
+	Packages.server.quest.MapleQuest.getInstance(29912).forceComplete(qm.getPlayer(), qm.getNpc());
+	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Lord Sniper> has been rewarded."));
+	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Lord Sniper> has been rewarded."));
 	qm.dispose();
 }
 
 function end(mode, type, selection) {
-	if (qm.canHold(1142011,1) && !qm.haveItem(1142011,1) && qm.getPlayer().getLevel() >= 200 && ((qm.getPlayer().getJob() / 100) | 0) == 3) {
-		qm.gainItem(1142011,1);
-		qm.forceStartQuest();
-		qm.forceCompleteQuest();
-	}
 	qm.dispose();
 }

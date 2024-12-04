@@ -1,66 +1,89 @@
-/* ===========================================================
-			Resonance
-	NPC Name: 		Maple Administrator
-	Description: 	Quest -  Kingdom of Mushroom in Danger
-=============================================================
-Version 1.0 - Script Done.(17/7/2010)
-=============================================================
+/*
+	名字:	危機的菇菇國王
+	地圖:	勇士聖殿
+	描述:	102000003
 */
 
 var status = -1;
 
 function start(mode, type, selection) {
-    status++;
-	if (mode != 1) {
-	    if(type == 1 && mode == 0)
-		    status -= 2;
-		else{
-			if(status == 0){
-				qm.sendOk("Really? It's an urgent matter, so if you have some time, please see me.");
-				qm.dispose();
-				return;
-			} else if(status == 3){
-				qm.sendNext("Okay. In that case, I'll just give you the routes to the Kingdom of Mushroom. #bNear the west entrance of Henesys,#k you'll find an #bempty house#k. Enter the house, and turn left to enter#b<Themed Dungeon : Mushroom Castle>#k. That's the entrance to the Kingdom of Mushroom. There's not much time!");
-				qm.forceStartQuest();
-				qm.warp(106020000, 0);
-				return;
-			}
-		}
-	}
-	if(status == 0) 
-		qm.sendAcceptDecline("Now that you have made the job advancement, you look like you're ready for this. I have something I'd like to ask you for help. Are you willing to listen?");
-	if(status == 1)
-		qm.sendNext("What happened is that the #bKingdom of Mushroom#k is currently in disarray. Kingdom of Mushroom is located near Henesys, featuring the peace-loving, intelligent King Mush. Recently, he began to feel ill, so he decided to appoint his only daughter #bPrincess Violetta#k. Something must have happened since then for the kingdom to be in its current state.");
-	if(status == 2)
-		qm.sendNext("I am not aware of the exact details, but it's obvious something terrible had taken place, so I think it'll be better if you go there and assess the damage yourself. An explorer like you seem more than capable of saving Kingdom of Mushroom. I have just written you a #brecommendation letter#k, so I suggest you head over to Kingdom of Mushroom immediately and look for the #bHead Patrol Officer#k.\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v4032375# #t4032375#");
-	if(status == 3)
-		qm.sendYesNo("By the way, do you know where Kingdom of Mushroom is located? It'll be okay if you can find your way there, but if you don't mind, I can take you straight to the entrance.");
-	if(status == 4){
-		qm.gainItem(4032375, 1);
-		qm.forceStartQuest();
-		qm.warp(106020000, 0);
+	switch (mode) {
+	case -1:
 		qm.dispose();
-	}
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendOk("Oh really? Well, this is very urgent, so please talk to me again if you change your mind.");
+		qm.dispose();
+		return;
+		}
+		if (status > 2) {
+		qm.sendNext("Are you planning to walk all the way there? If so, please hurry. You can get to Mushking Empire by heading west from Ghost Mushroom Forest, where the Henesys Mushroom Forest ends. <Theme Dungeon: Mushroom Castle> is its entrance.");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendAcceptDecline("Now that you have made the job advancement, you look like you're ready to handle this. There is a favor I'd like to ask of you. Are you willing to help?");
+		break;
+	case 1:
+		qm.sendNext("The #bMushking Empire#k seems to be facing a major crisis. Mushking Empire is a mushroom kingdom located near Henesys that is ruled by Mushking, a king popular for his wisdom and desire for peace. But recently, the king fell ill and abdicated his throne to his one and only daughter, the #bPrincess Violetta#k, so that he could rest. However, some problems seem to have arisen.");
+		break;
+	case 2:
+		qm.sendNextPrev("I'm not certain what exactly has happened, but it seems that they are in a difficult situation. I think you should go find out and help them if you can. You, of all people, should be able to save the Mushking Empire from its travails. Here, I will give you a #bRecommendation Letter#k. Take it and hurry to the Mushking Empire. Go find the #bHead Security Officer#k. \r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0# \r\n#v4032375# #t4032375#");
+		break;
+	case 3:
+		if (qm.getPlayer().getInventory(Packages.client.inventory.MapleInventoryType.ETC).getNumFreeSlot() < 1) {
+			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(1, "Please check and see if you have an empty slot available at your etc. inventory."));
+			qm.dispose();
+			return;
+			}
+			qm.gainItem(4032375, qm.getPlayer().itemQuantity(4032375) ? 0 : 1);
+			Packages.server.quest.MapleQuest.getInstance(2300).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.sendYesNo("By the way, do you know how to get to the Mushking Empire? It's fine if you know how to get there alone. Otherwise, I can send you to the entrance directly.");
+			break;
+	case 4:
+		qm.sendNext("Okay, I'll send you straight to the Mushking Castie. I wish you luck.");
+		break;
+	case 5:
+		qm.dispose();
+		qm.getPlayer().changeMap(qm.getMap(106020001), qm.getMap(106020001).getPortal(0));
+}
 }
 
 function end(mode, type, selection) {
-    status++;
-	if (mode != 1) {
-	    if(type == 1 && mode == 0)
-		    status -= 2;
-		else{
-		    qm.dispose();
-			return;
-		}
-	}
-	if(status == 0)
-		qm.sendNext("Hmmm? Is that a #brecommendation letter from the job instructor#k??! What is this, are you the one that came to save us, the Kingdom of Mushroom?");
-	if(status == 1)
-		qm.sendNextPrev("Hmmm... okay. Since the letter is from the job instructor, I suppose you are really the one. I apologize for not introducing myself to you earlier. I'm the #bHead Security Officer#k in charge of protecting King Mush. As you can see, this temporary hideout is protected by the team of security and soldiers. Our situation may be dire, but nevertheless, welcome to Kingdom of Mushroom.");
-	if(status == 2){
-		qm.gainItem(4032375, -1);
-		qm.forceCompleteQuest();
-		qm.forceStartQuest(2312);
+	switch (mode) {
+	case -1:
 		qm.dispose();
-	}
+		return;
+	case 0:
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNext("Huh? Recommendation Letter from a job instructor! What's this? You're the one sent here to save our Mushking Kingdom?");
+		break;
+	case 1:
+		qm.sendNextPrevS("Y...Yesss?", 3);
+		break;
+	case 2:
+		qm.sendNextPrev("Hmm, I see. Well, if a job instructor recommended you, I will put my trust in you as well. I apologize for my late introduction. I am the #bHead Security Officer#k in charge of the royal family's security. As you can see, I am currently in charge of security over this temporary housing and the key figures inside. We're not in the best of situations, but nevertheless, let me welcome you to the Mushking Empire.");
+		break;
+	case 3:
+		Packages.server.quest.MapleQuest.getInstance(2300).forceComplete(qm.getPlayer(), qm.getNpc());
+		Packages.server.quest.MapleQuest.getInstance(2311).forceStart(qm.getPlayer(), qm.getNpc(), 1);
+		qm.gainItem(4032375, -1);
+		qm.gainExp(1200);
+		qm.dispose();
+}
 }

@@ -1,34 +1,39 @@
-var status = -1;
-function start(mode, type, selection) {
-	end(mode,type,selection);
-}
+/*
+	名字:	精靈的英雄 3轉
+	地圖:	偉大的精神降臨
+	描述:	910150100
+*/
 
-function end(mode, type, selection) {
-    if (mode == 0) {
-	if (status == 0) {
-	    qm.sendNext("This is an important decision to make.");
-	    qm.safeDispose();
-	    return;
-	}
-	status--;
-    } else {
-	status++;
-    }
-    if (status == 0) {
-	if(qm.getJob() == 910){
-		qm.forceCompleteQuest();
-	}	
-	qm.sendYesNo("Have you made your decision? The decision will be final, so think carefully before deciding what to do. Are you sure you want to become a Mercedes?");
-    } else if (status == 1) {
-	qm.sendNext("I have just molded your body to make it perfect for a Mercedes. If you wish to become more powerful, use Stat Window (S) to raise the appropriate stats. If you arn't sure what to raise, just click on #bAuto#k.");
-	if (qm.getJob() == 2310) {
-	    qm.changeJob(2311);
-	}
-	qm.forceCompleteQuest();
-    } else if (status == 2) {
-	qm.sendNextPrev("I have also expanded your inventory slot counts for your equipment and etc. inventory. Use those slots wisely and fill them up with items required for Resistance to carry.");
-    } else if (status == 3) {
-	qm.sendNextPrev("Now... I want you to go out there and show the world how the Resistance operate.");
-	qm.safeDispose();
-    }
+var status = -1;
+
+function start(mode, type, selection) {
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendNext("I can awaken the power within you. What gives you cause for hesitation?");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendAcceptDecline("...It's been quite some time, Queen Mercedes. I see you've recovered much of your original strength since we last spoke. You have come in search of the Royal Power, and so I shall grant it unto thee.");
+		break;
+	case 1:
+		qm.sendNext("Young Ruler of the Elves, rise and lead your people to victory.");
+		break;
+	case 2:
+		Packages.server.quest.MapleQuest.getInstance(24012).forceComplete(qm.getPlayer(), qm.getNpc());
+		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24012));
+		qm.getPlayer().changeJob(2311);
+		qm.dispose();
+}
 }

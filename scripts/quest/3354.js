@@ -1,44 +1,41 @@
 /*
-    This file is part of the HeavenMS MapleStory Server
-    Copyleft (L) 2016 - 2019 RonanLana
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	特力的藥
+	地圖:	特力的研究室
+	描述:	926120200
 */
 
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if (status == 0) {
-            qm.sendAcceptDecline("I have a request for you. Can you ask #bMaed#k for a potion of my devise? Obviously, don't mention I have asked you that, that would be a problem. #bKeeny#k got an illness due to the contact with the Huroids, this have bothering me so much I couldn't give progress on my researches... Please #rbring her the potion#k, so that I could feel better and start making progress. I'm counting on you.");
-        } else if (status == 1) {
-            qm.forceStartQuest();
-            qm.dispose();
-        }
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 1) {
+		qm.sendOk("There are really quite a lot of hazards in here. Please get out.");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNext("Whew... This research is not going anywhere... In fact, it's pretty much all over. I found out that it's practically impossible to transmute the human body with all the memories intact... However, I seem to have stumbled upon something even better.");
+		break;
+	case 1:
+		qm.sendNextPrev("This medicine is for my daughter, Keeny. She has always been very weak, you see. I've discovered it's a genetic trait, one I can correct... with this!");
+		break;
+	case 2:
+		qm.sendAcceptDecline("I'm quite proud of this breakthrough. I cannot change humans into machines, but I can give the weak strength. In the long run, this will be a greater benefit to the world, I think. Now that I have shared my breakthrough with you, I must ask you to leave. The lab is still in disarray and I do not need you breaking anything.");
+		break;
+	case 3:
+		Packages.server.quest.MapleQuest.getInstance(3354).forceStart(qm.getPlayer(), qm.getNpc(), null);
+		qm.getPlayer().changeMap(qm.getMap(261020401), qm.getMap(261020401).getPortal(0));
+		qm.dispose();
+}
 }

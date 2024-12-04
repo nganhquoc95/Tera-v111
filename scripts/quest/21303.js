@@ -1,50 +1,49 @@
 /*
-    This file is part of the HeavenMS MapleStory Server
-    Copyleft (L) 2016 - 2019 RonanLana
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	與雪吉拉的友情
+	地圖:	像刀刃的絕壁
+	描述:	914022100
 */
 
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if (status == 0) {
-            qm.sendNext("Aaaargh... Yeti's #b#t4032339##k has just been stolen! How frustrating, Yeti worked hard to get it, just to have it stolen by that #rThief Crow#k...", 9);
-        } else if (status == 1) {
-            qm.sendNextPrev("Hey, I was just passing by and could not refrain from hearing you just now. I can lend you my strength, where did the thief go?", 3);
-        } else if (status == 2) {
-            qm.sendNextPrev("Oh, how nice of you... Thief has passed #rthrough the gate at west#k. Bring back the #b#t4032339##k, Yeti needs it to give to beloved one.", 9);
-        } else if (status == 3) {
-            qm.sendNextPrev("Ok, wait there. I will return it back to you in no time!", 3);
-        } else if (status == 4) {
-            qm.forceStartQuest();
-            qm.dispose();
-        }
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 3) {
+		qm.sendNext("No... #p1203001# is going to cry... going to cry loudly... going to cry until you agree to find gem!");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNextS("*Sob sob* #p1203001# is sad. #p1203001# is mad. #p1203001# cries. *Sob sob*", 8);
+		break;
+	case 1:
+		qm.sendNextPrevS("Wh...What's wrong?", 2);
+		break;
+	case 2:
+		qm.sendNextPrevS("#p1203001# made gem. #bGem as red as apple#k. But #rthief#k stole gem. #p1203001# no longer has gem. #p1203001# is sad...", 8);
+		break;
+	case 3:
+		qm.sendNextPrevS("A thief stole your red gem?", 2);
+		break;
+	case 4:
+		qm.sendAcceptDecline("Yes, #p1203001# wants gem back. #p1203001# reward you if you find gem. Catch thief and you get reward.");
+		break;
+	case 5:
+		Packages.server.quest.MapleQuest.getInstance(21303).forceStart(qm.getPlayer(), qm.getNpc(), null);
+		qm.sendOk("The thief went that way! Which way? Hold on...eat with right hand, not left hand... #bLeft#k! He went left! Go left and you find thief.");
+		break;
+	case 6:
+		qm.dispose();
+}
 }

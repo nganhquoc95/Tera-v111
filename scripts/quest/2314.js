@@ -1,59 +1,38 @@
-/* ===========================================================
-			Resonance
-	NPC Name: 		Minister of Home Affairs
-	Map(s): 		Mushroom Castle: Corner of Mushroom Forest(106020000)
-	Description: 	Quest -  Exploring Mushroom Forest(1)
-=============================================================
-Version 1.0 - Script Done.(18/7/2010)
-=============================================================
+/*
+	名字:	菇菇森林探險（１）
+	地圖:	菇菇森林路口
+	描述:	106020000
 */
-
-importPackage(Packages.client);
 
 var status = -1;
 
 function start(mode, type, selection) {
-    status++;
-	if (mode != 1) {
-	    if(type == 1 && mode == 0)
-		    status -= 2;
-		else{
-			qm.sendNext("Please do not lose faith in our Kingdom of Mushroom.");
-			qm.dispose();
-			return;
-		}
-	}
-	if (status == 0)
-		qm.sendYesNo("In order to rescue the princess, you must first navigate the Mushroom Forest. King Pepe set up a powerful barrier forbidding anyone from entering the castle. Please investigate this matter for us.");
-	if (status == 1)
-		qm.sendNext("You'll run into the barrier at the Mushroom Forest by heading east of where you are standing right now. Please be careful. I hear that the area is infested with crazy, fear-inducing monsters.");
-	if(status == 2){
-		//qm.forceStartQuest();
-		//qm.forceStartQuest(2314,"1");
-		qm.gainExp(8300);
-		qm.sendOk("I see, so it was indeed not a regular barrier by any means. Great work there. If not for you help, we wouldn't have had a clue as to what that was all about.");
-		qm.forceCompleteQuest(); 
+	switch (mode) {
+	case -1:
 		qm.dispose();
-	}
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendOk("Please do not give up on the Mushking Empire!");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendYesNo("In order to rescue the princess, you must first investigate the Mushroom Forest. King Pepe has somehow set up a powerful barrier preventing anyone from entering the castle. Please investigate this mater for us right away.");
+		break;
+	case 1:
+		qm.sendNext("You'll run into the barrier in the Mushroom Forest if you head over to the east from your current location. Please be careful, though. From what I've heard, the area is infested with many atrocious monsters.");
+		break;
+	case 2:
+		qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2314)).setStatus(1);
+		qm.getPlayer().updateQuest(qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2314)), true);
+		qm.dispose();
 }
-
-function end(mode, type, selection) {
-    status++;
-	if (mode != 1) {
-	    if(type == 1 && mode == 0)
-		    status -= 2;
-		else{
-			qm.dispose();
-			return;
-		}
-	}
-	if (status == 0)
-		qm.sendOk("I see that you have thoroughly investigated the barrier at the Mushroom Forest. What was it like?");
-	if (status == 1){
-		qm.gainExp(8300);
-		qm.sendOk("I see, so it was indeed not a regular barrier by any means. Great work there. If not for you help, we wouldn't have had a clue as to what that was all about.");
-		qm.forceCompleteQuest(); 
-		qm.dispose();
-		}
-	}
-	
+}

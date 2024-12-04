@@ -1,3 +1,8 @@
+/*
+	名字:	哈姆梅爾的禮物
+	地圖:	專業技術村 &amp;lt;梅斯特鎮&gt;
+	描述:	910001000
+*/
 
 var status = -1;
 
@@ -15,17 +20,17 @@ function start(mode, type, selection) {
 		}
 	switch (status) {
 	case 0:
-		qm.sendNext("Have you finished listening to Stache’s first herb picking lesson so quickly? To express my encouragement, I have prepared a small gift for you.");
+		qm.sendNext("I see you've completed Saffron's first lesson in Herbalism! How about I give you some helpful advice?");
 		break;
 	case 1:
-		qm.sendNextPrev("Through the teleportation port on the far right side of the Professional Technology Village, you can go to the secret farm that only Stacher knows about. There are many medicinal herbs suitable for medicinal purposes.");
+		qm.sendNextPrev("The #bportal on the far right side in the lower level of Ardentmill#k is connected to Saffron's farm. #bIt's filled with herbs for Herbalism#k.");
 		break;
 	case 2:
-		qm.sendPrev("Then work harder and strive to become an excellent pharmaceutical expert as soon as possible!\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0# \r\n#v4001482# #t4001482# 1");
+		qm.sendNextPrev("Well then, keep up the good work until you become a great Herbalist.");
 		break;
 	case 3:
 		if (qm.getPlayer().getInventory(Packages.client.inventory.MapleInventoryType.ETC).getNumFreeSlot() < 1) {
-			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.serverNotice(1, "Please check for space in your inventory."));
+			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(1, "Etc item inventory is full."));
 			qm.dispose();
 			return;
 			}

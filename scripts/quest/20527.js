@@ -1,50 +1,41 @@
 /*
-    This file is part of the HeavenMS MapleStory Server
-    Copyleft (L) 2016 - 2019 RonanLana
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	騎士的品格
+	地圖:	耶雷弗
+	描述:	130000000
 */
 
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if (status == 0) {
-            var mount = qm.getPlayer().getMount();
-            
-            if(mount != null && mount.getLevel() >= 3) {
-                qm.forceCompleteQuest();
-                qm.sendNext("Alright, I'll get you started in how to train Mimio, the next step for Mimianas. When you're ready, talk to me again.");
-            } else {
-                qm.sendNext("It looks like your Mimiana haven't reached #rlevel 3#k yet. Please train it a bit more before trying to advance it.");
-            }
-        } else if (status == 1) {
-            qm.dispose();
-        }
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 0) {
+		qm.sendNext("You don't want to learn about powerful mounts? Fine. But leave your medal of knights behind too.");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNext("Oh no, you're at Level 100 and you're still riding a regular Mimiana? That's so very unfortunate. How can you call yourself an Advanced Knight when you are acting like just another regular Knight?");
+		break;
+	case 1:
+		qm.sendAcceptDecline("I keep having to remind you this, but your actions do affect the reputation of the Empress Please act suitably for your status for the sake of the Empress. Go to #b#p1102002##k and you'll learn more about #bEnhanced Monster Riding#k.");
+		break;
+	case 2:
+		Packages.server.quest.MapleQuest.getInstance(20527).forceComplete(qm.getPlayer(), qm.getNpc());
+		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20527));
+		qm.sendOk("You didn't forget where #p1102002# is located, did you? you can find #p1102002# at #b#m130010220##k, the optimal place to raise your Mimiana.");
+		break;
+	case 3:
+		qm.dispose();
+}
 }

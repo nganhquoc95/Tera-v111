@@ -1,76 +1,101 @@
+/*
+	名字:	武器選擇主人
+	地圖:	瑞恩村
+	描述:	140000000
+*/
+
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == 1) {
-	status++;
-    } else {
-	if (status == 0) {
-	    qm.sendNext("It's really urgent, and you'll regret it if you refuse to. #bIt has something to do with your pole arm,#k which means it has to do with your past. Who knows...? Maybe the pole arm is key to reawakening your abilities...?");
-	    qm.dispose();
-	    return;
-	}
-	status--;
-    }
-    if (status == 0) {
-	qm.askAcceptDecline("How's the training going? Wow, looking at you, I can tell your levels have shot through the roof. That's amazing... well, anyway, I see that you'r busy, but you'll have to return to the island for a bit.");
-    } else if (status == 1) {
-	qm.forceStartQuest(21200, "3"); //??
-	qm.forceCompleteQuest();
-	qm.forceStartQuest(21202); //skip just in case
-	qm.forceStartQuest(21203, "0");
-	qm.sendOk("Your #bGiant Pole Arm#k that's being kept in #bRien#k is acting strange all of a sudden. According to the book, the pole arm reacts like this when it's calling for its master. #bMaybe it's calling for you?#k? Please come back to the island and find out.");
-	qm.dispose();
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendNext("It's extremely urgent. You'll regret it if you decline. Why, you ask? Because it's #babout your Polearm#k. In other words, it's about your past. Who knows? The Polearm could be the key to restoring your abilities...");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendAcceptDecline("How is training going? Wow, you've reached such a high level! That's amazing. I knew you would do just fine on Victoria Island... Oh, look at me. I'm wasting your time. I know you're busy, but you'll have to return to the island for a bit.");
+		break;
+	case 1:
+		Packages.server.quest.MapleQuest.getInstance(21200).forceStart(qm.getPlayer(), qm.getNpc(), null);
+		qm.sendOk("Your #b#p1201001##k in #b#m140000000##k is acting strange all of a sudden. According to the records, the Polearm acts this way when it is calling for its master. #bPerhaps it's calling for you#k. Please return to the island and check things out.");
+		break;
+	case 2:
+		qm.dispose();
+}
 }
 
 function end(mode, type, selection) {
-    if (mode == 1) {
-	status++;
-    } else {
-	if (status == 11) {
-	    qm.sendNext("Hey, at least you tell me you tried!");
-	    qm.dispose();
-	    return;
-	} else if (status == 13) {
-	    qm.MovieClipIntroUI(true);
-	    qm.warp(914090200, 0);
-	    qm.dispose();
-	    return;
-	}
-	status--;
-    }
-    if (status == 0) {
-	qm.sendNextS("Hmmmmmm mmmm mmmmm....", 2);
-    } else if (status == 1) {
-	qm.sendNextPrevS("#b(Giant Pole Arm is buzzing, but who's that boy standing there?)#k", 2);
-    } else if (status == 2) {
-	qm.sendNextPrevS("#b(I've never met him before. He doesn't look human.)#k", 2);
-    } else if (status == 3) {
-	qm.sendNextPrev("Hey Aran! Do you still not hear me? Seriously, can't you hear me? Ahhh, this is frustrating!");
-    } else if (status == 4) {
-	qm.sendNextPrevS("#b(Whoa, who was that? Sounds like an angry boy...)#k", 2);
-    } else if (status == 5) {
-	qm.sendNextPrev("Seriously, the one master I had turned out to be trapped in ice for hundreds of years, abandoning the weapon, and now the 'master' can't even hear me?");
-    } else if (status == 6) {
-	qm.sendNextPrevS("Who are you?", 2);
-    } else if (status == 7) {
-	qm.sendNextPrev("Aran? Do you hear me now? It's me, it's me! I'm your weapon #bMaha the pole arm!#k!");
-    } else if (status == 8) {
-	qm.sendNextPrevS("#b(...Maha? Giant pole Arm actually talks?)#k", 2);
-    } else if (status == 9) {
-	qm.sendNextPrev("Why do you have that look on your face like you can't believe it? I see that you have lost all your memories, but... did you also forget about me? How can you do that to me??");
-    } else if (status == 10) {
-	qm.sendNextPrevS("I'm sorry, but seriously... I don't remember a thing.", 2);
-    } else if (status == 11) {
-	qm.sendYesNo("Is that all you can say after all those years? I'm sorry? Do you understand how bored I was all by myself for hundreds of years? Bring it out if you can. Bring your memories out! Bring them all out! Dig them up if you need to!");
-    } else if (status == 12) {
-	qm.sendNextS("#b(The voice that claims to be Maha the Giant Pole Arm seem quite perturbed. This conversation is going nowhere. I better talk to Lirin first.)#k", 2);
-	qm.forceCompleteQuest();
-	qm.forceStartQuest(21202); //skip just in case
-	qm.forceStartQuest(21203, "0");
-    } else if (status == 13) {
-	qm.sendYesNo("Would you like to skip the video clip?  Even if you skip the scene, game play will not be affected.");
-    } else if (status == 14) {
-	qm.dispose();
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 10) {
+		qm.sendNext("Hey! At least say you tried!");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNext("Voom voom voom voom voom....");
+		break;
+	case 1:
+		qm.sendNextPrevS("#b(The #p1201001# is producing an undulating echo. But who is that boy standing over there?)", 2);
+		break;
+	case 2:
+		qm.sendNextPrevS("#b(You've never seen him before. He doesn't look human.)", 2);
+		break;
+	case 3:
+		qm.sendNextPrevS("Yo, Aran! Do you not hear me? I said, do you not hear me! Ugh, how frustrating!", 8);
+		break;
+	case 4:
+		qm.sendNextPrevS("#b(Hm? Who's voice was that? It sounds like an angry boy...)", 2);
+		break;
+	case 5:
+		qm.sendNextPrevS("Ugh, my only master had to end up trapped in ice for hundreds of years, abandoning me completely, and is now completely ignoring me.", 8);
+		break;
+	case 6:
+		qm.sendNextPrevS("Who...are you?", 2);
+		break;
+	case 7:
+		qm.sendNextPrevS("Aran? Do you hear me now? It's me! Don't you recognize me? I'm your weapon, #b#p1201002# the Polearm#k!", 8);
+		break;
+	case 8:
+		qm.sendNextPrevS("#b(...#p1201002#? A #p1201001# can talk?)", 2);
+		break;
+	case 9:
+		qm.sendNextPrevS("What's with that suspicious look on your face? I know you've lost your memory, but did you forgot about me, too? How could you?!", 8);
+		break;
+	case 10:
+		qm.sendNextPrevS("I'm so sorry, but I can't remember a thing.", 2);
+		break;
+	case 11:
+		qm.sendYesNo("Sorry doesn't cut it! Do you know how lonely and bored I was for hundreds of years? I don't care what it takes! Remember me! Remember me now!");
+		break;
+	case 12:
+		Packages.server.quest.MapleQuest.getInstance(21200).forceComplete(qm.getPlayer(), qm.getNpc());
+		qm.sendNextS("#b(The voice that claims to be #p1201002# the #p1201001# is yelling in frustration. You don't think this conversation is going anywhere. You better go talk to #p1201000# first.)", 3);
+		break;
+	case 13:
+		qm.getPlayer().changeMap(qm.getMap(914090200), qm.getMap(914090200).getPortal(0));
+		qm.dispose();
+}
 }

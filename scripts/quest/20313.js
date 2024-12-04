@@ -1,39 +1,50 @@
 /*
- * Cygnus 3rd Job advancement - Wind Breaker
- */
+	名字:	神獸的眼淚
+	地圖:	耶雷弗
+	描述:	130000000
+*/
 
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == 0 && status == 1) {
-	qm.sendNext("You are not ready yet.");
-	qm.dispose();
-	return;
-    } else if (mode == 0) {
-	status--;
-    } else {
-	status++;
-    }
-
-    if (status == 0) {
-	qm.sendNext("The jewel you brought back from the Transformer is the tear of the Divine Bird. It's the crystal of it's power. If the Black Wizard has his hands on this, then spells doom for all of us.");
-    } else if (status == 1) {
-	qm.sendYesNo("For your effort in preventing a potentially serious disaster, the Godess has bestowed upon a new title for you. Are you ready to accept it?");
-    } else if (status == 2) {
-	if (qm.getPlayerStat("RSP") > (qm.getPlayerStat("LVL") - 70) * 3) {
-	    qm.sendNext("You still have way too much #bSP#k with you. You can't earn a new title like that. I strongly urge you to use more SP on your 1st and second level skills.");
-	} else {
-	    if (qm.canHold(1142068)) {
-		qm.gainItem(1142068, 1);
-		qm.changeJob(1311);
-		qm.sendOk("#h0#, as of this moment, you are now the Knight Sergeant. From this moment on, you shall carry yourself with dignity and respect befitting your new title The Knight Sergeant of Knights of cygnus. May your glory shines as bright as it is right now.");
-	    } else {
-		qm.sendOk("Please make space in your inventory.");
-	    }
-	}
-	qm.dispose();
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 0) {
+		qm.sendNext("Come back when you are ready.");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNext("The jewel you brought back from the Master of Disguise is Shinsoo's Teardrop. It is the crystallization of Shinsoo's powers. If the Black Mage gets his hands on this, then this spells doom for all of us.");
+		break;
+	case 1:
+		qm.sendYesNo("As a token of her appreciation for your work on this, the Empress decided to present you with a new title. Would you like to receive that title?");
+		break;
+	case 2:
+		if (qm.getPlayer().getInventory(Packages.client.inventory.MapleInventoryType.EQUIP).getNumFreeSlot() < 1) {
+			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(1, "Please check and see if you have an empty slot available at your equip. inventory."));
+			qm.dispose();
+			return;
+			}
+			Packages.server.quest.MapleQuest.getInstance(20313).forceComplete(qm.getPlayer(), qm.getNpc());
+			qm.getPlayer().changeJob(1311);
+			qm.gainItem(4032179, -1);
+			qm.gainItem(4032103, -1);
+			qm.gainItem(1142068, 1);
+			qm.getPlayer().gainSP(1, 2);
+			qm.sendOk("#h0#, as of this moment, you are an Advanced Knight. From this moment on, you will be carrying a whole lot of responsibility befitting your new title as an Advanced Knight of Cygnus Knights. You may view the world in a carefree mode, but please remember what your mission is.");
+			break;
+	case 3:
+		qm.dispose();
 }
-
-function end(mode, type, selection) {
 }

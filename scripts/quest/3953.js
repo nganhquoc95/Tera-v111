@@ -1,55 +1,74 @@
 /*
-    This file is part of the HeavenMS MapleStory Server
-    Copyleft (L) 2016 - 2019 RonanLana
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	說服莫哈默德
+	地圖:	納希民宅
+	描述:	260000200
 */
 
 var status = -1;
 
 function end(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if (status == 0) {
-            qm.sendSimple("Eh, are you still saying Deo is a monster? No, Deo is not a monster, he is a peaceful leader of the Royal cactus from the region.\r\n\r\n#L0##bHave you heard that a group of merchants crossing through the desert were attacked by the monsters?#k");
-        } else if (status == 1) {
-            qm.sendSimple("Is that so? I wonder why these merchants were wandering so recklessly in the desert. They trespassed the territory of the Cactus'! They shouldn't be wandering around in the first place, they should first have the leave of the Ariant Counsel.\r\n\r\n#L0##bThis is all because of the Queen's negligence in maintaining the safety of the town.#k");
-        } else if (status == 2) {
-            qm.sendSimple("Ehh... Yeah, the city is not really doing well because of the currently ruling govern, that's indeed a fact. If only the Guardians of the Deserts returned to put order on this mess...\r\n\r\n#L0##bWhat is the Guardian of the Deserts doing when we're under the Queen's tyranny?#k");
-        } else if (status == 3) {
-            qm.sendSimple("They have departed on an expedition to get rid of some major threats in the desert that were ravaging Ariant, for quite some time now... It's strange, they should have already returned... Thinking about it now, the last attack on the merchants was around the direction the Guardians departed... No, that can't be... Can it?\r\n\r\n#L0##bPerhaps Deo has already turned into a monster.#k");
-        } else if (status == 4) {
-            qm.forceCompleteQuest();
-            qm.gainItem(4011008, -1);
-            qm.gainExp(20000);
-
-            qm.sendNext("We're in great trouble, if it is like this. And it really seems like it. If the Royal Cactus Deo has gone insane, Ariant is done for. You, can you do something to defeat Deo? We really need your help now.");
-        } else if (status == 5) {
-            qm.dispose();
-        }
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status < 5) {
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(3953)).getStatus() < 1) {
+			Packages.server.quest.MapleQuest.getInstance(3953).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.dispose();
+			return;
+			}
+			qm.sendSimple("If you're going to keep blabbing some nonsense about how Deo has turned into a monster, I'm not interested! ...Huh? Hmm... isn't this Lidium? Looking at its color, this is high-quality Lidium...and it's in good condition... Hmm...you're giving this to me? Well... I can't say no to Lidium. Fine... what is it? \r\n#L0##bI want to inform you that Deo is a monster.#l\r\n#L1#Have you heard that a group of merchants crossing through the desert were attacked by the monsters?#l");
+			break;
+	case 1:
+		if (selection < 1) {
+			qm.sendNext("What are you saying?! Deo is the guardian deity of deserts! Get out of here if you're going to keep talking nonsense!");
+			qm.dispose();
+			return;
+			}
+			qm.sendSimple("The merchants? ...They probably lacked protection. There aren't any particularly dangerous monsters in the Burning Road, but we should always remain cautious... You must be careful in the desert. \r\n#L0##bThis won't happen if we defeat Deo.#l\r\n#L1#This is all because of the Queen's negligence in maintaining the safety of the town.#l");
+			break;
+	case 2:
+		if (selection < 1) {
+			qm.sendNext("What are you talking about? It would have been much more dangerous if it weren't for Deo!");
+			qm.dispose();
+			return;
+			}
+			qm.sendSimple("You're right! It's because of the Queen! Ever since her reign, the ever-wise Abdullah Vlll has changed and Ariant is slowly perishing...like an oasis drying out! And it's all her fault! \r\n#L0##bWhat is the guardian of deserts doing when we're under the Queen's tyranny?#l\r\n#L1#We must hurry up and form an army to escape from the Queen's oppression!#l");
+			break;
+	case 3:
+		if (selection > 0) {
+			qm.sendNext("This is true! But who would have the courage to do so...?");
+			qm.dispose();
+			return;
+			}
+			qm.sendSimple("...I agree. Only if Deo had helped us a little... How could he be so heartless? \r\n#L0##bPerhaps, Deo has already turned into a monster.#l\r\n#L1#He couldn't have done anything as a monster, right?#l");
+			break;
+	case 4:
+		if (selection > 0) {
+			qm.sendNext("Deo isn't just any monster! Don't underestimate his power!");
+			qm.dispose();
+			return;
+			}
+			qm.sendSimple("What are you talking about? Deo has turned into...a monster? But he's the guardian deity of Ariant... Well, Ariant isn't the same as it used to be... \r\n#L0##bI know ...and on top of that, Queen Areda is sucking the life out of the desert. Perhaps Deo's divine powers were lost and he gradually turned into a monster...#l");
+			break;
+	case 5:
+		qm.gainItem(4011008, -1);
+		Packages.server.quest.MapleQuest.getInstance(3953).forceComplete(qm.getPlayer(), qm.getNpc());
+		qm.sendOk("You might be right. I can't believe Ariant has changed like this, but this could be directly related to Deo's transformation. Perhaps, it really is time for us to defeat Deo...");
+		break;
+	case 6:
+		qm.dispose();
+}
 }

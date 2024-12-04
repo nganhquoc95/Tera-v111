@@ -1,45 +1,51 @@
 /*
-    This file is part of the HeavenMS MapleStory Server
-    Copyleft (L) 2016 - 2019 RonanLana
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	前往封印庭園的路
+	地圖:	老婆之屋
+	描述:	200050001
 */
 
 var status = -1;
 
 function end(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if(status == 0) {
-            qm.sendNext("So, have you defeated the giant? Oh, a Black Wing agent undercover? And he GOT THE SEAL STONE OF ORBIS?! Oh, no. That's horrible! We need to develop countermeasures as soon as possible! Tell the informant on Lith about the situation.");
-        } else if (status == 1) {
-            qm.forceCompleteQuest();
-            qm.gainExp(29500);
-            qm.dispose();
-        }
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendNext("Mm, you haven't had an opportunity to face the intruder yet? You must take care of that immediately.");
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(21739)).getStatus() < 1) {
+			Packages.server.quest.MapleQuest.getInstance(21739).forceStart(qm.getPlayer(), qm.getNpc(), null);
+			qm.dispose();
+			return;
+			}
+			qm.sendYesNo("Did you stop the intruder? But you don't look very happy... What?! You lost the Seal Stone?!");
+			break;
+	case 1:
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(21739)).getStatus() < 2) {
+			Packages.server.quest.MapleQuest.getInstance(21739).forceComplete(qm.getPlayer(), qm.getNpc());
+			qm.gainExp(4800);
+			}
+			qm.sendNextS("Really... You lost the Seal Stone? There isn't much we can do about it, at this point. And just because it's gone #bdoesn't mean #m200000000# is in imminent danger#k. To be honest, I'm not even sure what it's for.", 9);
+			break;
+	case 2:
+		qm.sendNextPrevS("But I have a feeling it's going to serve as the first step to something catastrophic. I don't know...I just have a hunch. I want to wish you good luck. I think you'll need a lot of it.", 9);
+		break;
+	case 3:
+		qm.sendPrevS("#b(You lost the Seal Stone of Orbis. What should you do? Maybe you should go talk to #p1002104#.)", 2);
+		break;
+	case 4:
+		qm.dispose();
+}
 }

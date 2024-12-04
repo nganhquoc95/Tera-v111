@@ -1,3 +1,9 @@
+/*
+	名字:	詹姆士的下落（１）
+	地圖:	菇菇森林路口
+	描述:	106020000
+*/
+
 var status = -1;
 
 function end(mode, type, selection) {
@@ -6,10 +12,6 @@ function end(mode, type, selection) {
 		qm.dispose();
 		return;
 	case 0:
-		if (status < 1) {
-		qm.dispose();
-		return;
-		}
 		status--;
 		break;
 	case 1:
@@ -23,13 +25,17 @@ function end(mode, type, selection) {
 			qm.dispose();
 			return;
 			}
-			qm.sendAcceptDecline("I...I'm afraid...Please help me...\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0# \r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0# 1000exp");
+			qm.sendNext("H-h-help! I'm so scared!");
 			break;
 	case 1:
-		Packages.server.quest.MapleQuest.getInstance(2325).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.gainExp(1000);
+		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2325)).getStatus() < 2) {
+			Packages.server.quest.MapleQuest.getInstance(2325).forceComplete(qm.getPlayer(), qm.getNpc());
+			qm.showNpcSpecialEffect(1300008, "out");
+			qm.gainExp(1600);
+			}
+			qm.sendNextPrev("What? My brother sent you here? Whew...I'm safe now. Thank you so much.");
+			break;
+	case 2:
 		qm.dispose();
 }
 }
-
-	

@@ -1,59 +1,38 @@
-/* ===========================================================
-			Resonance
-	NPC Name: 		Minister of Home Affairs
-	Map(s): 		Mushroom Castle: Corner of Mushroom Forest(106020000)
-	Description: 	Quest -  Over the Castle Wall (2)
-=============================================================
-Version 1.0 - Script Done.(18/7/2010)
-=============================================================
+/*
+	名字:	跨越城牆（２）
+	地圖:	菇菇森林路口
+	描述:	106020000
 */
-
-importPackage(Packages.client);
 
 var status = -1;
 
 function start(mode, type, selection) {
-    status++;
-	if (mode != 1) {
-	    if(type == 1 && mode == 0)
-		    status -= 2;
-		else{
-			qm.sendNext("Really? Is there another way you can penetrate the castle? If you don't know of one, then just come see me.");
-			qm.dispose();
-			return;
-		}
-	}
-	if (status == 0)
-		qm.sendYesNo("Like I told you, just breaking the barrier cannot be a cause for celebration. That's because our castle for the Kingdom of Mushroom completely denies entry of anyone outside our kingdom, so it'll be hard for you to do that. Hmmm... to figure out a way to enter, can you...investigate the outer walls of the castle first?");
-	if (status == 1)
-		qm.sendNext("Walk past the Mushroom Forest and when you reach the #bSplit Road of Choice#k, just walk towards the castle. Good luck.");
-	if (status == 2){
-		//qm.forceStartQuest();
-		//qm.forceStartQuest(2322, "1");
-		qm.gainExp(11000);
-		qm.sendOk("Good job navigating through the area.");
-		qm.forceCompleteQuest();
+	switch (mode) {
+	case -1:
 		qm.dispose();
-	}
-}
-
-function end(mode, type, selection) {
-    status++;
-	if (mode != 1) {
-	    if(type == 1 && mode == 0)
-		    status -= 2;
-		else{
-			qm.dispose();
-			return;
-		}
-	}
-	if (status == 0)
-		qm.sendOk("Hmmm I see... so they have completely shut off the entrance and everything.");
-	if (status == 1){
-		qm.gainExp(11000);
-		qm.sendOk("Good job navigating through the area.");
-		qm.forceCompleteQuest();
+		return;
+	case 0:
+		if (status < 1) {
+		qm.sendOk("Oh, really? You think you have a better idea?! Come talk to me when you get stuck outside the Castle Walls.");
 		qm.dispose();
-	}
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendYesNo("Like I told you, we can't be relieved just because the barrier has been broken. The castle of the Mushking Empire is impenetrable from the outside, so it won't be easy for you to enter. First, would you mind investigating the outer walls of the castle?");
+		break;
+	case 1:
+		qm.sendNext("Head over to the to the castle from the #bSplit Road of Destiny#k, past the Mushroom Forest. Good luck.");
+		break;
+	case 2:
+		qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2322)).setStatus(1);
+		qm.getPlayer().updateQuest(qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2322)), true);
+		qm.dispose();
 }
-	
+}

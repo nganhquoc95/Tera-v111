@@ -1,58 +1,54 @@
 /*
-    This file is part of the HeavenMS MapleStory Server
-    Copyleft (L) 2016 - 2019 RonanLana
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	名字:	封印庭園
+	地圖:	老婆之屋
+	描述:	200050001
 */
 
 var status = -1;
 
 function start(mode, type, selection) {
-    if (mode == -1) {
-        qm.dispose();
-    } else {
-        if(mode == 0 && type > 0) {
-            qm.dispose();
-            return;
-        }
-        
-        if (mode == 1)
-            status++;
-        else
-            status--;
-        
-        if (status == 0) {  // thanks ZERO傑洛 for noticing this quest shouldn't need a pw -- GMS-like string data thanks to skycombat
-            qm.sendNext("What is it? I usually don't welcome uninvited guests, but you have a mysterious aura that makes me curious about what you have to say.", 9);
-        } else if (status == 1) {
-            qm.sendNext("(You tell her about Giant Nependeath.)", 3);
-        } else if (status == 2) {
-            qm.sendNext("Giant Nependeath? It's definitely a big problem, but I don't think it's enough to really affect Orbis. Wait, where did you say the Giant Nependeath was, again?", 9);
-        } else if (status == 3) {
-            qm.sendNext("Neglected Strolling Path.", 3);
-        } else if (status == 4) {
-            qm.sendNext("...Neglected Strolling Path? If Giant Nependeath is there, someone is trying to enter Sealed Garden! But why? And more importantly, who?", 9);
-        } else if (status == 5) {
-            qm.sendNext("Sealed Garden?", 3);
-        } else if (status == 6) {
-            qm.sendAcceptDecline("I can't tell you about Sealed Garden. If you want to find out, I must first see whether you are worthy of the information. Do you mind if I look into your fate?", 9);
-        } else if (status == 7) {
-            qm.sendOk("Well, now let's look into your fate. Give me a second.");
-        } else if (status == 8) {
-            qm.forceStartQuest();
-            qm.dispose();
-        }
-    }
+	switch (mode) {
+	case -1:
+		qm.dispose();
+		return;
+	case 0:
+		if (status > 5) {
+		qm.dispose();
+		return;
+		}
+		status--;
+		break;
+	case 1:
+		status++;
+		break;
+		}
+	switch (status) {
+	case 0:
+		qm.sendNextS("What is it? I usually don't welcome uninvited guests, but you have a mysterious aura that makes me curious about what you have to say.", 8);
+		break;
+	case 1:
+		qm.sendNextPrevS("#b(You tell her about #o9300347#.)", 2);
+		break;
+	case 2:
+		qm.sendNextPrevS("#o9300347#? It's definitely a big problem, but I don't think it's enough to really affect #m200000000# Wait, where did you say the #o9300347# was, again?", 8);
+		break;
+	case 3:
+		qm.sendNextPrevS("#m200060001#？", 2);
+		break;
+	case 4:
+		qm.sendNextPrevS("...#m200060001#? If #o9300347# is there, then that must mean someone is trying to enter #m920030001#! But why? And more importantly, who?", 8);
+		break;
+	case 5:
+		qm.sendNextPrevS("#m920030001#?", 2);
+		break;
+	case 6:
+		qm.sendAcceptDecline("I can't tell you about #m920030001#. If you want to find out, I must first see whether you are worthy of the information. Do you mind if I look into your fate?");
+		break;
+	case 7:
+		Packages.server.quest.MapleQuest.getInstance(21738).forceStart(qm.getPlayer(), qm.getNpc(), null);
+		qm.sendOk("Well, now let's look into your fate. Give me a second.");
+		break;
+	case 8:
+		qm.dispose();
+}
 }

@@ -1,3 +1,9 @@
+/*
+	名字:	救命恩人是隻猴子？
+	地圖:	淺海地帶
+	描述:	3000100
+*/
+
 var status = -1;
 
 function start(mode, type, selection) {
@@ -6,7 +12,8 @@ function start(mode, type, selection) {
 		qm.dispose();
 		return;
 	case 0:
-		if (status > 0) {
+		if (status > 1) {
+		qm.sendNext("Ook! Ook! (The monkey looks very dissatisfied.)");
 		qm.dispose();
 		return;
 		}
@@ -18,18 +25,16 @@ function start(mode, type, selection) {
 		}
 	switch (status) {
 	case 0:
-		qm.sendNext("Where are you? You definitely took the boat that goes to Maple Island... But then Balrog showed up... You don't remember anything after that. And what's the deal with this monkey? Talk to him.");
+		qm.sendNext("Ooook! Ook! Ook!");
 		break;
 	case 1:
-		qm.sendNext("The monkey is gesturing wildly with his hands and feet. You think he's saying that... He saved you from the ocean? This monkey saved your life?!");
+		qm.sendNextPrevS("Well, that hit the spot, but... I still don't understand what happened. Where's the ship? Hey, do you know what happened to me?", 2);
 		break;
 	case 2:
-        qm.sendOk("You thanked the monkey. Still, on your quest to be a great and powerful Explorer...you were saved by a monkey. Not a very good start, is it?");
-        break;
-    case 3:
-        qm.dispose();
-        qm.gainExp(5);
-        qm.forceCompleteQuest();
-
+		qm.sendAcceptDecline("Oook! (The monkey nods. Does he really know what's going on? Couldn't hurt to ask.)");
+		break;
+	case 3:
+		Packages.server.quest.MapleQuest.getInstance(2560).forceStart(qm.getPlayer(), qm.getNpc(), null);
+		qm.dispose();
 }
 }
