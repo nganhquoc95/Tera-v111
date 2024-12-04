@@ -14,9 +14,7 @@ Log_Script_Except.rtf
 *.iml
 *.rtf
 *.properties
-src/database/DatabaseConnection.java
-*.java
-src/database/DatabaseConnection.java
+!logging.properties
 scripts/map/onUserEnter/cannon_tuto_direction2.js
 scripts/map/onUserEnter/cannon_tuto_direction1.js
 scripts/map/onUserEnter/cannon_tuto_direction.js
