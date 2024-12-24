@@ -1134,13 +1134,18 @@ public class MapleStatEffect implements Serializable {
                     ret.duration = 1000;
                     ret.statups.put(MapleBuffStat.MECH_CHANGE, (int) level); // ya wtf
                     break;
-                case 35121013:
+                case 35121013: // siege
+                    ret.duration = 2100000000;
+                    ret.v = 5;
+                    ret.statups.put(MapleBuffStat.MECH_CHANGE, (int) level); // ya wtf
+                    break;
                 case 35111004: // siege
-                    ret.duration = 5000;
+                    ret.duration = 2100000000;
                     ret.statups.put(MapleBuffStat.MECH_CHANGE, (int) level); // ya wtf
                     break;
                 case 35121005: // missile
                     ret.duration = 2100000000;
+                    ret.mpCon = (short) ret.w;
                     ret.statups.put(MapleBuffStat.MECH_CHANGE, (int) level); // ya wtf
                     break;
                 case 10001075: // Cygnus Echo
@@ -2461,7 +2466,7 @@ public class MapleStatEffect implements Serializable {
             case 35111004: {// siege
                 if (applyto.getBuffedValue(MapleBuffStat.MECH_CHANGE) != null && applyto.getBuffSource(MapleBuffStat.MECH_CHANGE) == 35121005) {
                     SkillFactory.getSkill(35121013).getEffect(level).applyBuffEffect(applyfrom, applyto, primary, newDuration);
-                    applyto.setMP(mp);
+                    applyto.addMP(-mpCon);
                     //normal = false;
                     //SkillFactory.getSkill(35121013).getEffect(level).applyTo(applyto);
                     return;
@@ -3117,6 +3122,10 @@ public class MapleStatEffect implements Serializable {
         return effect != null && sameSrc && this.skill == effect.skill;
     }
 
+    public final short getMpCon() {
+        return mpCon;
+    }
+
     public final int getCr() {
         return cr;
     }
@@ -3199,7 +3208,7 @@ public class MapleStatEffect implements Serializable {
 
     public final boolean isRecovery() {
         return skill && (sourceid == 1001 || sourceid == 10001001 || sourceid == 20001001 || sourceid == 20011001
-                || sourceid == 20021001 || sourceid == 11001 || sourceid == 35121005);
+                || sourceid == 20021001 || sourceid == 11001 || sourceid == 35121005 || sourceid == 35121013);
     }
 
     public final boolean isBerserk() {

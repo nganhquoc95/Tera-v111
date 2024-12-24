@@ -1072,6 +1072,7 @@ public class PlayerHandler {
             }
         }
         DamageParse.applyAttack(attack, skill, chr, bulletCount, basedamage, effect, ShadowPartner != null ? AttackType.RANGED_WITH_SHADOWPARTNER : AttackType.RANGED);
+        consumeMpForSpecialSkill(attack, chr, effect); // Handles MP deduction for some skills
 
         WeakReference<MapleCharacter>[] clones = chr.getClones();
         for (int i = 0; i < clones.length; i++) {
@@ -1571,5 +1572,20 @@ public class PlayerHandler {
         chr.gainMeso(-100, true, true);
         MapleInventoryManipulator.addById(c, itemid, (short) 1, "Redeemed item through medal quest " + q.getId() + " on " + FileoutputUtil.CurrentReadable_Date());
         c.getSession().write(UIPacket.reissueMedal(itemid, 0));
+    }
+
+    public static final void consumeMpForSpecialSkill(AttackInfo attack, MapleCharacter player, MapleStatEffect effect) {
+        if (player == null) {
+            return;
+        }
+
+        if(attack.skill == 35111004 || attack.skill == 35121005 || attack.skill == 35121013) { // Mech: Siege/Tank
+            if (player.getStat().getMp() < effect.getMpCon()) {
+                player.dropMessage(5, "You do not enough the MP to use this skill.");
+                return;
+            }
+
+            player.addMP(-effect.getMpCon());
+        }
     }
 }

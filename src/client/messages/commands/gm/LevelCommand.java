@@ -8,6 +8,7 @@ public class LevelCommand extends Command {
     public void execute(MapleClient c, String[] splitted){
         short maxLevel = 255;
         short level = c.getPlayer().getLevel();
+        short currentLevel = level;
         try {
             level = Short.parseShort(splitted[0]);
         } catch (NumberFormatException $Exception) { // out of range for short.
@@ -24,6 +25,11 @@ public class LevelCommand extends Command {
             if (c.getPlayer().getExp() < 0) {
                 c.getPlayer().gainExp(-c.getPlayer().getExp(), false, false, true);
             }
+        }
+        
+        if (currentLevel < level) {
+            c.getPlayer().gainAp((short) ((level - currentLevel - 1) * 5));
+            c.getPlayer().gainSP((short) ((level - currentLevel - 1) * 3));
         }
     } 
 }

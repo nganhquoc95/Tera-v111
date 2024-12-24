@@ -1938,7 +1938,7 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
             bloodEffect = getStatForBuff(MapleBuffStat.MECH_CHANGE);
             if (bloodEffect == null) {
                 lastRecoveryTime = 0;
-            } else if (bloodEffect.getSourceId() == 35121005) {
+            } else if (bloodEffect.getSourceId() == 35121005 || bloodEffect.getSourceId() == 35121013) {
                 prepareRecovery();
                 if (stats.getMp() < bloodEffect.getU()) {
                     cancelEffectFromBuffStat(MapleBuffStat.MONSTER_RIDING);
@@ -2180,7 +2180,7 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
                     }
                 } else if (stat == MapleBuffStat.DRAGONBLOOD) {
                     lastDragonBloodTime = 0;
-                } else if (stat == MapleBuffStat.RECOVERY || mbsvh.effect.getSourceId() == 35121005) {
+                } else if (stat == MapleBuffStat.RECOVERY || mbsvh.effect.getSourceId() == 35121005 || mbsvh.effect.getSourceId() == 35121013) {
                     lastRecoveryTime = 0;
                 } else if (stat == MapleBuffStat.HOMING_BEACON || stat == MapleBuffStat.ARCANE_AIM) {
                     linkMobs.clear();
