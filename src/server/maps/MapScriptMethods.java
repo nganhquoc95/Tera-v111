@@ -82,6 +82,7 @@ public class MapScriptMethods {
         cygnusTest,
         evanPromotion,
         explorationPoint,
+        merTutorDrecotion10,
         NULL;
 
         private static onUserEnter fromString(String Str) {
@@ -273,6 +274,28 @@ public class MapScriptMethods {
                         c.getPlayer().dropMessage(-1, "Title " + String.valueOf(m) + " Explorer currently in progress");
                         c.getSession().write(CWvsContext.showQuestMsg("Title " + String.valueOf(m) + " Explorer currently in progress " + number + "/" + m.maps.length + " completed"));
                     }
+                }
+                break;
+            }
+
+            case merTutorDrecotion10: {
+                if (c.getPlayer().getQuestNAdd(MapleQuest.getInstance(24007)).getStatus() != 0)
+                    return;
+
+                try {
+                    c.getSession().write(UIPacket.getDirectionStatus(true));
+                    c.getSession().write(UIPacket.IntroEnableUI(1));
+                    c.getSession().write(UIPacket.getDirectionInfo("Effect/Direction5.img/effect/mercedesInIce/merBalloon/6", 2000, 0, -100, 1));
+                    c.getSession().write(UIPacket.getDirectionInfo(1, 2000));
+                    Thread.sleep(2000);
+                    c.getSession().write(UIPacket.getDirectionStatus(true));
+                    c.getSession().write(UIPacket.getDirectionInfo(3, 2));
+                    c.getSession().write(UIPacket.getDirectionInfo("Effect/Direction5.img/effect/mercedesInIce/merBalloon/8", 2000, 0, -100, 1));
+                    c.getSession().write(UIPacket.getDirectionInfo(1, 2000));
+                    c.getSession().write(UIPacket.IntroEnableUI(0));
+                    c.getSession().write(CWvsContext.getMidMsg("Press the [Alt] key on the keyboard to jump.", false, 0));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 break;
             }
