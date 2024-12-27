@@ -49,7 +49,7 @@ function start(mode, type, selection) {
 	case 6:
 		qm.gainExp(870);
 		Packages.server.quest.MapleQuest.getInstance(22536).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22536));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22536));
 		qm.sendOk("Fine! #bI'll investigate the burglar you're looking for, so stay right here#k.. I'll contact you when I get to the bottom of this. Argh!");
 		break;
 	case 7:

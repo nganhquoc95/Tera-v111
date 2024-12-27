@@ -48,7 +48,7 @@ function start(mode, type, selection) {
 			}
 			qm.gainItem(1442077, 1);
 			Packages.server.quest.MapleQuest.getInstance(21700).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(21700));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(21700));
 			}
 			qm.sendNext("I gave you a #bPolearm#k because I figured it would be best for you to use a weapon you're familiar with. It will be useful in your training.");
 			break;

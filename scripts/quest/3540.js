@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrev("It's amazing how time flies.");
 		break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3540));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3540));
 		Packages.server.quest.MapleQuest.getInstance(3540).forceComplete(qm.getPlayer(), qm.getNpc());
 		Packages.server.quest.MapleQuest.getInstance(7081).forceStart(qm.getPlayer(), qm.getNpc(), 1);
 		qm.dispose();

@@ -43,7 +43,7 @@ function start(mode, type, selection) {
 		qm.gainExp(20000);
 		qm.getPlayer().gainSP(1, 5);
 		Packages.server.quest.MapleQuest.getInstance(22585).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22585));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22585));
 		qm.sendOk("So, the Black Wings... I don't want to be suspicious of them but I can't help it...");
 		break;
 	case 6:

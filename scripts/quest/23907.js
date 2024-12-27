@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 	case 1:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(23907)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(23907).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(23907));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(23907));
 			qm.gainExp(1200);
 			}
 			qm.sendNext("It does seem like the Black Wings have made that town their stronghold. I knew they weren't a small organization, but I had no idea they were that large...");

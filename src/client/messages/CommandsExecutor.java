@@ -294,6 +294,7 @@ public class CommandsExecutor {
         addCommand("ap", 4, ApCommand.class);
         addCommand("sp", 4, SpCommand.class);
         addCommand("gainmeso", 4, GainMesoCommand.class);
+        addCommand("gaincash", 4, GainCashCommand.class);
         addCommand("getitem", 4, GetItemCommand.class);
         //addCommand("", 4, Command.class);
         commandsNameDesc.add(levelCommandsCursor);

@@ -57,8 +57,8 @@ function start(mode, type, selection) {
 			if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(20020)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(20020).forceComplete(qm.getPlayer(), qm.getNpc());
 			Packages.server.quest.MapleQuest.getInstance(20100).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20020));
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20100));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20020));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20100));
 			}
 			qm.sendNext("You seem to know exactly which path you want to select. The only step remaining now is your final decision.");
 			}

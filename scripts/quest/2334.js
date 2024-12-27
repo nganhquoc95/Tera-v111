@@ -31,7 +31,7 @@ function start(mode, type, selection) {
 	case 3:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2334)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(2334).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(2334));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(2334));
 			qm.showNpcSpecialEffect(1300002, "face");
 			qm.gainExp(1000);
 			}

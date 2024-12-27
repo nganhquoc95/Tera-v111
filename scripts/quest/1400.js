@@ -49,7 +49,7 @@ function start(mode, type, selection) {
 			}
 			Packages.server.quest.MapleQuest.getInstance(1406).forceStart(qm.getPlayer(), qm.getNpc(), selection);
 			Packages.server.quest.MapleQuest.getInstance(1400).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(1400));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(1400));
 			select = selection;
 			break;
 	case 3:

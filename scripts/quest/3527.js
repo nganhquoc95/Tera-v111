@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrev("What I can tell you is-- keep going. As the person responsible for making you a pirate, I have no doubt in my mind that you still have room to grow-- and that you will become an even more powerful force.");
 		break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3527));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3527));
 		Packages.server.quest.MapleQuest.getInstance(3527).forceComplete(qm.getPlayer(), qm.getNpc());
 		Packages.server.quest.MapleQuest.getInstance(7081).forceStart(qm.getPlayer(), qm.getNpc(), 1);
 		qm.dispose();

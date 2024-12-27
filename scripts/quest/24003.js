@@ -29,9 +29,9 @@ function start(mode, type, selection) {
 		break;
 	case 1:
 		Packages.server.quest.MapleQuest.getInstance(24003).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24003));
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24000));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.environmentChange("Game/QueenOfElf", 6));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(24003));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(24000));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("Game/QueenOfElf", 6));
 		qm.sendOk("(Serene music fills the town. May your people find peace in their dreams...)");
 		break;
 	case 2:

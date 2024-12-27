@@ -22,7 +22,7 @@ function start(mode, type, selection) {
 	case 0:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(3108)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(3108).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3108));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3108));
 			qm.gainExp(3010);
 			}
 			qm.sendNext("(The statue is utterly beautiful, even from afar. It is so pure and transparent, as if it were made by ice, but it's not. I took a walk around the statue to look into it.)");

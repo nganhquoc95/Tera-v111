@@ -32,7 +32,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrevS("(Recalling your memories has given you a healthier perspective on life.)", 16);
 		break;
 	case 4:
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3544));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3544));
 		Packages.server.quest.MapleQuest.getInstance(3544).forceComplete(qm.getPlayer(), qm.getNpc());
 		Packages.server.quest.MapleQuest.getInstance(7081).forceStart(qm.getPlayer(), qm.getNpc(), 1);
 		qm.dispose();

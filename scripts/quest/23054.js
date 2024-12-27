@@ -48,7 +48,7 @@ function start(mode, type, selection) {
 			qm.gainItem(1142245, 1);
 			qm.getPlayer().changeJob(3512);
 			Packages.server.quest.MapleQuest.getInstance(23054).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(23054));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(23054));
 			}
 			qm.sendNext("No use refusing. I've already advanced you. I've also given you some skills that I know of but haven't mastered yet. I have a hunch that you'll be able master them. After all, you are are the most skilled member of the Resistance now.");
 			break;

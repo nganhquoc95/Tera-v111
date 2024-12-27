@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		break;
 	case 1:
 		Packages.server.quest.MapleQuest.getInstance(20610).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20610));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20610));
 		qm.sendOk("#bChief Knights#k must have acquired another skill. I strongly suggest you go there and learn that skill with them as well. Maybe the Chief Knight may object to it, but mastering the skill is all about your ability to make a specific skill your own.");
 		break;
 	case 2:

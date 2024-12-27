@@ -32,7 +32,7 @@ function start(mode, type, selection) {
 		break;
 	case 2:
 		Packages.server.quest.MapleQuest.getInstance(20527).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20527));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20527));
 		qm.sendOk("You didn't forget where #p1102002# is located, did you? you can find #p1102002# at #b#m130010220##k, the optimal place to raise your Mimiana.");
 		break;
 	case 3:

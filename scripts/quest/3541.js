@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrev("But, I don't think it's quite the time for us to sit back and reminisce. We're still in the middle of battle. Why don't we talk about our memories after the Black Wings are defeated and our town is recovered? Then, we can talk and laugh all night long...");
 		break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3541));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3541));
 		Packages.server.quest.MapleQuest.getInstance(3541).forceComplete(qm.getPlayer(), qm.getNpc());
 		Packages.server.quest.MapleQuest.getInstance(7081).forceStart(qm.getPlayer(), qm.getNpc(), 1);
 		qm.dispose();

@@ -48,7 +48,7 @@ function start(mode, type, selection) {
 	case 7:
 		qm.gainExp(1000);
 		Packages.server.quest.MapleQuest.getInstance(24064).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24064));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(24064));
 		qm.sendOk("We three elders have awakened, but the rest of the Elves are still cursed. But since we have our ruler, we aren't afraid of anything!");
 		break;
 	case 8:

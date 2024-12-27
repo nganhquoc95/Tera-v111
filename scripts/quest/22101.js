@@ -6,7 +6,7 @@
 
 function start(mode, type, selection) {
 	Packages.server.quest.MapleQuest.getInstance(22101).forceComplete(qm.getPlayer(), qm.getNpc());
-	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22101));
+	qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22101));
 	qm.getPlayer().changeJob(2210);
 	qm.dispose();
 }

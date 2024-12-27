@@ -39,8 +39,8 @@ function start(mode, type, selection) {
 		break;
 	case 6:
 		Packages.server.quest.MapleQuest.getInstance(24065).forceStart(qm.getPlayer(), qm.getNpc(), null);
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.environmentChange("mercedes/frame", 3));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.environmentChange("mercedes/elfElder", 3));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("mercedes/frame", 3));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("mercedes/elfElder", 3));
 		qm.dispose();
 }
 }

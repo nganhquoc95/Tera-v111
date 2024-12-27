@@ -59,7 +59,7 @@ function start(mode, type, selection) {
 	case 11:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(22406)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(22406).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22406));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22406));
 			}
 			qm.sendNextS("#b(#p1013000#'s saddle looks much too small on him. You'd better go back to #p2060005# in the #m230000000# and ask for a new one. Hold off on Dragon riding for the time being.)", 2);
 			break;

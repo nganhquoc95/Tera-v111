@@ -54,7 +54,7 @@ function start(mode, type, selection) {
 	case 9:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(20016)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(20016).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20016));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20016));
 			qm.gainExp(380);
 			}
 			qm.sendNext("I'm glad you're clear about our current situation, but you know, at your current level, you're not even strong enough to face the Black Mage's minions, let alone the Black Mage himself. Not even his minions' minions, as a matter of fact. How will you protect Maple World at your current level?");

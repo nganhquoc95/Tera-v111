@@ -48,7 +48,7 @@ function start(mode, type, selection) {
 		break;
 	case 9:
 		Packages.server.quest.MapleQuest.getInstance(24051).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24051));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(24051));
 		qm.gainExp(2000);
 		qm.dispose();
 }

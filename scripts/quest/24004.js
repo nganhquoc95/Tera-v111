@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		break;
 	case 1:
 		Packages.server.quest.MapleQuest.getInstance(24004).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24004));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(24004));
 		qm.sendOk("#b(The seal is complete, and the town is safe.)");
 		break;
 	case 2:

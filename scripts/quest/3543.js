@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrevS("(You recalled your entire past, unsure of which memories to focus on. However, thinking over your life has filled you with warmth, and renewed your spirit.)", 16);
 		break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3543));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3543));
 		Packages.server.quest.MapleQuest.getInstance(3543).forceComplete(qm.getPlayer(), qm.getNpc());
 		Packages.server.quest.MapleQuest.getInstance(7081).forceStart(qm.getPlayer(), qm.getNpc(), 1);
 		qm.dispose();

@@ -36,17 +36,17 @@ function start(mode, type, selection) {
 		break;
 	case 2:
 		if (selection == 1) {
-			qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.environmentChange("Party1/Failed", 4));
+			qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("Party1/Failed", 4));
 			qm.sendOk("Awkwardly familiar..."); 
 			status = 0;
 			}
 		if (selection == 2) {
-			qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.environmentChange("Coconut/Failed", 4));
+			qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("Coconut/Failed", 4));
 			qm.sendOk("Was it this?");
 			status = 0;
 			}
 		if (selection == 3) {
-			qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.environmentChange("quest2293/Die", 4));
+			qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("quest2293/Die", 4));
 			qm.sendOk("You heard that?");
 			status = 0;
 			}
@@ -69,7 +69,7 @@ function start(mode, type, selection) {
 			break;
 	case 4:
 		Packages.server.quest.MapleQuest.getInstance(2293).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(2293));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(2293));
 		qm.gainExp(3300);
 		qm.dispose();
 }

@@ -32,7 +32,7 @@ function start(mode, type, selection) {
 		break;
 	case 2:
 		Packages.server.quest.MapleQuest.getInstance(20520).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20520));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20520));
 		qm.sendOk("There's a special mount that only the Cygnus Knights can enjoy. If you are interested, visit #bEreve#k. I will give you more information on it.");
 		break;
 	case 3:

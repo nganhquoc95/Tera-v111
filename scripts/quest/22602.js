@@ -74,7 +74,7 @@ function start(mode, type, selection) {
 			}
 			qm.gainItem(1142156, 1);
 			Packages.server.quest.MapleQuest.getInstance(22602).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22602));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22602));
 			qm.sendOk("#b(You received #p1013000#'s dragon scale. As you place your hand on the dragon scale, it magically transforms into #v1142156#.)");
 			break;
 	case 15:

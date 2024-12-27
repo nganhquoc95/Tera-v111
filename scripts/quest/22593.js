@@ -30,7 +30,7 @@ function start(mode, type, selection) {
 	case 1:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(22593)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(22593).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22593));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22593));
 			qm.gainExp(5300);
 			}
 			qm.sendNext("Yes, it was quite a dilemma for us when the #b#o4230105#s started growing like crazy#k! Thankfully, someone that was passing by did some investigating on our behalf, and we were able to resolve the issue, but boy, it was a big deal!");

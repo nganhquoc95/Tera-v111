@@ -37,7 +37,7 @@ function start(mode, type, selection) {
 		qm.gainExp(3000);
 		qm.getPlayer().gainSP(2, 3);
 		Packages.server.quest.MapleQuest.getInstance(22565).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22565));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22565));
 		qm.sendOk("All right, then. We'll give that #p1032001# or whatever his name is, time to find out more. In the meanwhile, we'll get stronger. Let's become heroes! Let's go help people!");
 		break;
 	case 4:

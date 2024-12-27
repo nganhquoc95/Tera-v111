@@ -28,7 +28,7 @@ function start(mode, type, selection) {
 		break;
 	case 1:
 		Packages.server.quest.MapleQuest.getInstance(20600).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20600));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20600));
 		qm.sendOk("I strongly suggest you talk to the Knight Commander for some advice. Who knows? You might be able to find a new #bskill#k...");
 		break;
 	case 2:

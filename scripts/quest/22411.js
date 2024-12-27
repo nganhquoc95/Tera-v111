@@ -46,7 +46,7 @@ function start(mode, type, selection) {
 		break;
 	case 7:
 		Packages.server.quest.MapleQuest.getInstance(22411).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22411));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22411));
 		qm.sendOkS("#bHmm. Well, I guess we don't have a choice. It's expensive, but I can't not get you one. I'll go get another saddle for you.", 2);
 		break;
 	case 8:

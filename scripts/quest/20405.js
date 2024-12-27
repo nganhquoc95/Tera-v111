@@ -28,7 +28,7 @@ function start(mode, type, selection) {
 		break;
 	case 1:
 		Packages.server.quest.MapleQuest.getInstance(20405).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20405));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20405));
 		qm.sendOk("#b(As soon as I touch the crystal, a rough, raspy voice entered.) This is Dunamis. I was unable to spot the origin of the curse, but I did find the device used for it, so I'm sending it straight to Ereve. I'm leaving this message in case a Knight is sent here to search for items. You may now return to Ereve.");
 		break;
 	case 2:

@@ -35,7 +35,7 @@ function start(mode, type, selection) {
 		break;
 	case 3:
 		Packages.server.quest.MapleQuest.getInstance(20400).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20400));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20400));
 		qm.sendOk("Well, I may have said it in a joking manner, but it is true that you are one of the most talented knights in all of Cygnus Knights. That's why an important mission like this is given to a talented individual in Cygnus Knights. I believe in you. Good Luck.");
 		break;
 	case 4:

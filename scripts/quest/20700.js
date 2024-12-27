@@ -33,7 +33,7 @@ function start(mode, type, selection) {
 	case 2:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(20700)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(20700).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20700));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20700));
 			}
 			qm.sendNext("Kiku, the Training Instructor, will help you train into a serviceable knight. Once you reach Level 13, I'll assign you a mission or two. So until then, keep training.");
 			break;

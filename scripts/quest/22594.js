@@ -48,7 +48,7 @@ function start(mode, type, selection) {
 	case 7:
 		qm.gainExp(5300);
 		Packages.server.quest.MapleQuest.getInstance(22594).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22594));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22594));
 		qm.sendOk("No need to look so gloomy. It's not like you stole the treasure or even helped steal the treasure. #rIt's true our security has become weaker lately#k but we just need to be more watchful, that's all.");
 		break;
 	case 8:

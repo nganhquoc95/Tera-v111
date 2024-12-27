@@ -32,7 +32,7 @@ function start(mode, type, selection) {
 		break;
 	case 2:
 		Packages.server.quest.MapleQuest.getInstance(24012).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24012));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(24012));
 		qm.getPlayer().changeJob(2311);
 		qm.dispose();
 }

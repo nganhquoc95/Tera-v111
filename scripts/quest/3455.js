@@ -48,7 +48,7 @@ function start(mode, type, selection) {
 		break;
 	case 6:
 		if (qm.getPlayer().itemQuantity(4031927)) {
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3455));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3455));
 			qm.gainItem(4031927, -1);
 			}
 			qm.sendNext("You must have decided to side with the Grays! Here, sign this contract to pledge your loyalty!");

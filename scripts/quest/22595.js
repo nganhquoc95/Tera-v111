@@ -33,7 +33,7 @@ function start(mode, type, selection) {
 	case 2:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(22595)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(22595).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22595));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22595));
 			qm.gainExp(5300);
 			}
 			qm.sendNext("The #o9300390# was broken into by someone some time ago, and broke as a result. #bNo one was watching the secret Safe at the time, and so a burglar came in and stole the treasure#k. No one knows what kind of a treasure it was, but...it's a big deal.");

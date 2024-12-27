@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrev("I guess you can call that a memory...");
 		break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(3529));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(3529));
 		Packages.server.quest.MapleQuest.getInstance(3529).forceComplete(qm.getPlayer(), qm.getNpc());
 		Packages.server.quest.MapleQuest.getInstance(7081).forceStart(qm.getPlayer(), qm.getNpc(), 1);
 		qm.dispose();

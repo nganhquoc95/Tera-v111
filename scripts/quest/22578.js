@@ -55,7 +55,7 @@ function start(mode, type, selection) {
 		qm.gainExp(10000);
 		qm.getPlayer().gainSP(2, 4);
 		Packages.server.quest.MapleQuest.getInstance(22578).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22578));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22578));
 		qm.sendOkS("#bBut I'm sure there's a reason for it. It's for a good cause, so... I'll ask about it next time. Yeah, I'll just ask what the organization is really about when I'm given my next mission.", 2);
 		break;
 	case 10:

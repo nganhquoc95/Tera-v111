@@ -35,7 +35,7 @@ function start(mode, type, selection) {
 		schedule = Packages.server.Timer.EtcTimer.getInstance().register(function () {
 		if (tick == 1) {
 			Packages.server.quest.MapleQuest.getInstance(1504).forceStart(qm.getPlayer(), qm.getNpc(), null);
-			qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.environmentChange("demonSlayer/whiteOut", 3));
+			qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("demonSlayer/whiteOut", 3));
 			qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.EffectPacket.ShowWZEffect("Effect/Direction5.img/unitedMaple/Quest1504"));
 			schedule.cancel(true);
 			qm.dispose();

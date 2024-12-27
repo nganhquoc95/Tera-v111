@@ -31,7 +31,7 @@ function start(mode, type, selection) {
 		break;
 	case 2:
 		Packages.server.quest.MapleQuest.getInstance(20401).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20401));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20401));
 		qm.sendOk("You must be in the same field with him. Huh? How did I know? Well, I can't really pinpoint it, but it felt like you and that person had a similar feel to it. Anyway, good luck!! Dunamis is such a no-nonsense, intense guy that it worries me that you might later take on a #rdangerous task#k...");
 		break;
 	case 3:

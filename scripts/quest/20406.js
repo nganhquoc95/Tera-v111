@@ -31,7 +31,7 @@ function start(mode, type, selection) {
 		break;
 	case 2:
 		Packages.server.quest.MapleQuest.getInstance(20406).forceStart(qm.getPlayer(), qm.getNpc(), null);
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20406));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20406));
 		qm.sendOk("Please re-enter #bBlack Witch's cave#k, and search for any other types of evidence left behind by Dunamis. Who knows, you may have missed something. We, too, will do our best to find him.");
 		break;
 	case 3:

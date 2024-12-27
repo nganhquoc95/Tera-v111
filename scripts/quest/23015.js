@@ -42,7 +42,7 @@ function start(mode, type, selection) {
 		break;
 	case 7:
 		Packages.server.quest.MapleQuest.getInstance(23015).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(23015));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(23015));
 		qm.getPlayer().changeMap(qm.getMap(931000500), qm.getMap(931000500).getPortal(1));
 		qm.dispose();
 }

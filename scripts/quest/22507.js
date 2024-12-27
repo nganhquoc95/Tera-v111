@@ -72,7 +72,7 @@ function start(mode, type, selection) {
 	case 15:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(22507)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(22507).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22507));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22507));
 			qm.gainExp(810);
 			}
 			qm.sendNextS("Hehehe, alrighty then, master. Let's get to it!", 1);

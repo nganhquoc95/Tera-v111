@@ -42,7 +42,7 @@ function start(mode, type, selection) {
 	case 5:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(21749)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(21749).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(21749));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(21749));
 			}
 			qm.sendNextS("I mean, I am not worried about the Seal Stone itself. I just thought there was a possibility of you meeting someone that knew you back in that time period.", 1);
 			break;

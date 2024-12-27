@@ -36,7 +36,7 @@ function start(mode, type, selection) {
 	case 3:
 		qm.gainExp(2100);
 		Packages.server.quest.MapleQuest.getInstance(23908).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(23908));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(23908));
 		qm.sendOk("Ahhh! I'm so confused. Are the Black Wings good guys or bad guys?");
 		break;
 	case 4:

@@ -47,7 +47,7 @@ function start(mode, type, selection) {
 			}
 			qm.gainItem(1142157, 1);
 			Packages.server.quest.MapleQuest.getInstance(22603).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(22603));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22603));
 			qm.sendOk("Master, you should use this scale to make something useful that would reduce the damage you take when hit by a monster. You'll get stronger, which means that I'll get stronger. Sounds good to me!");
 			break;
 	case 6:

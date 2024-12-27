@@ -41,7 +41,7 @@ function start(mode, type, selection) {
 			qm.gainItem(1142069, 1);
 			qm.getPlayer().changeJob(qm.getPlayer().getJob() + 1);
 			Packages.server.quest.MapleQuest.getInstance(20408).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20408));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20408));
 			qm.sendOk("#h0#. For courageously battling the Black Mage, I will appoint you as the new Chief Knight of Cygnus Knights from this moment forward. Please use your power and authority wisely to help protect the citizens of Maple World.");
 			break;
 	case 4:

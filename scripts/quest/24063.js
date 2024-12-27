@@ -42,7 +42,7 @@ function start(mode, type, selection) {
 	case 5:
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(24063)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(24063).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(24063));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(24063));
 			qm.gainExp(1000);
 			}
 			qm.sendNext("I wish I could go with you, but I'm still too weak from the curse. I'd only get in your way, Your Majesty. #p1033100# would eliminate me if I tripped you up...");

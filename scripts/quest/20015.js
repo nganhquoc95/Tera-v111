@@ -41,7 +41,7 @@ function start(mode, type, selection) {
 			return;
 			}
 			Packages.server.quest.MapleQuest.getInstance(20015).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(20015));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(20015));
 			qm.gainItem(1142065, 1);
 			}
 			qm.sendNext("Heehee, I knew you'd say that. But you know you still have a ways to go before you can fight for Maple World, right?");

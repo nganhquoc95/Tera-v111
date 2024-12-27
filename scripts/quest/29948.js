@@ -6,7 +6,7 @@
 
 function start(mode, type, selection) {
 	Packages.server.quest.MapleQuest.getInstance(29948).forceComplete(qm.getPlayer(), qm.getNpc());
-	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(29948));
+	qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(29948));
 	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Chryse Savior> has been rewarded."));
 	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Chryse Savior> has been rewarded."));
 	qm.dispose();

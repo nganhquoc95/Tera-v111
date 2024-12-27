@@ -21,7 +21,6 @@ function action(mode, type, selection) {
 	switch (status) {
 	case 0:
 		ms.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.playMovie("Mercedes.avi", true));
-		ms.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(20020111), 1, 1, -1);
 		ms.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(20021166), 1, 1, -1);
 		ms.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(20021181), 1, 1, -1);
 		break;

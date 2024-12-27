@@ -69,7 +69,7 @@ function end(mode, type, selection) {
 			}
 			qm.gainItem(1142003, 1);
 			Packages.server.quest.MapleQuest.getInstance(29002).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getShowQuestCompletion(29002));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(29002));
 			qm.sendNext("On behalf of the God of Honor, I, Dalair, declare you as the newest owner of this honorable title. If you want to try out for another title, come back and see me anytime.");
 			break;
 	case 2:

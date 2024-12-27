@@ -48,7 +48,7 @@ public class ServerConstants {
     public static int flag = 0;
     public static int userLimit = 100;
     public static int maxCharacters = 6;
-    public static boolean monsterSpawn = true;
+    public static boolean monsterSpawn = false;
     public static boolean DEBUG = false;
 
     public static String ip = "127.0.0.1";
