@@ -6,7 +6,7 @@
 
 function start(mode, type, selection) {
 	Packages.server.quest.MapleQuest.getInstance(29959).forceComplete(qm.getPlayer(), qm.getNpc());
-	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Dark Warrior> has been rewarded."));
+	qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("<Dark Warrior> has been rewarded."));
 	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Dark Warrior> has been rewarded."));
 	qm.dispose();
 }

@@ -49,6 +49,6 @@ function end(mode, type, selection) {
 		qm.gainExp(1200);
 		Packages.server.quest.MapleQuest.getInstance(31000).forceComplete(qm.getPlayer(), qm.getNpc());
 		qm.getPlayer().changeMap(qm.getMap(200100001), qm.getMap(200100001).getPortal(0));
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("Pressing the JUMP key allows you to fly to Chryse."));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("Pressing the JUMP key allows you to fly to Chryse."));
 }
 }

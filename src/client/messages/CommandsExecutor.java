@@ -257,6 +257,7 @@ public class CommandsExecutor {
         addCommand("endevent", 2, EndEventCommand.class);
         addCommand("askox", 2, AskOXCommand.class);
         addCommand("buffmap", 2, BuffMapCommand.class);
+        addCommand("giveskill", GiveSkillCommand.class);
         //addCommand("", 2, Command.class);
         commandsNameDesc.add(levelCommandsCursor);
     }

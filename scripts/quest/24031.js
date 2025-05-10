@@ -29,7 +29,7 @@ function end(mode, type, selection) {
 			qm.gainItem(4032977, -1);
 			qm.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(20021160), 1, 1, -1);
 			Packages.server.quest.MapleQuest.getInstance(24031).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("Sylvidia Riding Skill obtained"));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("Sylvidia Riding Skill obtained"));
 			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "You obtained the <Sylvidia Riding> skill."));
 			}
 			qm.sendNext("This is... I haven't had this in ages! I missed this so much! We used to have so much fun, didn't we? But then you went off to fight the Black Mage, and left me all alone...");

@@ -20,7 +20,7 @@ function start(mode, type, selection) {
 		}
 	switch (status) {
 	case 0:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.IntroEnableUI(1));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.IntroEnableUI(1));
 		qm.sendNextS("If you remember #p1090000#'s story of the Seven Commanders, then you know what danger this could bode. I just don't understand how Guwaru's mark could be present in this day and age. What could it mean?", 1);
 		break;
 	case 1:
@@ -30,13 +30,13 @@ function start(mode, type, selection) {
 		qm.sendNextPrevS("I believe it would be best to purify this relic to remove the dark aura that surrounds it. Cover your eyes well when I perform the ritual, the light would burn out your retinas in less than a second. Are you ready?", 1);
 		break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.IntroEnableUI(0));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.IntroEnableUI(0));
 		var tick = 0;
 		schedule = Packages.server.Timer.EtcTimer.getInstance().register(function () {
 		if (tick == 1) {
 			Packages.server.quest.MapleQuest.getInstance(1504).forceStart(qm.getPlayer(), qm.getNpc(), null);
 			qm.getClient().getSession().write(Packages.tools.packet.CField.environmentChange("demonSlayer/whiteOut", 3));
-			qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.EffectPacket.ShowWZEffect("Effect/Direction5.img/unitedMaple/Quest1504"));
+			qm.getClient().getSession().write(Packages.tools.packet.CField.EffectPacket.ShowWZEffect("Effect/Direction5.img/unitedMaple/Quest1504"));
 			schedule.cancel(true);
 			qm.dispose();
 			return;

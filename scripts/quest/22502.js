@@ -29,7 +29,7 @@ function start(mode, type, selection) {
 		break;
 	case 1:
 		Packages.server.quest.MapleQuest.getInstance(22502).forceStart(qm.getPlayer(), qm.getNpc(), null);
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/12/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/12/0"));
 		qm.dispose();
 }
 }

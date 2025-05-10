@@ -31,7 +31,7 @@ function end(mode, type, selection) {
 		qm.sendNextPrev("Mercedes?!");
 		break;
 	case 2:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/mersedes/0/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/mersedes/0/0"));
 		break;
 	case 3:
 		qm.sendNext("I knew you were still alive! I KNEW it! I never believed for a second that the...that the Black Mage could stop you. \r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0# 2500 exp");

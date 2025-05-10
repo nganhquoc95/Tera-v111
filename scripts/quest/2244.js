@@ -38,7 +38,7 @@ function end(mode, type, selection) {
 			qm.dispose();
 			return;
 			}
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Tristan's Successor> has been rewarded."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("<Tristan's Successor> has been rewarded."));
 			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Tristan's Successor> has been rewarded."));
 			Packages.server.quest.MapleQuest.getInstance(2244).forceComplete(qm.getPlayer(), qm.getNpc());
 			qm.gainItem(1142079, 1);

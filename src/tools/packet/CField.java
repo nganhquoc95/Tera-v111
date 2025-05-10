@@ -2468,7 +2468,7 @@ public class CField {
         mplew.writeShort(SendPacketOpcode.SHOW_NEBULITE_EFFECT.getValue());
         mplew.writeInt(chr);
         mplew.write(success ? 1 : 0);
-        mplew.writeMapleAsciiString(success ? "星岩安裝成功" : "星岩安裝失敗。");
+        mplew.writeMapleAsciiString(success ? "Nebulite plugged successfully" : "Nebulite plug-in failure.");
 
         return mplew.getPacket();
     }

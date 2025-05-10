@@ -6,7 +6,7 @@
 
 function start(mode, type, selection) {
 	Packages.server.quest.MapleQuest.getInstance(29941).forceComplete(qm.getPlayer(), qm.getNpc());
-	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Special Training Beginner> has been rewarded."));
+	qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("<Special Training Beginner> has been rewarded."));
 	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Special Training Beginner> has been rewarded."));
 	qm.dispose();
 }

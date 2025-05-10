@@ -6,7 +6,7 @@
 
 function start(mode, type, selection) {
 	Packages.server.quest.MapleQuest.getInstance(29935).forceComplete(qm.getPlayer(), qm.getNpc());
-	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Perion Guard> has been rewarded."));
+	qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("<Perion Guard> has been rewarded."));
 	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Perion Guard> has been rewarded."));
 	qm.dispose();
 }

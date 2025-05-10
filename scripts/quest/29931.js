@@ -6,7 +6,7 @@
 
 function start(mode, type, selection) {
 	Packages.server.quest.MapleQuest.getInstance(29931).forceComplete(qm.getPlayer(), qm.getNpc());
-	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Honorary Employee> has been rewarded."));
+	qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("<Honorary Employee> has been rewarded."));
 	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "You have earned the <Honorary Employee> title. You can receive a Medal from NPC Dalair."));
 	qm.dispose();
 }

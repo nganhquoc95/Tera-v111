@@ -6,7 +6,7 @@
 
 function start(mode, type, selection) {
 	Packages.server.quest.MapleQuest.getInstance(29955).forceComplete(qm.getPlayer(), qm.getNpc());
-	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<Elven Hero> has been rewarded."));
+	qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("<Elven Hero> has been rewarded."));
 	qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<Elven Hero> has been rewarded."));
 	qm.dispose();
 }

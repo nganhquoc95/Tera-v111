@@ -35,7 +35,7 @@ function start(mode, type, selection) {
 		break;
 	case 3:
 		Packages.server.quest.MapleQuest.getInstance(22004).forceStart(qm.getPlayer(), qm.getNpc(), null);
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/6/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/6/0"));
 		qm.dispose();
 }
 }
@@ -73,7 +73,7 @@ function end(mode, type, selection) {
 			qm.sendNextPrev("Here. I made this new chair from the wooden boards I had left over after fixing the fence. It may not seem like much, but it's sturdy. I'm sure it'll come in handy.");
 			break;
 	case 2:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/7/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/7/0"));
 		qm.dispose();
 }
 }

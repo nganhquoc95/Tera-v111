@@ -83,6 +83,7 @@ public class MapScriptMethods {
         evanPromotion,
         explorationPoint,
         merTutorDrecotion10,
+        evanleaveD,
         NULL;
 
         private static onUserEnter fromString(String Str) {
@@ -182,6 +183,10 @@ public class MapScriptMethods {
             }
             case cygnusJobTutorial: {
                 showIntro(c, "Effect/Direction.img/cygnusJobTutorial/Scene" + (c.getPlayer().getMapId() - 913040100));
+                break;
+            }
+            case evanleaveD: {
+                c.getSession().write(UIPacket.IntroEnableUI(0));
                 break;
             }
             case evanPromotion:
@@ -299,7 +304,6 @@ public class MapScriptMethods {
                 }
                 break;
             }
-
             default: {
                 NPCScriptManager.getInstance().startMapScript(c, npc, scriptName, false);
                 FileoutputUtil.log(FileoutputUtil.ScriptEx_Log, "Unhandled script : " + scriptName + ", type : onUserEnter - MAPID " + c.getPlayer().getMapId());

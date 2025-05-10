@@ -43,7 +43,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrev("Come back to me if you happen to lose the Lunch Box. I'II make his lunch again.");
 		break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/5/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/5/0"));
 		qm.dispose();
 }
 }

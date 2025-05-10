@@ -42,7 +42,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrev("Eat the Roger's Apple to get back HP. Talk to me after you do.");
 		break;
 	case 5:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.EffectPacket.AranTutInstructionalBalloon("UI/tutorial.img/28"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.EffectPacket.AranTutInstructionalBalloon("UI/tutorial.img/28"));
 		qm.dispose();
 }
 }

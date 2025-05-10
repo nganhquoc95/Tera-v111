@@ -23,7 +23,7 @@ function start(mode, type, selection) {
 		qm.getPlayer().changeJob(2200);
 		Packages.server.quest.MapleQuest.getInstance(22100).forceComplete(qm.getPlayer(), qm.getNpc());
 		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(22100));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/14/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/14/0"));
 		break;
 	case 1:
 		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "The baby Dragon hatched from the egg inside the Incubator."));

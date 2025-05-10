@@ -53,7 +53,7 @@ function start(mode, type, selection) {
 		qm.sendNextS("#b#p1013101##k went to the #b#m100030102##k to feed the Bull Dog. You'll see him right outside.", 1);
 		break;
 	case 9:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/1/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/1/0"));
 		qm.dispose();
 }
 }
@@ -79,7 +79,7 @@ function end(mode, type, selection) {
 		break;
 	case 2:
 		Packages.server.quest.MapleQuest.getInstance(22000).forceComplete(qm.getPlayer(), qm.getNpc());
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/2/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/2/0"));
 		qm.gainExp(20);
 		qm.dispose();
 }

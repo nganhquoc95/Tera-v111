@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="client/messages/oldcommands/|client/messages/commands/player/|scripting/map/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/client/messages/commands/player"/>
+	<classpathentry kind="src" path="src/client/messages/oldcommands"/>
+	<classpathentry kind="src" path="src/scripting/map"/>
+	<classpathentry kind="lib" path="lib/graaljs/graaljs.jar"/>
+	<classpathentry kind="lib" path="lib/graaljs/graaljs-launcher.jar"/>
+	<classpathentry kind="lib" path="lib/graaljs/graal-sdk.jar"/>
+	<classpathentry kind="lib" path="lib/graaljs/icu4j.jar"/>
+	<classpathentry kind="lib" path="lib/graaljs/js-scriptengine.jar"/>
+	<classpathentry kind="lib" path="lib/graaljs/launcher-common.jar"/>
+	<classpathentry kind="lib" path="lib/graaljs/tregex.jar"/>
+	<classpathentry kind="lib" path="lib/graaljs/truffle-api.jar"/>
+	<classpathentry kind="lib" path="lib/HikariCP-4.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/JDA.jar"/>
+	<classpathentry kind="lib" path="lib/mina-core-1.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/mina-core-1.1.7-sources.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.25.jar"/>
+	<classpathentry kind="lib" path="lib/netty-all-4.1.39.Final.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-jdk14-1.7.5.jar"/>
+	<classpathentry kind="output" path="out/production/TeraServer"/>
+</classpath>

@@ -46,8 +46,8 @@ function start(mode, type, selection) {
 		break;
 	case 6:
 		if (!qm.getPlayer().hasSummon())
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonHelper(true));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonMessage(14));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonHelper(true));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonMessage(14));
 		Packages.server.quest.MapleQuest.getInstance(21010).forceStart(qm.getPlayer(), qm.getNpc(), null);
 		qm.dispose();
 }
@@ -86,8 +86,8 @@ function end(mode, type, selection) {
 		break;
 	case 4:
 		if (!qm.getPlayer().hasSummon())
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonHelper(true));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonMessage(15));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonHelper(true));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonMessage(15));
 		qm.dispose();
 }
 }

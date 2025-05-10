@@ -50,7 +50,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrevS("Please go ahead and slay 20 #o0100133#s.", 8);
 		break;
 	case 8:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.EffectPacket.AranTutInstructionalBalloon("Effect/OnUserEff.img/guideEffect/aranTutorial/tutorialArrow3"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.EffectPacket.AranTutInstructionalBalloon("Effect/OnUserEff.img/guideEffect/aranTutorial/tutorialArrow3"));
 		qm.dispose();
 }
 }

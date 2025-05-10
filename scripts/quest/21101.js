@@ -38,7 +38,7 @@ function start(mode, type, selection) {
 			qm.resetStats(35, 4, 4, 4);
 			qm.gainItem(1142129, 1);
 			qm.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(20009000), 1, 1, -1);
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("You have acquired the Pig's Weakness skill."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("You have acquired the Pig's Weakness skill."));
 			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "You have acquired the Pig's Weakness skill."));
 			qm.sendNextS("#b(You might be starting to remember something...)#k", 3);
 			break;

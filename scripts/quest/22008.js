@@ -32,7 +32,7 @@ function start(mode, type, selection) {
 		qm.sendNextS("Right? Let us go and defeat those Foxes. Go on ahead and defeat #r10 #o9300385#es#k in #b#m100030103##k first. I'II follow you and take care of what's left behind. Now, hurry over to #m100030103#!", 1);
 		break;
 	case 2:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/10/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/10/0"));
 		qm.dispose();
 }
 }

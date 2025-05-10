@@ -50,7 +50,7 @@ function start(mode, type, selection) {
 		qm.sendNextPrevS("I've written everything down in this letter, so all you have to do is take this to him. I'd go myself, but I have to deal with problems here.", 1);
 		break;
 	case 4:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/13/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/13/0"));
 		qm.dispose();
 }
 }

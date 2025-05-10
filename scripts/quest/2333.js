@@ -49,7 +49,7 @@ function start(mode, type, selection) {
 	case 9:
 		Packages.server.quest.MapleQuest.getInstance(2333).forceStart(qm.getPlayer(), qm.getNpc(), null);
 		qm.getPlayer().getMap().spawnMonsterOnGroundBelow(Packages.server.life.MapleLifeFactory.getMonster(3300008), new java.awt.Point(292, 133));
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("New Mission: Defeat the Prime Minister!"));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("New Mission: Defeat the Prime Minister!"));
 		qm.dispose();
 }
 }

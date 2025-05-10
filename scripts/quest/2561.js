@@ -51,7 +51,7 @@ function start(mode, type, selection) {
 		qm.sendNextS("(You have received a delicious-looking apple. You should eat it. Now...how do you open your Inventory? Was it the #bI#k key...?)", 2);
 		break;
 	case 8:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.EffectPacket.AranTutInstructionalBalloon("UI/tutorial.img/28"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.EffectPacket.AranTutInstructionalBalloon("UI/tutorial.img/28"));
 		qm.dispose();
 }
 }

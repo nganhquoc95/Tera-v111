@@ -44,7 +44,7 @@ function end(mode, type, selection) {
 			qm.gainItem(2070015, 500);
 			qm.getPlayer().gainSP(1, 0);
 			qm.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(10009000), 1, 1, -1);
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("You learned the Pig's Weakness Skill."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("You learned the Pig's Weakness Skill."));
 			}
 			qm.sendNext("You are a Night Walker from here on out. To commemorate the occasion of a new member, I will give you some of my abilities.");
 			break;

@@ -26,7 +26,7 @@ function start(mode, type, selection) {
 			return;
 			}
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(29964)).getStatus() < 2) {
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("<A Member of The Maple Alliance> has been rewarded."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("<A Member of The Maple Alliance> has been rewarded."));
 			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "<A Member of The Maple Alliance> has been rewarded."));
 			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.getShowQuestCompletion(29964));
 			Packages.server.quest.MapleQuest.getInstance(29964).forceComplete(qm.getPlayer(), qm.getNpc());

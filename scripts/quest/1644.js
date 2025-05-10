@@ -30,7 +30,7 @@ function start(mode, type, selection) {
 			}
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(1644)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(1644).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("You have obtained the <Silent Crusade Recruit> title."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("You have obtained the <Silent Crusade Recruit> title."));
 			qm.gainItem(1142351, 1);
 			}
 			qm.sendPrev("Congratulations on joining the Silent Crusade! #h0# received the #b<Silent Crusade Recruit>#k title.");

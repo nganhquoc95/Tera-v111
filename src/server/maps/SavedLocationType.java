@@ -33,7 +33,8 @@ public enum SavedLocationType {
     AMORIA(8),
     CHRISTMAS(9),
     ARDENTMILL(10),
-    MONSTERPARK(11);
+    MONSTERPARK(11),
+    DRAGON_RIDER(12);
     private int index;
 
     private SavedLocationType(int index) {

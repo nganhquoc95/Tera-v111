@@ -52,8 +52,8 @@ function end(mode, type, selection) {
 		break;
 	case 6:
 		if (!qm.getPlayer().hasSummon())
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonHelper(true));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonMessage(16));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonHelper(true));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonMessage(16));
 		qm.dispose();
 }
 }

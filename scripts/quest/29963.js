@@ -31,7 +31,7 @@ function start(mode, type, selection) {
 			qm.gainExp(1000);
 			qm.gainItem(1142356, 1);
 			Packages.server.quest.MapleQuest.getInstance(29963).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("< Star Maker > has been rewarded."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("< Star Maker > has been rewarded."));
 			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.serverNotice(5, "< Star Maker > has been rewarded."));
 			qm.sendOk("I'll always remember the great adventurer who helped me achieve my goals. From now on, everyone will know you as the #b<Star Maker>#k!");
 			qm.dispose();

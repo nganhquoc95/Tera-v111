@@ -72,7 +72,7 @@ function start(mode, type, selection) {
 		break;
 	case 15:
 		qm.resetStats(4, 4, 20, 4);
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/11/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/11/0"));
 		qm.dispose();
 }
 }

@@ -30,7 +30,7 @@ function start(mode, type, selection) {
 			}
 		if (qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(1647)).getStatus() < 2) {
 			Packages.server.quest.MapleQuest.getInstance(1647).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("You have obtained the <Silent Crusade Champion> title."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("You have obtained the <Silent Crusade Champion> title."));
 			qm.gainItem(1142354, 1);
 			}
 			qm.sendPrev("No matter what, we've got your back, #b<Silent Crusade Champion>#k.");

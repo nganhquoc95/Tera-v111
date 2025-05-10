@@ -35,7 +35,7 @@ function start(mode, type, selection) {
 	case 3:
 		qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(28751)).setStatus(1);
 		qm.getPlayer().updateQuest(qm.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(28751)), true);
-		qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("Avoid the Alien Scouts and gather 5 pieces of ore from around the map to use as fuel."));
+		qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("Avoid the Alien Scouts and gather 5 pieces of ore from around the map to use as fuel."));
 		qm.dispose();
 }
 }

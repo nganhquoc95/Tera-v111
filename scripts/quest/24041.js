@@ -41,24 +41,24 @@ function start(mode, type, selection) {
 		qm.sendNextPrevS("Right, hold it together, hold it together... I need to make sure there's not anything wrong with me.", 17);
 		break;
 	case 7:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.IntroEnableUI(1));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.getDirectionInfo(0, 5));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.IntroEnableUI(1));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.getDirectionInfo(0, 5));
 		Packages.server.quest.MapleQuest.getInstance(24041).forceStart(qm.getPlayer(), qm.getNpc(), null);
 		qm.sendNextPrevS("Left arm works...", 17);
 		break;
 	case 8:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.getDirectionInfo(0, 9));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.getDirectionInfo(0, 9));
 		qm.sendNextPrevS("No problem with my right arm.", 17);
 		break;
 	case 9:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.getDirectionInfo(0, 15));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.getDirectionInfo(0, 15));
 		qm.sendNextPrevS("Legs are fine, too.", 17);
 		break;
 	case 10:
 		qm.sendNextPrevS("And my wounds are all healed. I guess my level was the only thing affected...", 17);
 		break;
 	case 11:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.IntroEnableUI(0));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.IntroEnableUI(0));
 		qm.dispose();
 }
 }

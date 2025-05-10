@@ -41,7 +41,7 @@ function start(mode, type, selection) {
 			qm.sendNextS("#b(Mom has something to say? Eat your HandmadeSandwich and head back inside the house.)", 3);
 			break;
 	case 3:
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/3/0"));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/3/0"));
 		qm.dispose();
 }
 }
@@ -69,7 +69,7 @@ function end(mode, type, selection) {
 			return;
 			}
 			Packages.server.quest.MapleQuest.getInstance(22002).forceComplete(qm.getPlayer(), qm.getNpc());
-			qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.NPCPacket.getEvanTutorial("UI/tutorial/evan/4/0"));
+			qm.getClient().getSession().write(Packages.tools.packet.CField.NPCPacket.getEvanTutorial("UI/tutorial/evan/4/0"));
 			qm.gainItem(1003028, 1);
 			qm.gainItem(2022621, 5);
 			qm.gainItem(2022622, 5);

@@ -43,7 +43,7 @@ function end(mode, type, selection) {
 			qm.gainItem(1142066, 1);
 			qm.getPlayer().gainSP(1, 0);
 			qm.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(10009000), 1, 1, -1);
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("You learned the Pig's Weakness Skill."));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("You learned the Pig's Weakness Skill."));
 			}
 			qm.sendNext("I have just molded your body to be perfect for a Dawn Warrior. If you wish to become more powerful, use the Stat window (S) to raise the appropriate stats. If you aren't sure what to raise, just click on #bAuto#k.");
 			break;

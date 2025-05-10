@@ -36,7 +36,7 @@ function end(mode, type, selection) {
 			y = qm.getPlayer().getJob();
 			Packages.server.quest.MapleQuest.getInstance(50722).forceComplete(qm.getPlayer(), qm.getNpc());
 			qm.getPlayer().changeSingleSkillLevel(Packages.client.SkillFactory.getSkill(y < 1000 ? 1142 : y < 2000 ? 10001142 : y < 2200 ? 20001142 : y < 2300 ? 20011142 : y < 2400 ? 20021142 : y < 3200 ? 30011142 : 30001142), 1, 1, -1);
-			qm.getClient().getSession().write(Packages.tools.packet.MaplePacketCreator.getTopMsg("[Skill] Soaring obtained!"));
+			qm.getClient().getSession().write(Packages.tools.packet.CWvsContext.showQuestMsg("[Skill] Soaring obtained!"));
 			qm.gainItem(4032969, -1);
 			}
 			qm.sendNext("Good, now close your eyes and imagine soaring through the sky on your mount, using the Up Arrow and Jump keys to soar ever higher.");

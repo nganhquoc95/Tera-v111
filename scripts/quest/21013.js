@@ -40,8 +40,8 @@ function start(mode, type, selection) {
 		break;
 	case 3:
 		if (!qm.getPlayer().hasSummon())
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonHelper(true));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonMessage(18));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonHelper(true));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonMessage(18));
 		qm.dispose();
 }
 }
@@ -77,8 +77,8 @@ function end(mode, type, selection) {
 		break;
 	case 3:
 		if (!qm.getPlayer().hasSummon())
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonHelper(true));
-		qm.getClient().getSession().write(Packages.tools.packet.EtcPacket.UIPacket.summonMessage(19));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonHelper(true));
+		qm.getClient().getSession().write(Packages.tools.packet.CField.UIPacket.summonMessage(19));
 		qm.dispose();
 }
 }
