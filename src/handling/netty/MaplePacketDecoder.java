@@ -80,7 +80,7 @@ public class MaplePacketDecoder extends ByteToMessageDecoder {
 				for (int i = 4; i > op.length() / 8; i--) {
 					tab += "\t";
 				}
-				String Send = "用戶端發送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
+				String Send = "User sends: " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
 				if (packetLen <= 6000) {
 					String SendTo = Send + HexTool.toString(decryptedPacket) + "\r\n" + HexTool.toStringFromAscii(decryptedPacket);
 					System.out.println(SendTo + "\r\n");

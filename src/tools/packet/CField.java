@@ -525,35 +525,35 @@ public class CField {
 
             mplew.writeShort(SendPacketOpcode.OPEN_UI_OPTION.getValue());
             /*
-             * 0x03 連接技能視窗
-             * 0x15 組隊搜索視窗
-             * 0x21 道具修理視窗
-             * 0x2A 專業技術視窗
+             * 0x03 Link Skill Window
+             * 0x15 Party Search Window
+             * 0x21 Item Repair Window
+             * 0x2A Professional Skill Window
              */
             mplew.writeInt(op);
             mplew.writeInt(npc);
-            mplew.writeInt(0); //V.114新增 未知
+            mplew.writeInt(0); //V.114 New Unknown
 
             return mplew.getPacket();
         }
 
-        public static byte[] sendLinkSkillWindow(int skillId) {//連接技能視窗
+        public static byte[] sendLinkSkillWindow(int skillId) {//Link Skill Window
             return sendUIWindow(0x03, skillId);
         }
 
-        public static byte[] sendPartyWindow(int npc) {//組隊搜索視窗
+        public static byte[] sendPartyWindow(int npc) {//Party Search Window
             return sendUIWindow(0x15, npc);
         }
 
-        public static byte[] sendRepairWindow(int npc) {//道具修理視窗
+        public static byte[] sendRepairWindow(int npc) {//Item Repair Window
             return sendUIWindow(0x21, npc);
         }
 
-        public static byte[] sendProfessionWindow(int npc) {//專業技術視窗
+        public static byte[] sendProfessionWindow(int npc) {//Professional Skill Window
             return sendUIWindow(0x2A, npc);
         }
 
-        public static byte[] sendEventWindow(int npc) {//活動清單視窗
+        public static byte[] sendEventWindow(int npc) {//Activity List Window
 
             MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
@@ -610,7 +610,7 @@ public class CField {
             mplew.writeShort(SendPacketOpcode.SUMMON_HINT_MSG.getValue());
             mplew.write(1);
             mplew.writeInt(type);
-            mplew.writeInt(15000); // 딜레이로 추정 팅길시 7000으로 수정
+            mplew.writeInt(15000); // If it is estimated to be delayed, it will be changed to 7000
 
             return mplew.getPacket();
         }
@@ -2394,29 +2394,29 @@ public class CField {
         return mplew.getPacket();
     }
     /**
-     * 운영자 채팅 색상 코드
+     * Operator Chat Color Codes
      *
-     * <code>색상 코드</code>:<br>
-     * 0 : 일반 채팅(흰색)
-     * 1 : 귓속말 채팅(초록색)
-     * 2 : 파티 채팅(분홍색)
-     * 3 : 친구 채팅(주황색)
-     * 4 : 길드 채팅(보라색)
-     * 5 : (옅은 초록색)
-     * 6 : (약간 크고 진한 분홍색)
-     * 7 : (회색)
-     * 8 : (노란색)
-     * 9 : (연한 노란색)
-     * 10 : (파란색)
-     * 11 : 운영자 채팅(흰색바탕에 검은색)
-     * 12 : (갈색)
-     * 13 : (옅은파란바탕에 파란색)
-     * 17 : (진보라색)
-     * 18 : (연한파란색바탕에 분홍색)
-     * 20 : (갈색바탕에 흰색)
-     * 21 : (진보라)
-     * 22 : (주황바탕에 진보라색)
-     * 23 : (노란바탕에 검정)
+     * <code>Color Code</code>:<br>
+     * 0 : General Chat (White)
+     * 1 : Whisper Chat (Green)
+     * 2 : Party Chat (Pink)
+     * 3 : Buddy Chat (Orange)
+     * 4 : Guild Chat (Purple)
+     * 5 : (Light Green)
+     * 6 : (Slightly Larger and Dark Pink)
+     * 7 : (Gray)
+     * 8 : (Yellow)
+     * 9 : (Light Yellow)
+     * 10 : (Blue)
+     * 11 : Operator Chat (Black on White Background)
+     * 12 : (Brown)
+     * 13 : (Light Blue Background with Blue Text)
+     * 17 : (Dark Purple)
+     * 18 : (Light Blue Background with Pink Text)
+     * 20 : (Brown Background with White Text)
+     * 21 : (Dark Purple)
+     * 22 : (Orange Background with Dark Purple Text)
+     * 23 : (Yellow Background with Black Text)
      */
     public static byte[] getGMText(int type, String text)
     {
@@ -3912,7 +3912,7 @@ public class CField {
                 break;
             }
             case 0x1A: {
-                mplew.writeMapleAsciiString("發件人");
+                mplew.writeMapleAsciiString("Sender");
                 mplew.write(1);
                 break;
             }
@@ -3936,7 +3936,7 @@ public class CField {
 
         mplew.writeShort(SendPacketOpcode.PET_AUTO_HP.getValue());
         mplew.writeInt(itemId);
-//System.out.println(itemId);
+
         return mplew.getPacket();
     }
 

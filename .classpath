@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="client/messages/oldcommands/|client/messages/commands/player/|scripting/map/" kind="src" path="src"/>
-	<classpathentry kind="src" path="src/client/messages/commands/player"/>
-	<classpathentry kind="src" path="src/client/messages/oldcommands"/>
-	<classpathentry kind="src" path="src/scripting/map"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/graaljs/graaljs.jar"/>
 	<classpathentry kind="lib" path="lib/graaljs/graaljs-launcher.jar"/>
 	<classpathentry kind="lib" path="lib/graaljs/graal-sdk.jar"/>

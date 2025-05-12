@@ -52,7 +52,7 @@ public class MaplePacketEncoder extends MessageToByteEncoder<Object> {
 				String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
 				pHeaderStr = StringUtil.getLeftPaddedStr(pHeaderStr, '0', 4);
 				String op = nameOf(pHeader);
-				String Recv = "伺服端發送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
+				String Recv = "Server sends: " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
 				if (packetLen <= 50000) {
 					//String RecvTo = Recv + HexTool.toString(inputInitialPacket) + "\r\n" + HexTool.toStringFromAscii(inputInitialPacket);//數據包解析
 					String RecvTo = Recv + HexTool.toString(inputInitialPacket);
