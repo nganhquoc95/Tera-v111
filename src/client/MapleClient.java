@@ -1627,40 +1627,40 @@ public class MapleClient implements Serializable {
         return ServerConstants.Use_Localhost;
     }
 
-//    public boolean isPicEnable() {
-//        return isPicEnable;
-//    }
-//
-//    public boolean setPicEnable(boolean isPicEnable) {
-//        this.isPicEnable = isPicEnable;
-//        boolean updated = false;
-//        Connection con = null;
-//        PreparedStatement pst = null;
-//        try {
-//            con = DatabaseConnection.getConnection();
-//            pst = con.prepareStatement("UPDATE accounts set PicEnabled=? WHERE id=?");
-//            pst.setBoolean(1, isPicEnable);
-//            pst.setInt(2, getAccID());
-//            updated = pst.executeUpdate() > 0;
-//            pst.close();
-//            con.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            updated = false;
-//        } finally {
-//            try {
-//                if (pst != null && !pst.isClosed()) {
-//                    pst.close();
-//                }
-//                if (con != null && !con.isClosed()) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//                System.err.println(e);
-//            }
-//        }
-//        return updated;
-//    }
+   public boolean isPicEnable() {
+       return isPicEnable;
+   }
+
+    public boolean setPicEnable(boolean isPicEnable) {
+        this.isPicEnable = isPicEnable;
+        boolean updated = false;
+        Connection con = null;
+        PreparedStatement pst = null;
+        try {
+            con = DatabaseConnection.getConnection();
+            pst = con.prepareStatement("UPDATE accounts set PicEnabled=? WHERE id=?");
+            pst.setBoolean(1, isPicEnable);
+            pst.setInt(2, getAccID());
+            updated = pst.executeUpdate() > 0;
+            pst.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            updated = false;
+        } finally {
+            try {
+                if (pst != null && !pst.isClosed()) {
+                    pst.close();
+                }
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+        return updated;
+    }
 
     public void setGMLevel(int level) {
         gm = level > 4 ? true : false;

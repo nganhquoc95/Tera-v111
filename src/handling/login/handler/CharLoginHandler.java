@@ -165,7 +165,7 @@ public class CharLoginHandler {
             c.setChannel(channel);
             c.getSession().write(LoginPacket.getSecondAuthSuccess(c));
 
-            c.getSession().write(LoginPacket.getCharList(c.getSecondPassword(), chars, c.getCharacterSlots()));
+            c.getSession().write(LoginPacket.getCharList(c, chars, c.getCharacterSlots()));
         } else {
             c.getSession().close();
         }
@@ -555,7 +555,7 @@ public class CharLoginHandler {
             }
         }
         for (Entry<Byte, ArrayList<MapleCharacter>> w : worlds.entrySet()) {
-            c.getSession().write(LoginPacket.showAllCharacterInfo(w.getKey(), w.getValue(), c.getSecondPassword()));
+            c.getSession().write(LoginPacket.showAllCharacterInfo(w.getKey(), w.getValue(), c));
         }
     }
 }

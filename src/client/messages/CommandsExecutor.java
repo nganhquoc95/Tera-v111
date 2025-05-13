@@ -200,7 +200,7 @@ public class CommandsExecutor {
         addCommand("int", 0, StatIntCommand.class);
         addCommand("luk", 0, StatLukCommand.class);
         addCommand("str", 0, StatStrCommand.class);
-        //addCommand("enablepic", 0, EnablePicCommand.class);
+        addCommand("enablepic", 0, EnablePicCommand.class);
         addCommand("mob", 0, MobCommand.class);
         addCommand("clearslot", 0, ClearSlotCommand.class);
         addCommand("check", 0, CheckCommand.class);
@@ -210,6 +210,7 @@ public class CommandsExecutor {
         addCommand("uptime", 0, UpTimeCommand.class);
         addCommand("whodrops", 0, WhoDropsCommand.class);
         addCommand("joinevent", 0, JoinEventCommand.class);
+        addCommand("goto", 0, GoToCommand.class);
 
         //addCommand("", 0, Command.class);
         commandsNameDesc.add(levelCommandsCursor);
@@ -219,7 +220,6 @@ public class CommandsExecutor {
         levelCommandsCursor = new Pair<>((List<String>) new ArrayList<String>(), (List<String>) new ArrayList<String>());
         addCommand("job", 1, JobCommand.class);
         addCommand("warp", 1, WarpCommand.class);
-        addCommand("goto", 1, GoToCommand.class);
         addCommand("heal", 1, HealCommand.class);
         addCommand("hide", 1, HideCommand.class);
         addCommand("itemcheck", 1, ItemCheckCommand.class);
