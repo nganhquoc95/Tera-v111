@@ -211,6 +211,7 @@ public class CommandsExecutor {
         addCommand("whodrops", 0, WhoDropsCommand.class);
         addCommand("joinevent", 0, JoinEventCommand.class);
         addCommand("goto", 0, GoToCommand.class);
+        addCommand("search", 0, SearchCommand.class);
 
         //addCommand("", 0, Command.class);
         commandsNameDesc.add(levelCommandsCursor);
@@ -230,7 +231,6 @@ public class CommandsExecutor {
         addCommand("song", 1, SongCommand.class);
         addCommand("jail", 1, JailCommand.class);
         addCommand("say", 1, SayCommand.class);
-        addCommand("search", 1, SearchCommand.class);
         addCommand("tempban", 1, TempBanCommand.class);
         addCommand("warpto", 1, WarpToCommand.class);
         //addCommand("", 1, Command.class);

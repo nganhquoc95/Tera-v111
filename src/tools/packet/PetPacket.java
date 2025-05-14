@@ -181,4 +181,11 @@ public class PetPacket {
 
         return mplew.getPacket();
     }
+
+    // TODO: Handle save ignore item to DB
+    public static final byte[] updatePetIgnore(final MapleCharacter chr) {
+        final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
+        
+        return mplew.getPacket();
+    }
 }

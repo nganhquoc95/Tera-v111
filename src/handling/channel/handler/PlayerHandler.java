@@ -136,6 +136,12 @@ public class PlayerHandler {
                         chr.getQuestNAdd(MapleQuest.getInstance(GameConstants.MP_ITEM)).setCustomData(String.valueOf(data));
                     }
                     break;
+                case 3:
+                    if (data <= 0) {
+                        chr.getQuestRemove(MapleQuest.getInstance(GameConstants.CURE_ITEM));
+                    } else {
+                        chr.getQuestNAdd(MapleQuest.getInstance(GameConstants.CURE_ITEM)).setCustomData(String.valueOf(data));
+                    }
             }
         }
     }

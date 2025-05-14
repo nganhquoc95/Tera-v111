@@ -296,4 +296,17 @@ public class PetHandler {
             }
         }
     }
+
+    // TODO: Handle save ignore item to DB
+    public static final void PetIgnore(final LittleEndianAccessor slea, final MapleClient c) {
+        final MapleCharacter chr = c.getPlayer();
+        final int _skip1 = slea.readInt();
+        final byte _skip2 = slea.readByte();
+        final int _skip3 = slea.readInt();
+
+        while (slea.available() > 0) {
+            // Read ignore item
+            slea.readInt();
+        }
+    }
 }

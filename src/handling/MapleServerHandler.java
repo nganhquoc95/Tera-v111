@@ -1114,6 +1114,9 @@ public class MapleServerHandler extends ChannelInboundHandlerAdapter implements 
             case PET_AUTO_BUFF:
                 PetHandler.Pet_AutoBuff(slea, c, c.getPlayer());
                 break;
+            case PET_IGNORE:
+                PetHandler.PetIgnore(slea, c);
+                break;
             case MONSTER_CARNIVAL:
                 MonsterCarnivalHandler.MonsterCarnival(slea, c);
                 break;

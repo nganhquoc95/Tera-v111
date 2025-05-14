@@ -3318,6 +3318,7 @@ public class GameConstants {
     public static final int TELETIME = 999876;
     public static final int HP_ITEM = 122221;
     public static final int MP_ITEM = 122223;
+    public static final int CURE_ITEM = 122224;
     public static final int JAIL_TIME = 123455;
     public static final int JAIL_QUEST = 123456;
     public static final int REPORT_QUEST = 123457;

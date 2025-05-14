@@ -1,7 +1,7 @@
 /*
-	名字:	飛向天空2
-	地圖:	天空的渡口
-	描述:	240080000
+	Name: Fly to the Sky 2
+	Map: Sky Ferry
+	Description: 240080000
 */
 
 var status = -1;
