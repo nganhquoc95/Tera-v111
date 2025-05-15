@@ -115,7 +115,7 @@ public class SearchCommand extends Command {
                 for (ItemInformation itemPair : MapleItemInformationProvider.getInstance().getAllItems()) {
                     if (itemPair != null && itemPair.name != null
                             && itemPair.name.toLowerCase().contains(search.toLowerCase())) {
-                        retItems.add("#b" + itemPair.itemId + "#k - " + itemPair.name);
+                        retItems.add(itemPair.itemId + " - #b#z" + itemPair.itemId + "##k - [#r#o#" + itemPair.mob +"#k]");
                     }
                 }
                 if (retItems != null && retItems.size() > 0) {

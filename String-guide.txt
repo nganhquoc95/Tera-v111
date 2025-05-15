@@ -1,0 +1,11 @@
+// selStr += "#L" + i + "##i" + items[i] + ":# #b#z" + items[i] + "##k for " + coins[i] + " Monster Park Coins (Permanent)#l\r\n";
+
+// Monster object       #o[MOB_ID]#
+// NPC                  #p[NPC_ID]#
+// New Line             #L[INDEX]#Hello, #bWorld#k#l
+// Blue text            #bBlue#k
+// Red text             #rRed#k
+// ICON with info       #i[ITEM_ID]:#
+// ICON without info    #i[ITEM_ID]#
+// Text with info       #z[ITEM_ID]#
+// Text without info    #t[ITEM_ID]#

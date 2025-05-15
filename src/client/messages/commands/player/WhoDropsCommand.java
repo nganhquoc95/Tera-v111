@@ -30,23 +30,28 @@ public class WhoDropsCommand extends Command {
         }
 
         String searchString = player.getLastCommandMessage();
-        String output = "Restults for " + searchString + "\r\n";
+        StringBuilder output = new StringBuilder();
+        output.append("Restults for " + searchString + "\r\n");
+
         Iterator<ItemInformation> listIterator = MapleItemInformationProvider.getInstance().getItemDataByName(searchString).iterator();
+
         if (listIterator.hasNext()) {
-           
             while (listIterator.hasNext() /*&& count <= 3*/) {
                 ItemInformation data = listIterator.next();
 
-                output += "#b" + data.name + "#k is dropped by:\r\n\r\n";
+                output.append("#b#z" + data.itemId + "##k is dropped by:");
+                output.append("\r\n\r\n");
                 try {
                     Connection con = DatabaseConnection.getConnection();
                     PreparedStatement ps = con.prepareStatement("SELECT dropperid FROM drop_data WHERE itemid = ?;");
                     ps.setInt(1, data.itemId);
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        String resultName = MapleMonsterInformationProvider.getInstance().getMobNameFromId(rs.getInt("dropperid")).trim();
-                        if (resultName != null || resultName != "" || resultName.length() != 0) {
-                            output += "-" + resultName + " (ID: " + rs.getInt("dropperid") + ")\r\n";
+                        int mobId = rs.getInt("dropperid");
+                        String resultName = MapleMonsterInformationProvider.getInstance().getMobNameFromId(mobId).trim();
+                        if (resultName != null && resultName != "" && resultName.length() != 0) {
+                            output.append("-(" + mobId + ") #r#o" + mobId + "##k");
+                            output.append("\r\n");
                         }
                     }
                     rs.close();
@@ -57,15 +62,14 @@ public class WhoDropsCommand extends Command {
                     e.printStackTrace();
                     return;
                 }
-                output += "\r\n\r\n";
-               
+                output.append("\r\n\r\n");
             }
         } else {
             player.dropMessage(5, "The item you searched for doesn't exist.");
             return;
         }
 
-        c.getAbstractPlayerInteraction().npcTalk(9010000, output);
+        c.getAbstractPlayerInteraction().npcTalk(9010000, output.toString());
 
     }
 

@@ -84,6 +84,7 @@ public class MapScriptMethods {
         explorationPoint,
         merTutorDrecotion10,
         evanleaveD,
+        TD_MC_title,
         NULL;
 
         private static onUserEnter fromString(String Str) {
@@ -302,6 +303,11 @@ public class MapScriptMethods {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                break;
+            }
+            case TD_MC_title: {
+                c.getSession().write(UIPacket.IntroLock(false));
+                c.getSession().write(CField.environmentChange("temaD/enter/mushCatle", 3));
                 break;
             }
             default: {
