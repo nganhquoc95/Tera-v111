@@ -134,7 +134,7 @@ public class ChannelServer {
 
             acceptor = new ServerConnection(port, 0, channel, false);
             acceptor.run();
-            System.out.println(" <" + channel + ">Loading Port: " + port + "Please wait..:debug"+GameConstants.build);
+            System.out.println(" <" + channel + ">Loading Port: " + port + " - Please wait..:debug"+GameConstants.build);
             eventSM.init();
 
         } catch (Exception e) {
