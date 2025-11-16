@@ -80,10 +80,20 @@ public class GoToCommand extends Command {
         gotomaps.put("future", 271000000);
     }
 
+    private String availableLocations() {
+        StringBuilder sb = new StringBuilder();
+        for (String s : gotomaps.keySet()) {
+            sb.append(s).append(", ");
+        }
+        return sb.substring(0, sb.length() - 2);
+    }
+
     @Override
     public void execute(MapleClient c, String[] splitted) {
         if (splitted.length < 1) {
             c.getPlayer().dropMessage(6, "Syntax: !goto <mapname>");
+            c.getPlayer().dropMessage(6, "Locations are as follows:");
+            c.getPlayer().dropMessage(6, availableLocations());
         } else {
             if (gotomaps.containsKey(splitted[0])) {
                 MapleMap target = c.getChannelServer().getMapFactory().getMap(gotomaps.get(splitted[0]));
@@ -96,11 +106,7 @@ public class GoToCommand extends Command {
             } else {
                 if (splitted[0].equals("locations")) {
                     c.getPlayer().dropMessage(6, "Use !goto <location>. Locations are as follows:");
-                    StringBuilder sb = new StringBuilder();
-                    for (String s : gotomaps.keySet()) {
-                        sb.append(s).append(", ");
-                    }
-                    c.getPlayer().dropMessage(6, sb.substring(0, sb.length() - 2));
+                    c.getPlayer().dropMessage(6, availableLocations());
 
                 } else {
                     c.getPlayer().dropMessage(6, "Invalid command syntax - Use !goto <location>. For a list of locations, use !goto locations.");
