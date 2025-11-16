@@ -2,9 +2,10 @@
 echo Building Lidium Server...
 if not exist build mkdir build
 if not exist dist mkdir dist
-if exist tmp/sources.txt del tmp/sources.txt
-for /r src %%f in (*.java) do echo %%f >> tmp/sources.txt
-javac -cp "lib\*" -d build @tmp/sources.txt
+if not exist tmp mkdir tmp
+if exist tmp\sources.txt del tmp\sources.txt
+for /r src %%f in (*.java) do echo %%f >> tmp\sources.txt
+javac -cp "lib\*;lib\graaljs\*" -d build @tmp\sources.txt
 if %errorlevel% neq 0 (
     echo Compilation failed.
     exit /b 1

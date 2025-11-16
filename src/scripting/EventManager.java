@@ -54,6 +54,7 @@ public class EventManager {
 
     private static int[] eventChannel = new int[2];
     private Invocable iv;
+    private ChannelServer cserv;
     private int channel;
     private Map<String, EventInstanceManager> instances = new WeakHashMap<>();
     private Properties props = new Properties();
@@ -61,6 +62,7 @@ public class EventManager {
 
     public EventManager(ChannelServer cserv, Invocable iv, String name) {
         this.iv = iv;
+        this.cserv = cserv;
         this.channel = cserv.getChannel();
         this.name = name;
     }
@@ -75,6 +77,9 @@ public class EventManager {
     }
 
     public ScheduledFuture<?> schedule(final String methodName, long delay) {
+        if (Timer.EventTimer.getInstance().getSES() == null || Timer.EventTimer.getInstance().getSES().isShutdown()) {
+            return null;
+        }
         return Timer.EventTimer.getInstance().schedule(() -> {
             try {
                 iv.invokeFunction(methodName, (Object) null);
@@ -86,6 +91,9 @@ public class EventManager {
     }
 
     public ScheduledFuture<?> schedule(final String methodName, long delay, final EventInstanceManager eim) {
+        if (Timer.EventTimer.getInstance().getSES() == null || Timer.EventTimer.getInstance().getSES().isShutdown()) {
+            return null;
+        }
         return Timer.EventTimer.getInstance().schedule(() -> {
             try {
                 iv.invokeFunction(methodName, eim);
@@ -97,6 +105,9 @@ public class EventManager {
     }
 
     public ScheduledFuture<?> scheduleAtTimestamp(final String methodName, long timestamp) {
+        if (Timer.EventTimer.getInstance().getSES() == null || Timer.EventTimer.getInstance().getSES().isShutdown()) {
+            return null;
+        }
         return Timer.EventTimer.getInstance().scheduleAtTimestamp(() -> {
             try {
                 iv.invokeFunction(methodName, (Object) null);
@@ -111,7 +122,7 @@ public class EventManager {
     }
 
     public ChannelServer getChannelServer() {
-        return ChannelServer.getInstance(channel);
+        return cserv;
     }
 
     public EventInstanceManager getInstance(String name) {
