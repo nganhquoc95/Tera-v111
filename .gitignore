@@ -7,6 +7,9 @@ nbproject/*
 META-INF/*
 scripts/.vscode/*
 dist/*
+tmp/*
+!tmp/.gitkeep
+*.log
 build.xml
 manifest.mf
 Log_Script_Except.rtf
