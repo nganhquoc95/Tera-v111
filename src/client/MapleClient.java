@@ -441,8 +441,42 @@ public class MapleClient implements Serializable {
         try {
             final byte state = getLoginState();
             if (state > MapleClient.LOGIN_NOTLOGGEDIN) { // already loggedin
-                loggedIn = false;
-                return 7;
+                // Check if login is from the same IP address as the previous session
+                Connection con = DatabaseConnection.getConnection();
+                try {
+                    try (PreparedStatement ps = con.prepareStatement("SELECT SessionIP FROM accounts WHERE id = ?")) {
+                        ps.setInt(1, accId);
+                        try (ResultSet rs = ps.executeQuery()) {
+                            if (rs.next()) {
+                                final String sessionIP = rs.getString("SessionIP");
+                                // If same IP, allow force login by resetting previous session
+                                if (sessionIP != null && !sessionIP.isEmpty() && getSessionIPAddress().equals(sessionIP.split(":")[0])) {
+                                    loggedIn = false;
+                                    try {
+                                        updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN, getSessionIPAddress());
+                                    } catch (Exception e) {
+                                        System.err.println("Error forcing logout on previous session: " + e);
+                                    }
+                                    // Continue with the current login attempt
+                                } else {
+                                    // Different IP, reject login
+                                    return 7;
+                                }
+                            }
+                        }
+                        ps.close();
+                    }
+                } catch (SQLException e) {
+                    System.err.println("Error checking session IP: " + e);
+                } finally {
+                    try {
+                        if (con != null && !con.isClosed()) {
+                            con.close();
+                        }
+                    } catch (SQLException e) {
+                        System.err.println(e);
+                    }
+                }
             }
             updateLoginState(MapleClient.LOGIN_LOGGEDIN, getSessionIPAddress());
         } finally {
@@ -501,15 +535,24 @@ public class MapleClient implements Serializable {
                             }
                             byte loginstate = getLoginState();
                             if (loginstate > MapleClient.LOGIN_NOTLOGGEDIN) { // already loggedin
-                                loggedIn = false;
-                                loginok = 7;
-                            } else {
+                                // Check if login is from the same IP address as the previous session
+                                if (oldSession != null && !oldSession.isEmpty() && getSessionIPAddress().equals(oldSession.split(":")[0])) {
+                                    // Same IP, allow login by continuing with password check
+                                    loggedIn = false;
+                                } else {
+                                    // Different IP or no previous session, reject login
+                                    loggedIn = false;
+                                    loginok = 7;
+                                }
+                            }
+                            // Only process password if login is allowed
+                            if (loginok != 7) {
                                 boolean updatePasswordHash = false;
                                 // Check if the passwords are correct here. :B
                                 if (passhash == null || passhash.isEmpty()) {
                                     //match by sessionIP
                                     if (oldSession != null && !oldSession.isEmpty()) {
-                                        loggedIn = getSessionIPAddress().equals(oldSession);
+                                        loggedIn = getSessionIPAddress().equals(oldSession.split(":")[0]);
                                         loginok = loggedIn ? 0 : 4;
                                         updatePasswordHash = loggedIn;
                                     } else {
@@ -1019,8 +1062,16 @@ public class MapleClient implements Serializable {
                 }
             }
         }
-        if (!serverTransition && isLoggedIn()) {
-            updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN, getSessionIPAddress());
+        if (!serverTransition) {
+            // Force reset login state to prevent stuck logged in accounts
+            // This handles cases where user closed client at login server
+            if (accId > 0) {
+                try {
+                    updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN, getSessionIPAddress());
+                } catch (Exception e) {
+                    // Ignore errors
+                }
+            }
         }
         engines.clear();
     }
