@@ -15,13 +15,21 @@ public class GiveSkillCommand extends Command {
 
         MapleCharacter victim = c.getChannelServer().getPlayerStorage().getCharacterByName(splitted[0]);
         if (victim == null) {
-            c.getPlayer().dropMessage(5, "Player not found.");
+            c.getPlayer().dropMessage(5, "Player '" + splitted[0] + "' not found.");
             return;
         }
 
-        Skill skill = SkillFactory.getSkill(Integer.parseInt(splitted[1]));
+        int skillId = 0;
+        try {
+            skillId = Integer.parseInt(splitted[1]);
+        } catch (NumberFormatException e) {
+            c.getPlayer().dropMessage(5, "Invalid skill ID: " + splitted[1]);
+            return;
+        }
+
+        Skill skill = SkillFactory.getSkill(skillId);
         if (skill == null) {
-            c.getPlayer().dropMessage(5, "Skill not found.");
+            c.getPlayer().dropMessage(5, "Skill ID " + skillId + " not found.");
             return;
         }
 
@@ -37,6 +45,7 @@ public class GiveSkillCommand extends Command {
         }
 
         victim.changeSingleSkillLevel(skill, level, masterlevel);
+        victim.dropMessage(5, "You have been granted skill " + skill.getId() + " at level " + level + ".");
         c.getPlayer().dropMessage(5, "Skill " + skill.getId() + " given to " + victim.getName() + " at level " + level + ".");
     }
 

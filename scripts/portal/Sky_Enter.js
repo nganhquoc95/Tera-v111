@@ -1,44 +1,109 @@
 function enter(pi) {
 	var eim = pi.getDisconnected("Dragonica");
-	if (eim != null && pi.getPlayer().getParty() != null) { //only skip if not null
+	if (eim != null) { //only skip if not null
 		eim.registerPlayer(pi.getPlayer());
 		return true;
 	}
-    if (pi.getPlayer().getParty() == null || !pi.isLeader()) {
-	pi.playerMessage(5, "The leader of the party must be here.");
-	return false;
-    }
-	var party = pi.getPlayer().getParty().getMembers();
+	
+	var player = pi.getPlayer();
 	var next = true;
 	var size = 0;
-	var it = party.iterator();
-	while (it.hasNext()) {
-		var cPlayer = it.next();
-		var ccPlayer = pi.getPlayer().getMap().getCharacterById(cPlayer.getId());
-		if (ccPlayer == null || ccPlayer.getLevel() < 120 || (ccPlayer.getSkillLevel(ccPlayer.getStat().getSkillByJob(1026, ccPlayer.getJob())) <= 0)) {
+	
+	if (player.getParty() != null) {
+		// Party mode - check all members
+		if (!pi.isLeader()) {
+			pi.playerMessage(5, "The leader of the party must be here.");
+			return false;
+		}
+		var party = player.getParty().getMembers();
+		var it = party.iterator();
+		while (it.hasNext()) {
+			var cPlayer = it.next();
+			var ccPlayer = player.getMap().getCharacterById(cPlayer.getId());
+			
+			// Check level
+			if (ccPlayer == null || ccPlayer.getLevel() < 120) {
+				next = false;
+				break;
+			}
+			
+			// Check for Soaring skill
+			var hasSkill = false;
+			var skillId = 0;
+			var jobId = ccPlayer.getJob();
+			
+			// Determine skill ID based on job
+			if (jobId >= 2200 && jobId <= 2209) { // Evan
+				skillId = 20001026;
+			} else if (jobId >= 2210 && jobId <= 2212) { // Mercedis
+				skillId = 20021026;
+			} else if (jobId >= 3200 && jobId <= 3212) { // Other advanced classes
+				skillId = (Math.floor(jobId / 100) * 10000) + 1026;
+			} else {
+				skillId = 1026; // Default
+			}
+			
+			if (ccPlayer.getSkillLevel(skillId) > 0) {
+				hasSkill = true;
+			}
+			
+			if (!hasSkill) {
+				next = false;
+				break;
+			} else if (ccPlayer.isGM()) {
+				size += 4;
+			} else {
+				size++;
+			}
+		}
+	} else {
+		// Solo mode - check only the player
+		if (player.getLevel() < 120) {
 			next = false;
-			break;
-		} else if (ccPlayer.isGM()) {
-			size += 4;
 		} else {
-			size++;
+			// Check for Soaring skill
+			var skillId = 0;
+			var jobId = player.getJob();
+			
+			// Determine skill ID based on job
+			if (jobId >= 2200 && jobId <= 2209) { // Evan
+				skillId = 20001026;
+			} else if (jobId >= 2210 && jobId <= 2212) { // Mercedis
+				skillId = 20021026;
+			} else if (jobId >= 3200 && jobId <= 3212) { // Other advanced classes
+				skillId = (Math.floor(jobId / 100) * 10000) + 1026;
+			} else {
+				skillId = 1026; // Default
+			}
+			
+			if (player.getSkillLevel(skillId) <= 0) {
+				next = false;
+			} else {
+				size = 1;
+			}
 		}
 	}
-	if (next && size >= 2) {
+	
+	if (next && size >= 1) {
 		var em = pi.getEventManager("Dragonica");
 		if (em == null) {
 			pi.playerMessage(5, "This event is currently not available.");
 		} else {
 			var prop = em.getProperty("state");
 			if (prop == null || prop.equals("0")) {
-				em.startInstance(pi.getParty(), pi.getMap(), 200);
+				if (player.getParty() != null) {
+					em.startInstance(pi.getParty(), pi.getMap(), 200);
+				} else {
+					// Solo instance - pass null for party
+					em.startInstance(null, pi.getMap(), 200);
+				}
 			} else {
 				pi.playerMessage(5, "Someone is already attempting this boss.");
 			}
 		}
 	} else {
-		pi.playerMessage(5, "Make sure all 2+ party members are in this map and level 120+ and have Soaring skill.");
+		pi.playerMessage(5, "You must be level 120+ and have Soaring skill.");
 		return false;
 	}
-        return true;
+	return true;
 }
