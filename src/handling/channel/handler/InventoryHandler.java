@@ -481,7 +481,7 @@ public class InventoryHandler {
         final int alienSocketId = slea.readInt();
         final Item toMount = c.getPlayer().getInventory(MapleInventoryType.EQUIP).getItem((byte) slea.readShort());
         if (alienSocket == null || alienSocketId != alienSocket.getItemId() || toMount == null
-                || c.getPlayer().hasBlockedInventory()) {
+                || c.getPlayer().hasBlockedInventory() || !(toMount instanceof Equip)) {
             c.getSession().write(InventoryPacket.getInventoryFull());
             return;
         }
@@ -505,7 +505,7 @@ public class InventoryHandler {
         final int nebuliteId = slea.readInt();
         final Item toMount = c.getPlayer().getInventory(MapleInventoryType.EQUIP).getItem((byte) slea.readShort());
         if (nebulite == null || nebuliteId != nebulite.getItemId() || toMount == null
-                || c.getPlayer().hasBlockedInventory()) {
+                || c.getPlayer().hasBlockedInventory() || !(toMount instanceof Equip)) {
             c.getSession().write(InventoryPacket.getInventoryFull());
             return;
         }
