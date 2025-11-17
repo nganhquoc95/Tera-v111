@@ -9,6 +9,18 @@ function enter(pi) {
 	var next = true;
 	var size = 0;
 	
+	// All possible Soaring skill IDs for different job classes
+	var soaringSkills = [1026, 10001026, 20001026, 20011026, 20021026, 30001026, 30011026, 50001026];
+	
+	function hasSoaringSkill(character) {
+		for (var i = 0; i < soaringSkills.length; i++) {
+			if (character.getSkillLevel(soaringSkills[i]) > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	if (player.getParty() != null) {
 		// Party mode - check all members
 		if (!pi.isLeader()) {
@@ -28,26 +40,7 @@ function enter(pi) {
 			}
 			
 			// Check for Soaring skill
-			var hasSkill = false;
-			var skillId = 0;
-			var jobId = ccPlayer.getJob();
-			
-			// Determine skill ID based on job
-			if (jobId >= 2200 && jobId <= 2209) { // Evan
-				skillId = 20001026;
-			} else if (jobId >= 2210 && jobId <= 2212) { // Mercedis
-				skillId = 20021026;
-			} else if (jobId >= 3200 && jobId <= 3212) { // Other advanced classes
-				skillId = (Math.floor(jobId / 100) * 10000) + 1026;
-			} else {
-				skillId = 1026; // Default
-			}
-			
-			if (ccPlayer.getSkillLevel(skillId) > 0) {
-				hasSkill = true;
-			}
-			
-			if (!hasSkill) {
+			if (!hasSoaringSkill(ccPlayer)) {
 				next = false;
 				break;
 			} else if (ccPlayer.isGM()) {
@@ -62,21 +55,7 @@ function enter(pi) {
 			next = false;
 		} else {
 			// Check for Soaring skill
-			var skillId = 0;
-			var jobId = player.getJob();
-			
-			// Determine skill ID based on job
-			if (jobId >= 2200 && jobId <= 2209) { // Evan
-				skillId = 20001026;
-			} else if (jobId >= 2210 && jobId <= 2212) { // Mercedis
-				skillId = 20021026;
-			} else if (jobId >= 3200 && jobId <= 3212) { // Other advanced classes
-				skillId = (Math.floor(jobId / 100) * 10000) + 1026;
-			} else {
-				skillId = 1026; // Default
-			}
-			
-			if (player.getSkillLevel(skillId) <= 0) {
+			if (!hasSoaringSkill(player)) {
 				next = false;
 			} else {
 				size = 1;

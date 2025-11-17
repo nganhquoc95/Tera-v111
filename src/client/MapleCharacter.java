@@ -3140,7 +3140,7 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
             }
         }
         if (GameConstants.isMercedes(job)) {
-            final int[] ss = {20021000, 20021001, 20020002, 20020022, 20020109, 20021110, 20020111, 20020112};
+            final int[] ss = {20021000, 20021001, 20020002, 20020022, 20020109, 20021110, 20020111, 20020112, 20021026 };
             for (int i : ss) {
                 skil = SkillFactory.getSkill(i);
                 if (skil != null) {
