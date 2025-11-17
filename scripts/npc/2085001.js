@@ -3,15 +3,52 @@
 */
 
 function start() {
+    var player = cm.getPlayer();
+    
+    // Check if player is already in the PQ
+    if (player.getEventInstance() != null) {
+        cm.sendYesNo("You are already in the Dragon's Nest PQ. Would you like to quit?");
+        return;
+    }
+    
+    var partyInfo = "";
+    if (player.getParty() != null) {
+        if (cm.isLeader()) {
+            partyInfo = "#b(You are the party leader)#n";
+        } else {
+            partyInfo = "#b(You are a party member - only the leader can start)#n";
+        }
+    } else {
+        partyInfo = "#b(You are not in a party)#n";
+    }
+    
     cm.sendSimple("#e<Party Quest: Dragon's Nest>#n\r\n\r\n\
         Welcome to the entrance to Crimson Sky. What would you like to do?\r\n\r\n\
+        " + partyInfo + "\r\n\r\n\
         #L0##bEnter Crimson Sky.(Lv 120 or above)#l");
 }
 
 function action(mode, type, selection) {
+    var player = cm.getPlayer();
+    
+    // Check if player is in the PQ and answering the quit question
+    if (player.getEventInstance() != null) {
+        if (mode > 0) {
+            // User selected Yes to quit
+            var eim = player.getEventInstance();
+            eim.unregisterPlayer(player);
+            var map = cm.getChannelServer().getMapFactory().getMap(240080050);
+            player.changeMap(map, map.getPortal(0));
+            cm.dispose();
+        } else {
+            // User selected No, close the NPC
+            cm.dispose();
+        }
+        return;
+    }
+    
     if (mode > 0) {
         // Allow solo or party entry
-        var player = cm.getPlayer();
         var next = true;
         var size = 0;
         
@@ -30,9 +67,11 @@ function action(mode, type, selection) {
         if (player.getParty() != null) {
             // Party mode - check all members
             if (!cm.isLeader()) {
-                cm.sendOk("Only the party leader can start the PQ.");
+                cm.sendOk("#rOnly the party leader can start this Party Quest.#n\n\nPlease ask your party leader to talk to this NPC.");
                 cm.dispose();
                 return;
+            } else {
+                cm.sendOk("You are the party leader. Checking party requirements...");
             }
             var party = player.getParty().getMembers();
             var it = party.iterator();
@@ -56,6 +95,7 @@ function action(mode, type, selection) {
             }
         } else {
             // Solo mode - check only the player
+            cm.sendOk("You are entering solo. Checking your requirements...");
             if (player.getLevel() < 120) {
                 next = false;
             } else {
@@ -76,9 +116,11 @@ function action(mode, type, selection) {
                 var prop = em.getProperty("state");
                 if (prop == null || prop.equals("0")) {
                     if (player.getParty() != null) {
+                        cm.sendOk("Starting Party Quest for " + size + " party members...");
                         em.startInstance(player.getParty(), player.getMap(), 200);
                     } else {
                         // Create a solo instance - pass null for party parameter
+                        cm.sendOk("Starting solo Party Quest...");
                         em.startInstance(null, player.getMap(), 200);
                     }
                 } else {
@@ -86,7 +128,11 @@ function action(mode, type, selection) {
                 }
             }
         } else {
-            cm.sendOk("You must be level 120+ and have Soaring skill.");
+            if (player.getParty() != null) {
+                cm.sendOk("#rParty Requirements Not Met#n\n\nAll party members must be:\n- Level 120 or above\n- Have Soaring skill");
+            } else {
+                cm.sendOk("#rRequirements Not Met#n\n\nYou must be:\n- Level 120 or above\n- Have Soaring skill");
+            }
         }
     }
     cm.dispose();

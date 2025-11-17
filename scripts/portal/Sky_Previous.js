@@ -3,8 +3,12 @@ function enter(pi) {
 		var currentMapId = pi.getPlayer().getMapId();
 		var previousMapId = currentMapId - 100;
 		
-		// Only allow going back if not already in the first map (240080600)
-		if (previousMapId >= 240080600) {
+		// If on the first map (240080400), allow exit to PQ exit map (240080050)
+		if (currentMapId == 240080400) {
+			pi.warpParty(240080050);
+			pi.playPortalSE();
+		} else if (previousMapId >= 240080400) {
+			// Otherwise, go back to previous stage
 			pi.warpParty(previousMapId);
 			pi.playPortalSE();
 		} else {

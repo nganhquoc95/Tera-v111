@@ -10,7 +10,7 @@ em.setProperty("state", "1");
 	em.setProperty("leader", "true");
     var eim = em.newInstance("Dragonica" + leaderid);
 
-        eim.setInstanceMap(240080600).resetPQ(level);
+	eim.setInstanceMap(240080600).resetPQ(level);
 	eim.setInstanceMap(240080700);
 	var map3 = eim.setInstanceMap(240080800);
 	map3.resetPQ(level);
@@ -29,7 +29,7 @@ function playerEntry(eim, player) {
 }
 
 function playerRevive(eim, player) {
-    var map = eim.getMapInstance(eim.getMapInstance(0).getAllMonstersThreadsafe().size() == 0 ? 2 : 0);
+    var map = eim.getMapInstance(eim.getMapInstance(0).getAllMonstersThreadsafe().size() == 0 ? 4 : 0);
     player.addHP(50);
     player.changeMap(map, map.getPortal(0));
     return true;
@@ -53,7 +53,7 @@ function changedMap(eim, player, mapid) {
 }
 
 function playerDisconnected(eim, player) {
-    return 0;
+    return 0; // Return map index 0 (first map 240080400) to rejoin party members
 }
 
 function monsterValue(eim, mobId) {
@@ -80,8 +80,8 @@ function clearPQ(eim) {
 }
 
 function allMonstersDead(eim) {
-	if (eim.getMapInstance(2).getAllMonstersThreadsafe().size() == 0) {
-		eim.getMapInstance(2).spawnNpc(2085003, new java.awt.Point(700, -10));
+	if (eim.getMapInstance(4).getAllMonstersThreadsafe().size() == 0) {
+		eim.getMapInstance(4).spawnNpc(2085003, new java.awt.Point(700, -10));
 		eim.broadcastPlayerMsg(6, "Dragonica has been beaten! Have the leader go in the Portal to finish!");
 	}
 }
