@@ -37,10 +37,10 @@ function action(mode, type, selection) {
         // End the instance and warp out
         var eim = cm.getPlayer().getEventInstance();
         if (eim != null) {
-            eim.disposeIfPlayerBelow(100, 240080050);
+            eim.disposeIfPlayerBelow(100, 240080000);
         }
         
-        cm.warpParty(240080050);
+        cm.warpParty(240080000);
     }
     cm.dispose();
 }

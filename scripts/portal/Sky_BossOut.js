@@ -16,7 +16,7 @@ function enter(pi) {
 		pi.addTrait("charisma", 10);
 		pi.gainExp_PQ(200, 1.5);
 		pi.givePartyNX(1500);
-		pi.warpParty(240080050);
+		pi.warpParty(240080000);
 		pi.playPortalSE();
 	} else {
 		pi.playerMessage(5,"This portal is not available.");

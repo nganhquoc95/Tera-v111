@@ -37,7 +37,7 @@ function action(mode, type, selection) {
             // User selected Yes to quit
             var eim = player.getEventInstance();
             eim.unregisterPlayer(player);
-            var map = cm.getChannelServer().getMapFactory().getMap(240080050);
+            var map = cm.getChannelServer().getMapFactory().getMap(240080000);
             player.changeMap(map, map.getPortal(0));
             cm.dispose();
         } else {
@@ -70,8 +70,6 @@ function action(mode, type, selection) {
                 cm.sendOk("#rOnly the party leader can start this Party Quest.#n\n\nPlease ask your party leader to talk to this NPC.");
                 cm.dispose();
                 return;
-            } else {
-                cm.sendOk("You are the party leader. Checking party requirements...");
             }
             var party = player.getParty().getMembers();
             var it = party.iterator();
@@ -95,7 +93,6 @@ function action(mode, type, selection) {
             }
         } else {
             // Solo mode - check only the player
-            cm.sendOk("You are entering solo. Checking your requirements...");
             if (player.getLevel() < 120) {
                 next = false;
             } else {
@@ -116,12 +113,12 @@ function action(mode, type, selection) {
                 var prop = em.getProperty("state");
                 if (prop == null || prop.equals("0")) {
                     if (player.getParty() != null) {
-                        cm.sendOk("Starting Party Quest for " + size + " party members...");
+                        // var pqMap = cm.getChannelServer().getMapFactory().getMap(240080100);
+                        // em.startInstance(player.getParty(), pqMap, 200);
                         em.startInstance(player.getParty(), player.getMap(), 200);
                     } else {
                         // Create a solo instance - pass null for party parameter
-                        cm.sendOk("Starting solo Party Quest...");
-                        em.startInstance(null, player.getMap(), 200);
+                        cm.sendOk("You must be in a party to start this event.");
                     }
                 } else {
                     cm.sendOk("Someone is already attempting this boss.");
