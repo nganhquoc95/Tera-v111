@@ -528,7 +528,10 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
             ret.quests.put(queststatus_from.getQuest(), queststatus_from);
         }
         ct.Skills.entrySet().forEach(qs -> {
-            ret.skills.put(SkillFactory.getSkill(qs.getKey()), qs.getValue());
+            final Skill skil = SkillFactory.getSkill(qs.getKey());
+            if (skil != null) {
+                ret.skills.put(skil, qs.getValue());
+            }
         });
         ct.traits.entrySet().forEach(t -> {
             ret.traits.get(t.getKey()).setExp(t.getValue());

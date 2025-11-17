@@ -112,7 +112,7 @@ public class PlayerHandler {
                 if (type == 1 && action >= 1000) { //0 = normal key, 1 = skill, 2 = item
                     final Skill skil = SkillFactory.getSkill(action);
                     if (skil != null) { //not sure about aran tutorial skills..lol
-                        if ((!skil.isFourthJob() && !skil.isBeginnerSkill() && skil.isInvisible() && chr.getSkillLevel(skil) <= 0) || GameConstants.isLinkedAranSkill(action) || action % 10000 < 1000 || action >= 91000000) { //cannot put on a key
+                        if ((!skil.isFourthJob() && !skil.isBeginnerSkill() && skil.isInvisible() && chr.getSkillLevel(skil) <= 0) || GameConstants.isLinkedAranSkill(action) || action >= 91000000) { //cannot put on a key
                             continue;
                         }
                     }
