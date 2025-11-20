@@ -6,6 +6,7 @@ import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import { edit as editPassword } from '@/routes/user-password';
 import { edit as editSecurity } from '@/routes/security';
+import { edit as editGameSession } from '@/routes/game-session';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
@@ -24,6 +25,11 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Security',
         href: editSecurity(),
+        icon: null,
+    },
+    {
+        title: 'Game Session',
+        href: editGameSession(),
         icon: null,
     },
     {

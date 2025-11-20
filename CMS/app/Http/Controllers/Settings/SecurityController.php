@@ -12,9 +12,10 @@ class SecurityController extends Controller
 {
     public function edit()
     {
+        $user = Auth::user();
         return Inertia::render('settings/security', [
-            'picEnabled' => Auth::user()->PicEnabled ?? false,
-            'has2ndPassword' => !empty(Auth::user()->{'2ndpassword'}),
+            'picEnabled' => $user->PicEnabled ?? false,
+            'has2ndPassword' => !empty($user->{'2ndpassword'}),
         ]);
     }
 
