@@ -1087,14 +1087,18 @@ public class MapleClient implements Serializable {
         Connection con = DatabaseConnection.getConnection();
         try {
             boolean canlogin;
-            try (PreparedStatement ps = con.prepareStatement("SELECT SessionIP, banned FROM accounts WHERE id = ?")) {
+            try (PreparedStatement ps = con.prepareStatement("SELECT SessionIP, banned, loggedin FROM accounts WHERE id = ?")) {
                 ps.setInt(1, this.accId);
                 try (ResultSet rs = ps.executeQuery()) {
                     canlogin = false;
                     if (rs.next()) {
                         final String sessionIP = rs.getString("SessionIP");
+                        final int loggedInState = rs.getInt("loggedin");
 
-                        if (sessionIP != null) { // Probably a login proced skipper?
+                        // Check if account has been force logged out from CMS
+                        if (loggedInState == 0) {
+                            canlogin = false; // Force disconnect
+                        } else if (sessionIP != null) { // Probably a login proced skipper?
                             canlogin = getSessionIPAddress().equals(sessionIP.split(":")[0]);
                         }
                         if (rs.getInt("banned") > 0) {
