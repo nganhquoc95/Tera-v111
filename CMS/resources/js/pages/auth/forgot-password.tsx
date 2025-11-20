@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 import { Link } from '@inertiajs/react';
 import { email } from '@/routes/password';
-import { show as loginShow } from '@/routes/login';
+import { authenticate as login } from '@/routes/login';
 
 export default function ForgotPassword({
     status,
@@ -73,30 +73,11 @@ export default function ForgotPassword({
                         Remember your password?{' '}
                     </span>
                     <Link
-                        href={loginShow().url}
+                        href={login().url}
                         className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                     >
                         Sign in
                     </Link>
-                </div>
-            </div>
-        </AuthLayout>
-    );
-}
-                                >
-                                    {processing && (
-                                        <LoaderCircle className="h-4 w-4 animate-spin" />
-                                    )}
-                                    Email password reset link
-                                </Button>
-                            </div>
-                        </>
-                    )}
-                </Form>
-
-                <div className="space-x-1 text-center text-sm text-muted-foreground">
-                    <span>Or, return to</span>
-                    <TextLink href={login()}>log in</TextLink>
                 </div>
             </div>
         </AuthLayout>

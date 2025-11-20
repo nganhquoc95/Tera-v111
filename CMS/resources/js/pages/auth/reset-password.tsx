@@ -5,16 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
-import { update as resetPassword } from '@/routes/password/reset';
+import { form as resetPassword } from '@/routes/password/reset';
 
 interface ResetPasswordProps {
-    key: string;
+    token: string;
     email: string;
+    message?: string;
 }
 
-export default function ResetPassword({ key, email }: ResetPasswordProps) {
+export default function ResetPassword({ token, email, message }: ResetPasswordProps) {
     const { data, setData, post, processing, errors } = useForm({
-        key: key,
+        token: token,
         password: '',
         password_confirmation: '',
     });
@@ -29,7 +30,14 @@ export default function ResetPassword({ key, email }: ResetPasswordProps) {
             title="Reset Password"
             description="Please enter your new password below"
         >
-            <form onSubmit={submit} className="space-y-6">
+            <div className="space-y-6">
+                {message && (
+                    <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-300">
+                        {message}
+                    </div>
+                )}
+
+                <form onSubmit={submit} className="space-y-6">
                 <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -40,6 +48,8 @@ export default function ResetPassword({ key, email }: ResetPasswordProps) {
                         readOnly
                     />
                 </div>
+
+                <input type="hidden" name="token" value={token} />
 
                 <div className="space-y-2">
                     <Label htmlFor="password">New Password</Label>
@@ -74,7 +84,8 @@ export default function ResetPassword({ key, email }: ResetPasswordProps) {
                 <Button type="submit" className="w-full" disabled={processing}>
                     {processing ? 'Resetting...' : 'Reset Password'}
                 </Button>
-            </form>
+                </form>
+            </div>
         </AuthLayout>
     );
 }

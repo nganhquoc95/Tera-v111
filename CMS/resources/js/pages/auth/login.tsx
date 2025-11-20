@@ -8,12 +8,11 @@ import { useForm, Head, Link } from '@inertiajs/react';
 import { authenticate } from '@/routes/login';
 import { request as passwordRequest } from '@/routes/password';
 
-interface LoginErrors {
-    name?: string;
-    password?: string;
+interface LoginProps {
+    message?: string;
 }
 
-export default function Login() {
+export default function Login({ message }: LoginProps) {
     const { data, setData, post, errors, processing } = useForm({
         name: '',
         password: '',
@@ -31,7 +30,14 @@ export default function Login() {
         >
             <Head title="Log in" />
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="space-y-6">
+                {message && (
+                    <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-300">
+                        {message}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="grid gap-6">
                     <div className="grid gap-2">
                         <Label htmlFor="name">User name</Label>
@@ -94,6 +100,7 @@ export default function Login() {
                 >
                     Create one
                 </Link>
+            </div>
             </div>
         </AuthLayout>
     );

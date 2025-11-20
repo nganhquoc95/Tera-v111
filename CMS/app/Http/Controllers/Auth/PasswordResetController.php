@@ -10,6 +10,7 @@ use App\Services\EmailPreviewService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
 class PasswordResetController extends Controller
@@ -87,7 +88,7 @@ class PasswordResetController extends Controller
         }
 
         return Inertia::render('auth/reset-password', [
-            'key' => $key,
+            'token' => $key,
             'email' => $reset->email,
         ]);
     }
@@ -95,20 +96,20 @@ class PasswordResetController extends Controller
     public function resetPassword(Request $request)
     {
         $request->validate([
-            'key' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
+            'token' => 'required|string',
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
-
-        $reset = PasswordReset::where('confirmkey', $request->key)->first();
+        
+        $reset = PasswordReset::where('confirmkey', $request->token)->first();
 
         if (!$reset) {
-            return back()->withErrors(['key' => 'Invalid or expired reset key.']);
+            return back()->withErrors(['token' => 'Invalid or expired reset token.']);
         }
 
         $account = Account::find($reset->id);
 
         if (!$account) {
-            return back()->withErrors(['key' => 'Account not found.']);
+            return back()->withErrors(['token' => 'Account not found.']);
         }
 
         // Update password using bcrypt
