@@ -17,7 +17,10 @@ class PasswordResetController extends Controller
 {
     public function showRequestForm()
     {
-        return Inertia::render('auth/forgot-password');
+        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
+        return Inertia::render('auth/forgot-password', [
+            'errors' => $errors,
+        ]);
     }
 
     public function sendResetLink(Request $request)
@@ -85,6 +88,11 @@ class PasswordResetController extends Controller
         if (!$reset) {
             return redirect()->route('password.request')
                 ->withErrors(['key' => 'Invalid or expired reset key.']);
+        }
+
+        if ($reset->status == 1) {
+            return redirect()->route('password.request')
+                ->withErrors(['key' => 'This password reset link has already been used.']);
         }
 
         return Inertia::render('auth/reset-password', [

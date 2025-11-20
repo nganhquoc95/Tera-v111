@@ -11,10 +11,12 @@ import { authenticate as login } from '@/routes/login';
 
 export default function ForgotPassword({
     status,
+    errors,
 }: {
     status?: string;
+    errors?: Record<string, string[]>;
 }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing } = useForm({
         name: '',
         email: '',
     });
@@ -32,6 +34,13 @@ export default function ForgotPassword({
                         {status}
                     </div>
                 )}
+                {errors && (
+                    <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-300">
+                        {Object.values(errors).flat().map((error, index) => (
+                            <p key={index}>{error}</p>
+                        ))}
+                    </div>
+                )}
 
                 <form onSubmit={submit} className="space-y-4">
                     <div className="space-y-2">
@@ -45,7 +54,7 @@ export default function ForgotPassword({
                             disabled={processing}
                             required
                         />
-                        <InputError message={errors.name} />
+                        <InputError message={errors?.name?.[0]} />
                     </div>
 
                     <div className="space-y-2">
@@ -60,7 +69,7 @@ export default function ForgotPassword({
                             disabled={processing}
                             required
                         />
-                        <InputError message={errors.email} />
+                        <InputError message={errors?.email?.[0]} />
                     </div>
 
                     <Button type="submit" className="w-full" disabled={processing}>

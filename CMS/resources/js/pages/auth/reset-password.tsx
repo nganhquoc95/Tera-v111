@@ -11,9 +11,10 @@ interface ResetPasswordProps {
     token: string;
     email: string;
     message?: string;
+    error?: string;
 }
 
-export default function ResetPassword({ token, email, message }: ResetPasswordProps) {
+export default function ResetPassword({ token, email, message, error }: ResetPasswordProps) {
     const { data, setData, post, processing, errors } = useForm({
         token: token,
         password: '',
@@ -34,6 +35,11 @@ export default function ResetPassword({ token, email, message }: ResetPasswordPr
                 {message && (
                     <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-300">
                         {message}
+                    </div>
+                )}
+                {error && (
+                    <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-300">
+                        {error}
                     </div>
                 )}
 
