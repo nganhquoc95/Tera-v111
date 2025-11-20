@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +14,12 @@ Route::get('/', function () {
 Route::get('login', [LoginController::class, 'show'])->name('login');
 Route::post('login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 Route::post('logout', [LogoutController::class, 'store'])->name('logout');
+
+// Password Reset Routes
+Route::get('forgot-password', [PasswordResetController::class, 'showRequestForm'])->name('password.request');
+Route::post('forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('password.email');
+Route::get('reset-password', [PasswordResetController::class, 'showResetForm'])->name('password.reset.form');
+Route::post('reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {

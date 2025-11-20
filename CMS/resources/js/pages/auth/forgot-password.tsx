@@ -1,53 +1,88 @@
-// Components
-import { login } from '@/routes';
-import { email } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
-
+import { useForm } from '@inertiajs/react';
+import { FormEventHandler } from 'react';
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
+import { Link } from '@inertiajs/react';
+import { email } from '@/routes/password';
+import { show as loginShow } from '@/routes/login';
 
-export default function ForgotPassword({ status }: { status?: string }) {
+export default function ForgotPassword({
+    status,
+}: {
+    status?: string;
+}) {
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        email: '',
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(email().url);
+    };
+
     return (
-        <AuthLayout
-            title="Forgot password"
-            description="Enter your email to receive a password reset link"
-        >
-            <Head title="Forgot password" />
-
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
-
+        <AuthLayout title="Forgot Password?" description="Enter your account details to reset your password">
             <div className="space-y-6">
-                <Form {...email.form()}>
-                    {({ processing, errors }) => (
-                        <>
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    autoComplete="off"
-                                    autoFocus
-                                    placeholder="email@example.com"
-                                />
+                {status && (
+                    <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-300">
+                        {status}
+                    </div>
+                )}
 
-                                <InputError message={errors.email} />
-                            </div>
+                <form onSubmit={submit} className="space-y-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="name">Account Name</Label>
+                        <Input
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            placeholder="Enter your account name"
+                            disabled={processing}
+                            required
+                        />
+                        <InputError message={errors.name} />
+                    </div>
 
-                            <div className="my-6 flex items-center justify-start">
-                                <Button
-                                    className="w-full"
-                                    disabled={processing}
-                                    data-test="email-password-reset-link-button"
+                    <div className="space-y-2">
+                        <Label htmlFor="email">Email Address</Label>
+                        <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            placeholder="Enter your email address"
+                            disabled={processing}
+                            required
+                        />
+                        <InputError message={errors.email} />
+                    </div>
+
+                    <Button type="submit" className="w-full" disabled={processing}>
+                        {processing ? 'Sending...' : 'Send Reset Link'}
+                    </Button>
+                </form>
+
+                <div className="text-center text-sm">
+                    <span className="text-gray-600 dark:text-gray-400">
+                        Remember your password?{' '}
+                    </span>
+                    <Link
+                        href={loginShow().url}
+                        className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                    >
+                        Sign in
+                    </Link>
+                </div>
+            </div>
+        </AuthLayout>
+    );
+}
                                 >
                                     {processing && (
                                         <LoaderCircle className="h-4 w-4 animate-spin" />

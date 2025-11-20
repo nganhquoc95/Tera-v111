@@ -4,8 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
-import { useForm, Head } from '@inertiajs/react';
+import { useForm, Head, Link } from '@inertiajs/react';
 import { authenticate } from '@/routes/login';
+import { request as passwordRequest } from '@/routes/password';
 
 interface LoginErrors {
     name?: string;
@@ -61,6 +62,15 @@ export default function Login() {
                             disabled={processing}
                         />
                         {errors.password && <InputError message={errors.password} />}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <Link
+                            href={passwordRequest().url}
+                            className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                        >
+                            Forgot password?
+                        </Link>
                     </div>
 
                     <Button
