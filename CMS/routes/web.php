@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,6 +15,9 @@ Route::get('/', function () {
 Route::get('login', [LoginController::class, 'show'])->name('login');
 Route::post('login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 Route::post('logout', [LogoutController::class, 'store'])->name('logout');
+
+Route::get('register', [RegisterController::class, 'show'])->name('register');
+Route::post('register', [RegisterController::class, 'register'])->name('register.create');
 
 // Password Reset Routes
 Route::get('forgot-password', [PasswordResetController::class, 'showRequestForm'])->name('password.request');
