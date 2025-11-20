@@ -140,11 +140,12 @@ export default function GameSession({
                                         This will immediately terminate your game session on the server. Use this if you're stuck or unable to login to the game.
                                     </p>
                                     <div className="rounded-md bg-blue-50 p-3 text-sm text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
-                                        <p className="font-semibold">What this does:</p>
+                                        <p className="font-semibold">How it works:</p>
                                         <ul className="mt-2 list-inside space-y-1">
-                                            <li>• Clears your active game session</li>
-                                            <li>• Resets the login state on the server</li>
-                                            <li>• You can immediately log back in</li>
+                                            <li>• Clears your active game session from the database</li>
+                                            <li>• Game server detects the session state change</li>
+                                            <li>• Any connected session is automatically disconnected</li>
+                                            <li>• You can immediately log back into the game</li>
                                         </ul>
                                     </div>
                                     <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
