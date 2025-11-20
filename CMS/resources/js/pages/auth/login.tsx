@@ -1,12 +1,11 @@
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { useForm, Head } from '@inertiajs/react';
+import { authenticate } from '@/routes/login';
 
 interface LoginErrors {
     name?: string;
@@ -17,13 +16,11 @@ export default function Login() {
     const { data, setData, post, errors, processing } = useForm({
         name: '',
         password: '',
-        remember: false,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(route('login.authenticate'));
-        post(route('login.authenticate'));
+        post(authenticate.url());
     };
 
     return (
@@ -79,11 +76,3 @@ export default function Login() {
         </AuthLayout>
     );
 }
-
-function route(name: string): string {
-    const routes: Record<string, string> = {
-        'login.authenticate': '/login',
-    };
-    return routes[name] || '/';
-}
-

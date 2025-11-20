@@ -32,10 +32,8 @@ class LoginController extends Controller
             ])->onlyInput('name');
         }
 
-        // Verify password using SHA-512 with salt
-        $hashedPassword = hash('sha512', $credentials['password'] . $account->salt);
-
-        if ($hashedPassword !== $account->password) {
+        // Verify password (supports both bcrypt and SHA-512)
+        if (!$account->verifyPassword($credentials['password'])) {
             return back()->withErrors([
                 'password' => 'The provided password is incorrect.',
             ])->onlyInput('name');

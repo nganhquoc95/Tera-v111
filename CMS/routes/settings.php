@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Settings\SecurityController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,6 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::put('settings/password', [PasswordController::class, 'update'])
         ->middleware('throttle:6,1')
         ->name('user-password.update');
+
+    Route::get('settings/security', [SecurityController::class, 'edit'])->name('security.edit');
+    Route::patch('settings/security', [SecurityController::class, 'update'])->name('security.update');
+    Route::post('settings/security/reset-2nd-password', [SecurityController::class, 'reset2ndPassword'])->name('security.reset-2nd-password');
 
     Route::get('settings/appearance', function () {
         return Inertia::render('settings/appearance');

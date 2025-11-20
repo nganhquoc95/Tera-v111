@@ -121,32 +121,44 @@ class Account extends Authenticatable
     }
 
     /**
-     * Hash password using SHA-512 algorithm with salt
-     * Order: password + salt
+     * Hash password using bcrypt algorithm
+     * New passwords are hashed with bcrypt for better security
      */
-    public static function hashPassword(string $password, string $salt = ''): string
+    public static function hashPasswordBcrypt(string $password): string
+    {
+        return bcrypt($password);
+    }
+
+    /**
+     * Hash password using SHA-512 algorithm with salt
+     * Legacy method: password + salt (for existing passwords)
+     */
+    public static function hashPasswordSha512(string $password, string $salt = ''): string
     {
         return hash('sha512', $password . $salt);
     }
 
     /**
-     * Verify password against SHA-512 hash with salt
+     * Verify password against either bcrypt or SHA-512 hash
      */
     public function verifyPassword(string $password): bool
     {
-        return $this->password === self::hashPassword($password, $this->salt);
+        // Try bcrypt first (new passwords)
+        if (password_verify($password, $this->password)) {
+            return true;
+        }
+
+        // Fall back to SHA-512 (legacy passwords)
+        return $this->password === self::hashPasswordSha512($password, $this->salt);
     }
 
     /**
-     * Set the password attribute and hash it with SHA-1 using salt
+     * Set the password attribute and hash it with bcrypt
      */
     public function setPasswordAttribute(string $value): void
     {
-        // Generate salt if not exists
-        if (!$this->salt) {
-            $this->salt = bin2hex(random_bytes(16));
-        }
-        $this->attributes['password'] = self::hashPassword($value, $this->salt);
+        // Use bcrypt for new passwords
+        $this->attributes['password'] = self::hashPasswordBcrypt($value);
     }
 
     /**
