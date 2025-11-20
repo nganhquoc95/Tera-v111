@@ -1,0 +1,89 @@
+import InputError from '@/components/input-error';
+import TextLink from '@/components/text-link';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
+import AuthLayout from '@/layouts/auth-layout';
+import { useForm, Head } from '@inertiajs/react';
+
+interface LoginErrors {
+    name?: string;
+    password?: string;
+}
+
+export default function Login() {
+    const { data, setData, post, errors, processing } = useForm({
+        name: '',
+        password: '',
+        remember: false,
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log(route('login.authenticate'));
+        post(route('login.authenticate'));
+    };
+
+    return (
+        <AuthLayout
+            title="Log in to your account"
+            description="Enter your email and password below to log in"
+        >
+            <Head title="Log in" />
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                <div className="grid gap-6">
+                    <div className="grid gap-2">
+                        <Label htmlFor="name">User name</Label>
+                        <Input
+                            id="name"
+                            type="text"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            required
+                            autoFocus
+                            autoComplete="name"
+                            placeholder="username"
+                            disabled={processing}
+                        />
+                        {errors.name && <InputError message={errors.name} />}
+                    </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                            id="password"
+                            type="password"
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            required
+                            autoComplete="current-password"
+                            placeholder="••••••••"
+                            disabled={processing}
+                        />
+                        {errors.password && <InputError message={errors.password} />}
+                    </div>
+
+                    <Button
+                        type="submit"
+                        className="mt-4 w-full"
+                        disabled={processing}
+                    >
+                        {processing && <Spinner />}
+                        Log in
+                    </Button>
+                </div>
+            </form>
+        </AuthLayout>
+    );
+}
+
+function route(name: string): string {
+    const routes: Record<string, string> = {
+        'login.authenticate': '/login',
+    };
+    return routes[name] || '/';
+}
+
