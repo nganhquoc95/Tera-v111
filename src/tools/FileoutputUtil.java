@@ -102,6 +102,11 @@ public class FileoutputUtil {
         return sdfGMT.format(new Date());
     }
 
+    public static String CurrentTimeUTCPlus7() {
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        return sdf.format(new Date());
+    }
+
     public static String getString(final Throwable e) {
         String retValue = null;
         StringWriter sw = null;

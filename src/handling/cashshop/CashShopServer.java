@@ -50,10 +50,10 @@ public class CashShopServer {
 
             acceptor = new ServerConnection(PORT, 0, -1, true);
             acceptor.run();
-            System.out.println("Listening on port " + PORT + ".");
+            System.out.println("CashShop: Listening on port " + PORT + ".");
 
         } catch (final Exception e) {
-            System.err.println("CashShop : Binding port " + PORT + " failed");
+            System.err.println("CashShop: Binding port " + PORT + " failed");
             e.printStackTrace();
             throw new RuntimeException("Binding failed.", e);
         }

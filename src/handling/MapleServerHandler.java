@@ -313,12 +313,15 @@ public class MapleServerHandler extends ChannelInboundHandlerAdapter implements 
         tracker.put(address, new Pair<Long, Byte>(System.currentTimeMillis(), count));
         // End of IP checking.
         String IP = address.substring(address.indexOf('/') + 1, address.length());
+        // System.out.println("[LOGIN_FLOW] channel connect remoteIp=" + IP + " channel=" + channel + " cs=" + cs + " hasAuth=" + LoginServer.containsIPAuth(IP));
         if (channel > -1) {
             if (ChannelServer.getInstance(channel).isShutdown()) {
+                // System.out.println("[LOGIN_FLOW] rejecting channel connect remoteIp=" + IP + " reason=channel-shutdown");
                 ctx.channel().close();
                 return;
             }
             if (!LoginServer.containsIPAuth(IP)) {
+                // System.out.println("[LOGIN_FLOW] rejecting channel connect remoteIp=" + IP + " reason=missing-auth");
                 ctx.channel().close();
                 return;
             }
@@ -400,6 +403,7 @@ public class MapleServerHandler extends ChannelInboundHandlerAdapter implements 
                     fw.flush();
                 }
 
+                // System.out.println("[LOGIN_FLOW] disconnect remote=" + ctx.channel().remoteAddress() + " state=" + state + " player=" + (client.getPlayer() == null ? "null" : client.getPlayer().getName()));
                 client.disconnect(true, cs);
             } finally {
                 ctx.channel().close();
@@ -417,7 +421,7 @@ public class MapleServerHandler extends ChannelInboundHandlerAdapter implements 
             client.sendPing();
         } else {
             ctx.channel().close();
-            System.out.println("netty檢測心跳掉線。");
+            System.out.println("Netty detected heartbeat timeout.");
         }
         super.userEventTriggered(ctx, status);
     }

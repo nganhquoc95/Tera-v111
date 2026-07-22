@@ -74,7 +74,7 @@ public class Start {
         SkillFactory.load();
         MapleLifeFactory.loadNpcName();
 
-        System.out.print("Loading World... ");
+        System.out.println("Loading World... ");
         // Start Channel Server... ok
         ChannelServer.startChannel_Main();
         World.init();

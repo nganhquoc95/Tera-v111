@@ -497,8 +497,11 @@ public class CharLoginHandler {
         LoginServer.putLoginAuth(charId, s.substring(s.indexOf('/') + 1, s.length()), c.getTempIP());
         c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, s);
         String[] socket = c.getChannelServer().getIP().split(":");
+        final String advertisedHost = socket[0];
+        final int advertisedPort = Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]);
+        // System.out.println("[LOGIN_FLOW] character select charId=" + charId + " channel=" + c.getChannel() + " sessionIp=" + s + " tempIp=" + c.getTempIP() + " advertisedHost=" + advertisedHost + " advertisedPort=" + advertisedPort);
         try {
-            c.getSession().write(CField.getServerIP(InetAddress.getByName(socket[0]), Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]), charId));
+            c.getSession().write(CField.getServerIP(InetAddress.getByName(advertisedHost), advertisedPort, charId));
         } catch (UnknownHostException ex) {
             Logger.getLogger(CharLoginHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -528,8 +531,11 @@ public class CharLoginHandler {
             LoginServer.putLoginAuth(charId, s.substring(s.indexOf('/') + 1, s.length()), c.getTempIP());
             c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, s);
             String[] socket = c.getChannelServer().getIP().split(":");
+            final String advertisedHost = socket[0];
+            final int advertisedPort = Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]);
+            // System.out.println("[LOGIN_FLOW] character select (second password) charId=" + charId + " channel=" + c.getChannel() + " sessionIp=" + s + " tempIp=" + c.getTempIP() + " advertisedHost=" + advertisedHost + " advertisedPort=" + advertisedPort);
             try {
-                c.getSession().write(CField.getServerIP(InetAddress.getByName(socket[0]), Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]), charId));
+                c.getSession().write(CField.getServerIP(InetAddress.getByName(advertisedHost), advertisedPort, charId));
             } catch (UnknownHostException ex) {
                 Logger.getLogger(CharLoginHandler.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -24,8 +24,8 @@ public class CheckCommand extends Command{
         String mesoRate = ServerProperties.getProperty("net.sf.odinms.world.meso");
         String dropRate = ServerProperties.getProperty("net.sf.odinms.world.dropRate");
 
-        c.getPlayer().dropMessage(6, "Server: EXP: " + expRate + "x, MESO: " + mesoRate + "x, DROP: " + dropRate + "x");
+        c.getPlayer().dropMessage(6, "The server rates: EXP: " + expRate + "x, MESO: " + mesoRate + "x, DROP: " + dropRate + "x");
+        c.getPlayer().dropMessage(6, "The server time: " + FileoutputUtil.CurrentTimeUTCPlus7() + " (UTC+7)");
         c.getPlayer().dropMessage(6, "You currently have " + c.getPlayer().getCSPoints(MapleCharacter.CashShopType.NX_CREDIT) + " Cash.");
-        c.getPlayer().dropMessage(6, "The time is currently " + FileoutputUtil.CurrentReadable_TimeGMT() + " GMT.");
     }
 }
