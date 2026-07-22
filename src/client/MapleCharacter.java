@@ -2277,9 +2277,9 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
                 // hacky...
                 map.broadcastMessage(this, CField.spawnPlayerMapobject(this), false);
 
-                pets.stream().filter(pet -> (pet.getSummoned())).forEachOrdered(pet -> {
-                    map.broadcastMessage(this, PetPacket.showPet(this, pet, false, false), false);
-                });
+                // pets.stream().filter(pet -> (pet.getSummoned())).forEachOrdered(pet -> {
+                //     map.broadcastMessage(this, PetPacket.showPet(this, pet, false, false), false);
+                // });
                 for (final WeakReference<MapleCharacter> chr : clones) {
                     if (chr.get() != null) {
                         map.broadcastMessage(chr.get(), CField.spawnPlayerMapobject(chr.get()), false);
@@ -7116,12 +7116,27 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
     }
 
     public void updatePetAuto() {
-        if (getIntNoRecord(GameConstants.HP_ITEM) > 0) {
+        if (getPetAutoHP() > 0) {
             client.getSession().write(CField.petAutoHP(getIntRecord(GameConstants.HP_ITEM)));
         }
-        if (getIntNoRecord(GameConstants.MP_ITEM) > 0) {
+        if (getPetAutoMP() > 0) {
             client.getSession().write(CField.petAutoMP(getIntRecord(GameConstants.MP_ITEM)));
         }
+        if (getPetAutoCure() > 0) {
+            client.getSession().write(CField.petAutoCURE(getIntRecord(GameConstants.CURE_ITEM)));
+        }
+    }
+
+    public int getPetAutoHP() {
+        return getIntNoRecord(GameConstants.HP_ITEM);
+    }
+
+    public int getPetAutoMP() {
+        return getIntNoRecord(GameConstants.MP_ITEM);
+    }
+
+    public int getPetAutoCure() {
+        return getIntNoRecord(GameConstants.CURE_ITEM);
     }
 
     public void sendEnglishQuiz(String msg) {

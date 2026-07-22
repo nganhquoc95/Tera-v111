@@ -554,17 +554,17 @@ public class PacketHelper {
                 mplew.write(equip.getState()); // 17 = rare, 18 = epic, 19 = unique, 20 = legendary, potential flags.
                 mplew.write(equip.getEnhance());
                 mplew.writeShort(equip.getPotential1());
-                if (!hasUniqueId) {
-                    mplew.writeShort(equip.getPotential2());
-                    mplew.writeShort(equip.getPotential3());
-                    mplew.writeShort(equip.getPotential4());
-                    mplew.writeShort(equip.getPotential5());
-                }
-                mplew.writeShort(equip.getSocketState());
+                mplew.writeShort(equip.getPotential2());
+                mplew.writeShort(equip.getPotential3());
+                mplew.writeShort(equip.getPotential4());
+                mplew.writeShort(equip.getPotential5());
+                mplew.writeShort(equip.getSocketState());//socket
                 mplew.writeShort(equip.getSocket1() % 10000); // > 0 = mounted, 0 = empty, -1 = none.
                 mplew.writeShort(equip.getSocket2() % 10000);
                 mplew.writeShort(equip.getSocket3() % 10000);
-                mplew.writeLong(equip.getInventoryId() <= 0 ? -1 : equip.getInventoryId()); //some tracking ID
+                if (!hasUniqueId) {
+                    mplew.writeLong(equip.getInventoryId() <= 0 ? -1 : equip.getInventoryId()); //some tracking ID
+                }
                 mplew.writeLong(getTime(-2));
                 mplew.writeInt(-1); //?
             } else {

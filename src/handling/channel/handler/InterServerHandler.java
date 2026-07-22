@@ -63,6 +63,7 @@ import tools.packet.CWvsContext.ExpeditionPacket;
 import tools.packet.CWvsContext.FamilyPacket;
 import tools.packet.CWvsContext.GuildPacket;
 import tools.packet.MTSCSPacket;
+import tools.packet.PetPacket;
 
 public class InterServerHandler {
 
@@ -250,6 +251,9 @@ public class InterServerHandler {
 
         c.getSession().write(CField.getKeymap(player.getKeyLayout()));
         player.updatePetAuto();
+        player.getPetAutoHP();
+        player.getPetAutoMP();
+        player.getPetAutoCure();
         player.expirationTask(true, transfer == null);
         if (player.getJob() == 132) { // DARKKNIGHT
             player.checkBerserk();

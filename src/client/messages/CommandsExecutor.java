@@ -210,6 +210,7 @@ public class CommandsExecutor {
         addCommand("uptime", 0, UpTimeCommand.class);
         addCommand("whodrops", 0, WhoDropsCommand.class);
         addCommand("joinevent", 0, JoinEventCommand.class);
+        addCommand("go", 0, GoToCommand.class);
         addCommand("goto", 0, GoToCommand.class);
         addCommand("search", 0, SearchCommand.class);
 
