@@ -37,6 +37,13 @@ import server.Randomizer;
 import tools.Pair;
 
 public class LoginPacket {
+    private static int getPicState(final MapleClient client) {
+        if (!client.isPicEnable())
+            return 0; // PIC disabled
+        if (client.getSecondPassword() != null && client.getSecondPassword().length() > 0)
+            return 1; // PIC enabled
+        return 2;  // New PIC
+    }
 
     public static final byte[] getHello(final short mapleVersion, final byte[] sendIv, final byte[] recvIv) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter(15 + ServerConstants.MAPLE_PATCH.length());
@@ -80,8 +87,8 @@ public class LoginPacket {
         mplew.writeInt(client.getAccID());
         mplew.write(client.getGender());
         mplew.write(client.isGm() ? 0 : 0); // Admin byte - Find, Trade, etc.
-        mplew.writeShort(0/*2*/); //0 for new accounts
-        mplew.write(0/*client.isGm() ? 1 : 0*/); // Admin byte - Commands
+        mplew.writeShort(client.getLoginState()); //0 for new accounts
+        mplew.write(client.isGm() ? 1 : 0); // Admin byte - Commands
         mplew.writeMapleAsciiString(client.getAccountName());
         mplew.write(3); //0 for new accounts
         mplew.write(0); // quiet ban
@@ -90,15 +97,7 @@ public class LoginPacket {
         mplew.writeLong(PacketHelper.getTime(System.currentTimeMillis())); //really create date
         mplew.writeInt(4); // Remove the "Select the world you want to play in" since it doesn't fit inside the loginscreen
         mplew.write(1); //1 = pin disabled, 0 = pin enabled
-        if (client.isPicEnable()) {
-            if (client.getSecondPassword() == null || client.getSecondPassword().length() == 0) {
-                mplew.write(0);
-            } else {
-                mplew.write(1);
-            }
-        } else {
-            mplew.write(2); //2 = no pic at all
-        }
+        mplew.write(getPicState(client));
 
         // mplew.write(client.getSecondPassword() == null ? 0 : (client.getSecondPassword().equals("") ? 2 : 1)); //2 = no pic at all
         mplew.writeLong(Randomizer.nextLong());
@@ -184,11 +183,11 @@ public class LoginPacket {
         mplew.write(0);
         mplew.writeInt(client.getAccID());
         mplew.write(client.getGender());
-        mplew.write(client.isGm() ? 0 : 0); // Admin byte - Find, Trade, etc.
+        mplew.write(client.isGm() ? 1 : 0); // Admin byte - Find, Trade, etc.
         mplew.writeShort(2);
         mplew.write(client.isGm() ? 1 : 0); // Admin byte - Commands
         mplew.writeMapleAsciiString(client.getAccountName());
-        mplew.write(3); //0 for new accounts
+        mplew.write(getPicState(client)); //0 for new accounts
         mplew.write(0); // quiet ban
         mplew.writeLong(0); // quiet ban time
         mplew.writeLong(PacketHelper.getTime(System.currentTimeMillis())); //really create date
@@ -329,16 +328,7 @@ public class LoginPacket {
             addCharEntry(mplew, chr, !chr.isGM() && chr.getLevel() >= 30, false);
         }
 
-        if (c.isPicEnable()) {
-            if (c.getSecondPassword() == null || c.getSecondPassword().length() == 0) {
-                mplew.write(0);
-            } else {
-                mplew.write(1);
-            }
-        } else {
-            mplew.write(2);            
-        }
-
+        mplew.write(getPicState(c));
         mplew.write(0);
         mplew.writeInt(charslots);
         mplew.writeInt(0);
@@ -400,15 +390,7 @@ public class LoginPacket {
             addCharEntry(mplew, chr, true, true);
         }
 
-        if (c.isPicEnable()) {
-            if (c.getSecondPassword() == null || c.getSecondPassword().length() == 0) {
-                mplew.write(0);
-            } else {
-                mplew.write(1);
-            }
-        } else {
-            mplew.write(2); // writing 2 here disables PIC
-        }
+        mplew.write(getPicState(c));
 
         return mplew.getPacket();
     }
