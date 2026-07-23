@@ -13,7 +13,7 @@ public class EnablePicCommand extends Command {
     public void execute(MapleClient c, String[] params) {
         boolean picEnable = c.isPicEnable();
         picEnable = !picEnable;
-        c.setPicEnable(picEnable);
-        c.getPlayer().dropMessage(-1, "Your PIC has been " + (picEnable ? "enabled." : "deactivated."));
+        c.setPicEnable(picEnable, true);
+        c.getPlayer().dropMessage(6, "Your PIC has been " + (picEnable ? "enabled." : "disabled."));
     }
 }

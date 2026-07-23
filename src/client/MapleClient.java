@@ -1686,8 +1686,12 @@ public class MapleClient implements Serializable {
        return isPicEnable;
    }
 
-    public boolean setPicEnable(boolean isPicEnable) {
+    public boolean setPicEnable(boolean isPicEnable, boolean storeToDB) {
         this.isPicEnable = isPicEnable;
+        
+        if (!storeToDB)
+            return true;
+
         boolean updated = false;
         Connection con = null;
         PreparedStatement pst = null;

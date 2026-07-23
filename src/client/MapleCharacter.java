@@ -780,6 +780,7 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
                     ret.maplepoints = rs.getInt("mPoints");
                     ret.points = rs.getInt("points");
                     ret.vpoints = rs.getInt("vpoints");
+                    ret.getClient().setPicEnable(rs.getBoolean("PicEnabled"), false);
 
                     if (rs.getTimestamp("lastlogon") != null) {
                         final Calendar cal = Calendar.getInstance();
@@ -6107,7 +6108,7 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
 
     public void spawnPet(byte slot, boolean lead, boolean broadcast) {
         final Item item = getInventory(MapleInventoryType.CASH).getItem(slot);
-        if (item == null || item.getItemId() > 5000200 || item.getItemId() < 5000000) {
+        if (item == null || item.getItemId() > 5003000 || item.getItemId() < 5000000) {
             return;
         }
         switch (item.getItemId()) {
