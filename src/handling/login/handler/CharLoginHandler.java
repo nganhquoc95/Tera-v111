@@ -468,12 +468,18 @@ public class CharLoginHandler {
             c.setChannel(slea.readByte());
             c.setWorld(slea.readByte());
         }
+
         final int charId = slea.readInt();
-        
-        if (!c.isLoggedIn() || loginFailCount(c) || !c.login_Auth(charId) || ChannelServer.getInstance(c.getChannel()) == null /*|| c.getWorld() != 0*/) { // TODOO: MULTI WORLDS
+        if (
+            !c.isLoggedIn() ||
+            loginFailCount(c) ||
+            !c.login_Auth(charId) ||
+            ChannelServer.getInstance(c.getChannel()) == null /*|| c.getWorld() != 0*/
+        ) { // TODOO: MULTI WORLDS
             c.getSession().close();
             return;
         }
+
         c.updateMacs(slea.readMapleAsciiString());
         slea.readMapleAsciiString();
         if (slea.available() != 0) {
@@ -493,18 +499,8 @@ public class CharLoginHandler {
         if (c.getIdleTask() != null) {
             c.getIdleTask().cancel(true);
         }
-        final String s = c.getSessionIPAddress();
-        LoginServer.putLoginAuth(charId, s.substring(s.indexOf('/') + 1, s.length()), c.getTempIP());
-        c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, s);
-        String[] socket = c.getChannelServer().getIP().split(":");
-        final String advertisedHost = socket[0];
-        final int advertisedPort = Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]);
-        // System.out.println("[LOGIN_FLOW] character select charId=" + charId + " channel=" + c.getChannel() + " sessionIp=" + s + " tempIp=" + c.getTempIP() + " advertisedHost=" + advertisedHost + " advertisedPort=" + advertisedPort);
-        try {
-            c.getSession().write(CField.getServerIP(InetAddress.getByName(advertisedHost), advertisedPort, charId));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(CharLoginHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        CharacterTryLogin(c, charId);
     }
 
     public static final void Character_WithSecondPassword(final LittleEndianAccessor slea, final MapleClient c, final boolean view) {
@@ -516,7 +512,12 @@ public class CharLoginHandler {
             c.setWorld(c.getWorld()+1);
             slea.skip(4);
         }
-        if (!c.isLoggedIn() || loginFailCount(c) || c.getSecondPassword() == null || !c.login_Auth(charId) || ChannelServer.getInstance(c.getChannel()) == null /*|| c.getWorld() != 0*/) { // TODOO: MULTI WORLDS
+        if (
+            !c.isLoggedIn() ||
+            loginFailCount(c) ||
+            c.getSecondPassword() == null ||
+            !c.login_Auth(charId) ||
+            ChannelServer.getInstance(c.getChannel()) == null /*|| c.getWorld() != 0*/) { // TODOO: MULTI WORLDS
             //c.getSession().close();
             return;
         }
@@ -527,20 +528,24 @@ public class CharLoginHandler {
             if (c.getIdleTask() != null) {
                 c.getIdleTask().cancel(true);
             }
-            final String s = c.getSessionIPAddress();
-            LoginServer.putLoginAuth(charId, s.substring(s.indexOf('/') + 1, s.length()), c.getTempIP());
-            c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, s);
-            String[] socket = c.getChannelServer().getIP().split(":");
-            final String advertisedHost = socket[0];
-            final int advertisedPort = Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]);
-            // System.out.println("[LOGIN_FLOW] character select (second password) charId=" + charId + " channel=" + c.getChannel() + " sessionIp=" + s + " tempIp=" + c.getTempIP() + " advertisedHost=" + advertisedHost + " advertisedPort=" + advertisedPort);
-            try {
-                c.getSession().write(CField.getServerIP(InetAddress.getByName(advertisedHost), advertisedPort, charId));
-            } catch (UnknownHostException ex) {
-                Logger.getLogger(CharLoginHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            CharacterTryLogin(c, charId);
         } else {
             c.getSession().write(LoginPacket.secondPwError((byte) 0x14));
+        }
+    }
+
+    private static void CharacterTryLogin(final MapleClient c, final int charId) {
+        final String s = c.getSessionIPAddress();
+        LoginServer.putLoginAuth(charId, s.substring(s.indexOf('/') + 1, s.length()), c.getTempIP());
+        c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, s);
+        String[] socket = c.getChannelServer().getIP().split(":");
+
+        final String advertisedHost = socket[0];
+        final int advertisedPort = Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]);
+        try {
+            c.getSession().write(CField.getServerIP(InetAddress.getByName(advertisedHost), advertisedPort, charId));
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(CharLoginHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
