@@ -6,7 +6,7 @@ if "%1"=="debug" (
     echo HotSwap enabled - attach debugger to port 5005
     echo Automatic hot reload enabled for class file changes
     echo Press Ctrl+C to stop the server gracefully
-    set CLASSPATH=.;build;lib\*;lib\graaljs\*
+    set CLASSPATH=.;dist;lib\*;lib\graaljs\*
     java -server -javaagent:lib/hotswap-agent.jar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Dnet.sf.odinms.wzpath=wz\ server.Start
 ) else (
     echo Starting Lidium Server...
