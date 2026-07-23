@@ -20,11 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package constants;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
 import server.ServerProperties;
 
 public class ServerConstants {
@@ -60,59 +55,6 @@ public class ServerConstants {
     public static String host = "127.0.0.1";
     public static int channelcount = 1;
 
-    static {
-        ip = resolveAdvertisedHost();
-        host = ip;
-    }
-
-    private static String resolveAdvertisedHost() {
-        final String configuredInterface = ServerProperties.getProperty("net.sf.odinms.channel.net.interface");
-        final String configuredHost = ServerProperties.getProperty("net.sf.odinms.world.host");
-
-        String preferredHost = null;
-        if (configuredInterface != null && !configuredInterface.trim().isEmpty()) {
-            preferredHost = configuredInterface.trim();
-        } else if (configuredHost != null && !configuredHost.trim().isEmpty()) {
-            preferredHost = configuredHost.trim();
-        }
-
-        if (preferredHost != null && !preferredHost.isEmpty() && !isLoopbackHost(preferredHost)) {
-            return preferredHost;
-        }
-
-        try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = interfaces.nextElement();
-                if (!networkInterface.isUp() || networkInterface.isLoopback()) {
-                    continue;
-                }
-                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
-                while (addresses.hasMoreElements()) {
-                    InetAddress address = addresses.nextElement();
-                    if (address instanceof Inet4Address && !address.isLoopbackAddress() && !address.isAnyLocalAddress()) {
-                        return address.getHostAddress();
-                    }
-                }
-            }
-        } catch (SocketException e) {
-            // fall back to configured value or localhost below
-        }
-
-        if (preferredHost != null && !preferredHost.isEmpty()) {
-            return preferredHost;
-        }
-        return "127.0.0.1";
-    }
-
-    private static boolean isLoopbackHost(final String host) {
-        if (host == null) {
-            return true;
-        }
-        final String normalized = host.trim().toLowerCase();
-        return normalized.equals("localhost") || normalized.equals("127.0.0.1") || normalized.equals("0.0.0.0") || normalized.startsWith("::1") || normalized.equals("::1");
-    }
-
     // Start of Poll
     public static final boolean PollEnabled = false;
     public static final String Poll_Question = "Are you there?";
@@ -135,7 +77,7 @@ public class ServerConstants {
     public static byte[] getServerIP() {
         byte[] bip = null;
 
-        final String serverip = resolveAdvertisedHost();
+        final String serverip = ServerProperties.getProperty("net.sf.odinms.world.host").trim();
         String[] split = serverip.split("\\.");
         bip = new byte[] { (byte) Integer.parseInt(split[0]), (byte) Integer.parseInt(split[1]),
                 (byte) Integer.parseInt(split[2]), (byte) Integer.parseInt(split[3]) };

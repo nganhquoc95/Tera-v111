@@ -48,7 +48,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import scripting.NPCScriptManager;
 import server.maps.FieldLimitType;
 import server.maps.MapleMap;
 import server.maps.SavedLocationType;
@@ -63,7 +62,6 @@ import tools.packet.CWvsContext.ExpeditionPacket;
 import tools.packet.CWvsContext.FamilyPacket;
 import tools.packet.CWvsContext.GuildPacket;
 import tools.packet.MTSCSPacket;
-import tools.packet.PetPacket;
 
 public class InterServerHandler {
 
@@ -135,12 +133,10 @@ public class InterServerHandler {
             Pair<String, String> ip = LoginServer.getLoginAuth(playerid);
             String s = c.getSessionIPAddress();
             final String actualIp = s.substring(s.indexOf('/') + 1, s.length());
-            // System.out.println("[LOGIN_FLOW] loggedin playerId=" + playerid + " sessionIp=" + actualIp + " storedIp=" + (ip == null ? "null" : ip.left) + " tempIp=" + (ip == null ? "null" : ip.right) + " state=" + c.getLoginState());
             if (ip == null || !actualIp.equals(ip.left)) {
                 if (ip != null) {
                     LoginServer.putLoginAuth(playerid, ip.left, ip.right);
                 }
-                // System.out.println("[LOGIN_FLOW] auth rejected playerId=" + playerid + " reason=ip-mismatch actual=" + actualIp + " expected=" + (ip == null ? "null" : ip.left));
                 c.getSession().close();
                 return;
             }

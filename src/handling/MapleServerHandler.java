@@ -22,7 +22,6 @@ package handling;
 
 import constants.ServerConstants;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -42,13 +41,11 @@ import handling.login.LoginServer;
 import handling.login.handler.*;
 import handling.netty.MaplePacketDecoder;
 import handling.netty.MapleSession;
-import handling.world.exped.ExpeditionType;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.management.ManagementFactory;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -63,10 +60,7 @@ import tools.Pair;
 import scripting.NPCScriptManager;
 import server.MTSStorage;
 import tools.FileoutputUtil;
-import tools.HexTool;
-import tools.packet.CField;
 import tools.packet.MTSCSPacket;
-import tools.packet.CWvsContext;
 
 public class MapleServerHandler extends ChannelInboundHandlerAdapter implements MapleServerHandlerMBean {
 
@@ -313,15 +307,12 @@ public class MapleServerHandler extends ChannelInboundHandlerAdapter implements 
         tracker.put(address, new Pair<Long, Byte>(System.currentTimeMillis(), count));
         // End of IP checking.
         String IP = address.substring(address.indexOf('/') + 1, address.length());
-        // System.out.println("[LOGIN_FLOW] channel connect remoteIp=" + IP + " channel=" + channel + " cs=" + cs + " hasAuth=" + LoginServer.containsIPAuth(IP));
         if (channel > -1) {
             if (ChannelServer.getInstance(channel).isShutdown()) {
-                // System.out.println("[LOGIN_FLOW] rejecting channel connect remoteIp=" + IP + " reason=channel-shutdown");
                 ctx.channel().close();
                 return;
             }
             if (!LoginServer.containsIPAuth(IP)) {
-                // System.out.println("[LOGIN_FLOW] rejecting channel connect remoteIp=" + IP + " reason=missing-auth");
                 ctx.channel().close();
                 return;
             }
@@ -403,7 +394,6 @@ public class MapleServerHandler extends ChannelInboundHandlerAdapter implements 
                     fw.flush();
                 }
 
-                // System.out.println("[LOGIN_FLOW] disconnect remote=" + ctx.channel().remoteAddress() + " state=" + state + " player=" + (client.getPlayer() == null ? "null" : client.getPlayer().getName()));
                 client.disconnect(true, cs);
             } finally {
                 ctx.channel().close();
