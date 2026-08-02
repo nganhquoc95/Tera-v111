@@ -39,10 +39,10 @@ import tools.Pair;
 public class LoginPacket {
     private static int getPicState(final MapleClient client) {
         if (!client.isPicEnable())
-            return 0; // PIC disabled
+            return 2; // PIC disabled
         if (client.getSecondPassword() != null && client.getSecondPassword().length() > 0)
             return 1; // PIC enabled
-        return 2;  // New PIC
+        return 0;  // New PIC
     }
 
     public static final byte[] getHello(final short mapleVersion, final byte[] sendIv, final byte[] recvIv) {
@@ -187,7 +187,7 @@ public class LoginPacket {
         mplew.writeShort(2);
         mplew.write(client.isGm() ? 1 : 0); // Admin byte - Commands
         mplew.writeMapleAsciiString(client.getAccountName());
-        mplew.write(getPicState(client)); //0 for new accounts
+        mplew.write(getPicState(client)); // Write actual PIC state: 2 = disabled, 1 = enabled, 0 = new
         mplew.write(0); // quiet ban
         mplew.writeLong(0); // quiet ban time
         mplew.writeLong(PacketHelper.getTime(System.currentTimeMillis())); //really create date

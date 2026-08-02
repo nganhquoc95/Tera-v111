@@ -513,6 +513,14 @@ public class MapleClient implements Serializable {
                         accId = rs.getInt("id");
                         secondPassword = rs.getString("2ndpassword");
                         salt2 = rs.getString("salt2");
+                        // Load whether PIC (second password) feature is enabled for this account
+                        try {
+                            boolean picEnabled = rs.getBoolean("PicEnabled");
+                            // don't store to DB, just set the in-memory flag
+                            setPicEnable(picEnabled, false);
+                        } catch (Exception e) {
+                            // ignore if column missing or other DB issue
+                        }
                         gm = rs.getInt("gm") > 0;
                         greason = rs.getByte("greason");
                         //tempban = getTempBanCalendar(rs);
