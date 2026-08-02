@@ -122,12 +122,16 @@ public class PlayerHandler {
         } else if (chr != null) {
             final int type = slea.readInt(), data = slea.readInt();
             switch (type) {
+                case 0:
+                    chr.updatePetAuto();
+                    break;
                 case 1:
                     if (data <= 0) {
                         chr.getQuestRemove(MapleQuest.getInstance(GameConstants.HP_ITEM));
                     } else {
                         chr.getQuestNAdd(MapleQuest.getInstance(GameConstants.HP_ITEM)).setCustomData(String.valueOf(data));
                     }
+                    chr.getClient().getSession().write(CField.petAutoHP(Math.max(0, data)));
                     break;
                 case 2:
                     if (data <= 0) {
@@ -135,6 +139,7 @@ public class PlayerHandler {
                     } else {
                         chr.getQuestNAdd(MapleQuest.getInstance(GameConstants.MP_ITEM)).setCustomData(String.valueOf(data));
                     }
+                    chr.getClient().getSession().write(CField.petAutoMP(Math.max(0, data)));
                     break;
                 case 3:
                     if (data <= 0) {
@@ -142,6 +147,11 @@ public class PlayerHandler {
                     } else {
                         chr.getQuestNAdd(MapleQuest.getInstance(GameConstants.CURE_ITEM)).setCustomData(String.valueOf(data));
                     }
+                    chr.getClient().getSession().write(CField.petAutoCURE(Math.max(0, data)));
+                    break;
+                default:
+                    chr.updatePetAuto();
+                    break;
             }
         }
     }

@@ -65,8 +65,10 @@ import tools.packet.MTSCSPacket;
 
 public class InterServerHandler {
 
-    public static final void EnterCS(final MapleClient c, final MapleCharacter chr, final boolean mts, final boolean npc) {
-        if (chr.hasBlockedInventory() || chr.getMap() == null || chr.getEventInstance() != null || c.getChannelServer() == null) {
+    public static final void EnterCS(final MapleClient c, final MapleCharacter chr, final boolean mts,
+            final boolean npc) {
+        if (chr.hasBlockedInventory() || chr.getMap() == null || chr.getEventInstance() != null
+                || c.getChannelServer() == null) {
             c.getSession().write(CField.serverBlocked(2));
             c.getSession().write(CWvsContext.enableActions());
             return;
@@ -81,11 +83,12 @@ public class InterServerHandler {
             c.getSession().write(CWvsContext.enableActions());
             return;
         }
-        //if (c.getChannel() == 1 && !c.getPlayer().isGM()) {
-        //    c.getPlayer().dropMessage(5, "You may not enter on this channel. Please change channels and try again.");
-        //    c.getSession().write(CWvsContext.enableActions());
-        //    return;
-        //}
+        // if (c.getChannel() == 1 && !c.getPlayer().isGM()) {
+        // c.getPlayer().dropMessage(5, "You may not enter on this channel. Please
+        // change channels and try again.");
+        // c.getSession().write(CWvsContext.enableActions());
+        // return;
+        // }
         final ChannelServer ch = ChannelServer.getInstance(c.getChannel());
 
         chr.changeRemoval();
@@ -104,7 +107,8 @@ public class InterServerHandler {
         chr.getMap().removePlayer(chr);
         String[] socket = c.getChannelServer().getIP().split(":");
         try {
-            c.getSession().write(CField.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(CashShopServer.getIP().split(":")[1])));
+            c.getSession().write(CField.getChannelChange(InetAddress.getByName(socket[0]),
+                    Integer.parseInt(CashShopServer.getIP().split(":")[1])));
         } catch (UnknownHostException ex) {
             Logger.getLogger(InterServerHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -155,7 +159,8 @@ public class InterServerHandler {
         final int state = c.getLoginState();
         boolean allowLogin = false;
 
-        if (state == MapleClient.LOGIN_SERVER_TRANSITION || state == MapleClient.CHANGE_CHANNEL || state == MapleClient.LOGIN_NOTLOGGEDIN) {
+        if (state == MapleClient.LOGIN_SERVER_TRANSITION || state == MapleClient.CHANGE_CHANNEL
+                || state == MapleClient.LOGIN_NOTLOGGEDIN) {
             allowLogin = !World.isCharacterListConnected(c.loadCharacterNames(c.getWorld()));
         }
         if (!allowLogin) {
@@ -173,11 +178,14 @@ public class InterServerHandler {
         c.getSession().write(CField.getCharInfo(player));
         c.getSession().write(MTSCSPacket.enableCSUse());
 
-        /*if (player.isGM()) {
-        SkillFactory.getSkill(GameConstants.GMS ? 9101004 : 9001004).getEffect(1).applyTo(player);
-        }*/
+        /*
+         * if (player.isGM()) {
+         * SkillFactory.getSkill(GameConstants.GMS ? 9101004 :
+         * 9001004).getEffect(1).applyTo(player);
+         * }
+         */
         c.getSession().write(CWvsContext.temporaryStats_Reset()); // .
-        player.getMap().addPlayer(player);
+        // player.getMap().addPlayer(player);
 
         try {
             // Start of buddylist
@@ -221,7 +229,7 @@ public class InterServerHandler {
                             }
                         }
                     }
-                } else { //guild not found, change guild id
+                } else { // guild not found, change guild id
                     player.setGuildId(0);
                     player.setGuildRank((byte) 5);
                     player.setAllianceRank((byte) 5);
@@ -243,31 +251,33 @@ public class InterServerHandler {
         player.sendImp();
         player.updatePartyMemberHP();
         player.startFairySchedule(false);
-        player.baseSkills(); //fix people who've lost skills.
+        player.baseSkills(); // fix people who've lost skills.
 
         c.getSession().write(CField.getKeymap(player.getKeyLayout()));
-        player.updatePetAuto();
-        player.getPetAutoHP();
-        player.getPetAutoMP();
-        player.getPetAutoCure();
         player.expirationTask(true, transfer == null);
         if (player.getJob() == 132) { // DARKKNIGHT
             player.checkBerserk();
         }
         player.spawnClones();
-        player.spawnSavedPets();
+        player.updatePetAuto();
         if (player.getStat().equippedSummon > 0) {
             SkillFactory.getSkill(player.getStat().equippedSummon).getEffect(1).applyTo(player);
         }
         MapleQuestStatus stat = player.getQuestNoAdd(MapleQuest.getInstance(GameConstants.PENDANT_SLOT));
-        c.getSession().write(CWvsContext.pendantSlot(stat != null && stat.getCustomData() != null && Long.parseLong(stat.getCustomData()) > System.currentTimeMillis()));
+        c.getSession().write(CWvsContext.pendantSlot(stat != null && stat.getCustomData() != null
+                && Long.parseLong(stat.getCustomData()) > System.currentTimeMillis()));
         stat = player.getQuestNoAdd(MapleQuest.getInstance(GameConstants.QUICK_SLOT));
-        c.getSession().write(CField.quickSlot(stat != null && stat.getCustomData() != null ? stat.getCustomData() : null));
+        c.getSession()
+                .write(CField.quickSlot(stat != null && stat.getCustomData() != null ? stat.getCustomData() : null));
         c.getSession().write(CWvsContext.getFamiliarInfo(player));
+        player.spawnSavedPets();
+        player.getMap().addPlayer(player);
     }
 
-    public static final void ChangeChannel(final LittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr, final boolean room) {
-        if (chr == null || chr.hasBlockedInventory() || chr.getEventInstance() != null || chr.getMap() == null || chr.isInBlockedMap() || FieldLimitType.ChannelSwitch.check(chr.getMap().getFieldLimit())) {
+    public static final void ChangeChannel(final LittleEndianAccessor slea, final MapleClient c,
+            final MapleCharacter chr, final boolean room) {
+        if (chr == null || chr.hasBlockedInventory() || chr.getEventInstance() != null || chr.getMap() == null
+                || chr.isInBlockedMap() || FieldLimitType.ChannelSwitch.check(chr.getMap().getFieldLimit())) {
             c.getSession().write(CWvsContext.enableActions());
             return;
         }
