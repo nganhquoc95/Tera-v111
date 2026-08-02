@@ -95,8 +95,14 @@ public class GoToCommand extends Command {
             c.getPlayer().dropMessage(6, "Locations are as follows:");
             c.getPlayer().dropMessage(6, availableLocations());
         } else {
-            if (gotomaps.containsKey(splitted[0])) {
-                MapleMap target = c.getChannelServer().getMapFactory().getMap(gotomaps.get(splitted[0]));
+            String location = splitted[0].toLowerCase();
+            if (location.equals("gmmap") && !c.getPlayer().isGM()) {
+                c.getPlayer().dropMessage(6, "You do not have permission to go to this map.");
+                return;
+            }
+
+            if (gotomaps.containsKey(location)) {
+                MapleMap target = c.getChannelServer().getMapFactory().getMap(gotomaps.get(location));
                 if (target == null) {
                     c.getPlayer().dropMessage(6, "Map does not exist");
                     return;
@@ -104,10 +110,9 @@ public class GoToCommand extends Command {
                 MaplePortal targetPortal = target.getPortal(0);
                 c.getPlayer().changeMap(target, targetPortal);
             } else {
-                if (splitted[0].equals("locations")) {
+                if (location.equals("locations")) {
                     c.getPlayer().dropMessage(6, "Use !goto <location>. Locations are as follows:");
                     c.getPlayer().dropMessage(6, availableLocations());
-
                 } else {
                     c.getPlayer().dropMessage(6, "Invalid command syntax - Use !goto <location>. For a list of locations, use !goto locations.");
                 }
