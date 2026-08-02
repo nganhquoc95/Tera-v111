@@ -794,15 +794,20 @@ public class MapleClient implements Serializable {
     public final void updateSecondPassword() {
         final Connection con = DatabaseConnection.getConnection();
         try {
-
-            try (PreparedStatement ps = con.prepareStatement("UPDATE `accounts` SET `2ndpassword` = ?, `salt2` = ? WHERE id = ?")) {
-                final String newSalt = LoginCrypto.makeSalt();
-                ps.setString(1, LoginCrypto.rand_s(LoginCrypto.makeSaltedSha512Hash(secondPassword, newSalt)));
+            final String newSalt = LoginCrypto.makeSalt();
+            final String hashed = LoginCrypto.makeSaltedSha512Hash(secondPassword, newSalt);
+            final String stored = LoginCrypto.rand_s(hashed);
+            try (PreparedStatement ps = con.prepareStatement("UPDATE `accounts` SET `2ndpassword` = ?, `salt2` = ?, `PicEnabled` = ? WHERE id = ?")) {
+                ps.setString(1, stored);
                 ps.setString(2, newSalt);
-                ps.setInt(3, accId);
+                ps.setBoolean(3, true);
+                ps.setInt(4, accId);
                 ps.executeUpdate();
                 ps.close();
             }
+            secondPassword = LoginCrypto.rand_r(stored);
+            salt2 = newSalt;
+            isPicEnable = true;
             con.close();
         } catch (SQLException e) {
             System.err.println("error updating login state" + e);

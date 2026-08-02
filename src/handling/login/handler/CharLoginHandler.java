@@ -461,10 +461,11 @@ public class CharLoginHandler {
     }
 
     public static final void Character_WithoutSecondPassword(final LittleEndianAccessor slea, final MapleClient c, final boolean haspic, final boolean view) {
-        
-        if (view) {
-            c.setChannel(slea.readByte());
-            c.setWorld(slea.readByte());
+        if (haspic) {
+            final byte channel = slea.readByte();
+            final byte world = slea.readByte();
+            c.setChannel(channel);
+            c.setWorld(world);
         }
 
         final int charId = slea.readInt();
