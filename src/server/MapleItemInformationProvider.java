@@ -114,6 +114,7 @@ public class MapleItemInformationProvider {
                 item.opID = Integer.parseInt(dat.getName());
                 item.optionType = MapleDataTool.getIntConvert("info/optionType", dat, 0);
                 item.reqLevel = MapleDataTool.getIntConvert("info/reqLevel", dat, 0);
+                item.stringTemplate = MapleDataTool.getString("info/string", dat, "");
                 for (final String i : StructItemOption.types) {
                     if (i.equals("face")) {
                         item.face = MapleDataTool.getString("face", potLevel, "");

@@ -157,8 +157,6 @@ public class CharLoginHandler {
             return;
         }
 
-        //System.out.println("Client " + c.getSession().getRemoteAddress().toString().split(":")[0] + " is connecting to server " + server + " channel " + channel + "");
-
         final List<MapleCharacter> chars = c.loadCharacters(server);
         if (chars != null && ChannelServer.getInstance(channel) != null) {
             c.setWorld(server);
