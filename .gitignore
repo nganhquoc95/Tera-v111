@@ -18,9 +18,10 @@ Log_Script_Except.rtf
 *.rtf
 *.properties
 !logging.properties
+!recvopsGMS.properties
+!sendopsGMS.properties
 scripts/map/onUserEnter/cannon_tuto_direction2.js
 scripts/map/onUserEnter/cannon_tuto_direction1.js
 scripts/map/onUserEnter/cannon_tuto_direction.js
 scripts/map/onUserEnter/cannon_tuto_01.js
 db.properties
-!recvopsGMS.properties
