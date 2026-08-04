@@ -66,51 +66,40 @@ public class ServerConstants {
     }
 
     private static String resolveAdvertisedHost() {
-        final String configuredInterface = ServerProperties.getProperty("net.sf.odinms.channel.net.interface");
-        final String configuredHost = ServerProperties.getProperty("net.sf.odinms.world.host");
-
-        String preferredHost = null;
-        if (configuredInterface != null && !configuredInterface.trim().isEmpty()) {
-            preferredHost = configuredInterface.trim();
-        } else if (configuredHost != null && !configuredHost.trim().isEmpty()) {
-            preferredHost = configuredHost.trim();
+        String host = ServerProperties.getProperty("net.sf.odinms.world.host");
+        if (host != null && !host.isBlank()) {
+            return host.trim();
         }
 
-        if (preferredHost != null && !preferredHost.isEmpty() && !isLoopbackHost(preferredHost)) {
-            return preferredHost;
+        String iface = ServerProperties.getProperty("net.sf.odinms.channel.net.interface");
+        if (iface != null && !iface.isBlank()) {
+            return resolveInterfaceIp(iface.trim());
         }
 
+        return "127.0.0.1";
+    }
+
+    private static String resolveInterfaceIp(String iface) {
         try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = interfaces.nextElement();
-                if (!networkInterface.isUp() || networkInterface.isLoopback()) {
-                    continue;
-                }
-                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+            NetworkInterface nic = NetworkInterface.getByName(iface);
+
+            if (nic != null && nic.isUp()) {
+                Enumeration<InetAddress> addresses = nic.getInetAddresses();
+
                 while (addresses.hasMoreElements()) {
                     InetAddress address = addresses.nextElement();
-                    if (address instanceof Inet4Address && !address.isLoopbackAddress() && !address.isAnyLocalAddress()) {
+
+                    if (address instanceof Inet4Address
+                            && !address.isLoopbackAddress()) {
                         return address.getHostAddress();
                     }
                 }
             }
-        } catch (SocketException e) {
+        } catch (Exception ignored) {
             // fall back to configured value or localhost below
         }
 
-        if (preferredHost != null && !preferredHost.isEmpty()) {
-            return preferredHost;
-        }
-        return ServerConstants.ip;
-    }
-
-    private static boolean isLoopbackHost(final String host) {
-        if (host == null) {
-            return true;
-        }
-        final String normalized = host.trim().toLowerCase();
-        return normalized.equals("localhost") || normalized.equals("127.0.0.1") || normalized.equals("0.0.0.0") || normalized.startsWith("::1") || normalized.equals("::1");
+        return "127.0.0.1";
     }
 
     // Start of Poll
