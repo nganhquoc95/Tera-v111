@@ -22810,8 +22810,8 @@ CREATE TABLE `scroll_log` (
 -- Estructura de tabla para la tabla `shopitems`
 --
 
-CREATE TABLE `shopitems` (
-  `shopitemid` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `shopitems` (
+  `shopitemid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `shopid` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `itemid` int(11) NOT NULL DEFAULT 0,
   `price` int(11) NOT NULL DEFAULT 0,
@@ -22822,8 +22822,10 @@ CREATE TABLE `shopitems` (
   `buyable` int(11) NOT NULL DEFAULT 0,
   `category` tinyint(4) NOT NULL DEFAULT 0,
   `minLevel` int(11) NOT NULL DEFAULT 0,
-  `expiration` int(11) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `expiration` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`shopitemid`),
+  KEY `shopid` (`shopid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `shopitems`

@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `shopitems`;
 
 
 CREATE TABLE IF NOT EXISTS `shopitems` (
-  `shopitemid` int(10) UNSIGNED NOT NULL,
+  `shopitemid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `shopid` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `itemid` int(11) NOT NULL DEFAULT 0,
   `price` int(11) NOT NULL DEFAULT 0,
@@ -13,16 +13,15 @@ CREATE TABLE IF NOT EXISTS `shopitems` (
   `buyable` int(11) NOT NULL DEFAULT 0,
   `category` tinyint(4) NOT NULL DEFAULT 0,
   `minLevel` int(11) NOT NULL DEFAULT 0,
-  `expiration` int(11) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `expiration` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`shopitemid`),
+  KEY `shopid` (`shopid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- shopitems data.
 --
 
-ALTER TABLE `shopitems`
-  ADD PRIMARY KEY (`shopitemid`),
-  ADD KEY `shopid` (`shopid`);
 
 INSERT IGNORE INTO `shopitems` (`shopitemid`, `shopid`, `itemid`, `price`, `position`, `reqitem`, `reqitemq`, `rank`, `buyable`, `category`, `minLevel`, `expiration`) VALUES
 (1, 1, 1302000, 50, 1, 0, 0, 0, 0, 0, 0, 0),
@@ -2492,7 +2491,7 @@ INSERT IGNORE INTO `shopitems` (`shopitemid`, `shopid`, `itemid`, `price`, `posi
 (2570, 304, 2510194, 0, 9, 4310015, 15, 0, 0, 0, 0, 0),
 (2571, 304, 2510195, 0, 9, 4310015, 15, 0, 0, 0, 0, 0),
 (2572, 304, 2510196, 0, 9, 4310015, 15, 0, 0, 0, 0, 0);
-INSERT IGNORE INTO shopitems (`shopid`, `itemid`, `price`, `position`) values -- Gm shop
+INSERT IGNORE INTO shopitems (`shopid`, `itemid`, `price`, `position`) values
 (1337, 1002140, 1, 1),
 (1337, 1042003, 1, 2),
 (1337, 1062007, 1, 3),
