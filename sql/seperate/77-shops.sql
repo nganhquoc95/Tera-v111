@@ -3,6 +3,9 @@ CREATE TABLE IF NOT EXISTS `shops` (
   `npcid` int(11) DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
+ALTER TABLE `shops`
+  ADD PRIMARY KEY (`shopid`);
+
 --
 -- shops data.
 --
@@ -87,7 +90,5 @@ INSERT IGNORE INTO `shops` (`shopid`, `npcid`) VALUES
 (400, 9120229),
 (303, 1012122),
 (304, 9070001),
-(1337, 11000);
-
-ALTER TABLE `shops`
-  ADD PRIMARY KEY (`shopid`);
+(1337, 11000),
+(9500000, 9010038);
