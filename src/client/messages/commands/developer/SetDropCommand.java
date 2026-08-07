@@ -12,24 +12,32 @@ import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
 
 public class SetDropCommand extends Command {
+    {
+        setDescription("Set drop for a monster.");
+    }
 
     @Override
     public void execute(MapleClient c, String[] splitted) {
         if (splitted.length == 0) {
             c.getPlayer().blueMessage(
-                "Syntax: !setdrop <dropperid> <itemid> <questid>(optional)");
+                "Syntax: !setdrop <dropperid> <itemid> <questid>(optional) <chance>(optional, default 1000)");
             return;
         }
 
         int itemId;
         int dropperId;
         int questId = 0;
+        int chance = 1000;
 
         try {
             dropperId = Integer.parseInt(splitted[0]);
             itemId = Integer.parseInt(splitted[1]);
             if (splitted.length > 2) {
                 questId = Integer.parseInt(splitted[2]);
+            }
+            if (splitted.length > 3) {
+                chance = Integer.parseInt(splitted[3]);
+                chance = Math.min(chance, 100000);
             }
         } catch (NumberFormatException e) {
             c.getPlayer().blueMessage("Your command could not run. Did you only enter numbers?");
@@ -63,12 +71,14 @@ public class SetDropCommand extends Command {
         try {
             Connection con = DatabaseConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT IGNORE INTO drop_data (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (?, ?, 1, 1, ?, 10000);");
+                    "REPLACE INTO drop_data (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (?, ?, 1, 1, ?, ?);");
             ps.setInt(1, dropperId);
             ps.setInt(2, itemId);
             ps.setInt(3, questId);
+            ps.setInt(4, chance);
             ps.executeUpdate();
             ps.close();
+                    
             con.close();
             c.getPlayer().dropMessage(6, "Successfully added drop for " + onemob.getStats().getName() + " to drop " + itemId + ".");
         } catch (Exception e) {
