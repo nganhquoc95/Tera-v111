@@ -284,6 +284,7 @@ public class CommandsExecutor {
         addCommand("spawndebug", 4, SpawnDebugCommand.class);
         addCommand("jobperson", 4, JobPersonCommand.class);
         addCommand("drop", 4, DropCommand.class);
+        addCommand("setdrop", 4, SetDropCommand.class);
         addCommand("multidrop", 4, MultiDropCommand.class);
         addCommand("reloaddrops", 4, ReloadDropsCommand.class);
         addCommand("reloadevents", 4, ReloadEventsCommand.class);
