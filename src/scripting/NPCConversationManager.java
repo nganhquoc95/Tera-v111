@@ -1589,7 +1589,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                         namez = (de.getMinimum() * getClient().getChannelServer().getMesoRate()) + " to " + (de.getMaximum() * getClient().getChannelServer().getMesoRate()) + " meso";
                     }
                     ch = Math.round(de.getChance() * getClient().getChannelServer().getDropRate());
-                    name.append(num).append(1).append(") #v").append(itemId).append("#").append(namez).append(" - ").append(Integer.valueOf(ch >= 999999 ? 1000000 : ch).doubleValue() / 10000.0).append("% chance. ").append(de.getQuestId() > 0 && MapleQuest.getInstance(de.getQuestId()).getName().length() > 0 ? ("Requires quest " + MapleQuest.getInstance(de.getQuestId()).getName() + " to be started.") : "").append("\r\n");
+                    name.append(num + 1).append(") #v").append(itemId).append("#").append(namez).append(" - ").append(Integer.valueOf(ch >= 999999 ? 1000000 : ch).doubleValue() / 10000.0).append("% chance. ").append(de.getQuestId() > 0 && MapleQuest.getInstance(de.getQuestId()).getName().length() > 0 ? ("Requires quest " + MapleQuest.getInstance(de.getQuestId()).getName() + " to be started.") : "").append("\r\n");
                     num++;
                 }
             }
