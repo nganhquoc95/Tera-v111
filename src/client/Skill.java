@@ -39,8 +39,10 @@ public class Skill {
     private List<Integer> animation = null;
     private final List<Pair<Integer, Byte>> requiredSkill = new ArrayList<Pair<Integer, Byte>>();
     private Element element = Element.NEUTRAL;
-    private int id, animationTime = 0, masterLevel = 0, maxLevel = 0, delay = 0, trueMax = 0, eventTamingMob = 0, skillType = 0; //4 is alert
-    private boolean invisible = false, chargeskill = false, timeLimited = false, combatOrders = false, pvpDisabled = false, magic = false, casterMove = false, pushTarget = false, pullTarget = false;
+    private int id, animationTime = 0, masterLevel = 0, maxLevel = 0, delay = 0, trueMax = 0, eventTamingMob = 0,
+            skillType = 0; // 4 is alert
+    private boolean invisible = false, chargeskill = false, timeLimited = false, combatOrders = false,
+            pvpDisabled = false, magic = false, casterMove = false, pushTarget = false, pullTarget = false;
 
     public Skill(final int id) {
         super();
@@ -86,7 +88,7 @@ public class Skill {
         switch (skillType) {
             case 2 -> isBuff = true;
             case 3 -> {
-                //final attack
+                // final attack
                 ret.animation = new ArrayList<>();
                 ret.animation.add(0);
                 isBuff = effect != null;
@@ -105,7 +107,7 @@ public class Skill {
                 isBuff = effect != null && hit == null && ball == null;
                 if (action_ != null) {
                     String d = null;
-                    if (action) { //prepare
+                    if (action) { // prepare
                         d = MapleDataTool.getString(action_, null);
                     } else {
                         d = MapleDataTool.getString("0", action_, null);
@@ -117,12 +119,12 @@ public class Skill {
                             for (MapleData del : dd) {
                                 ret.delay += Math.abs(MapleDataTool.getInt("delay", del, 0));
                             }
-                            if (ret.delay > 30) { //then, faster(2) = (10+2)/16 which is basically 3/4
-                                ret.delay = (int) Math.round(ret.delay * 11.0 / 16.0); //fastest(1) lolol
-                                ret.delay -= (ret.delay % 30); //round to 30ms
+                            if (ret.delay > 30) { // then, faster(2) = (10+2)/16 which is basically 3/4
+                                ret.delay = (int) Math.round(ret.delay * 11.0 / 16.0); // fastest(1) lolol
+                                ret.delay -= (ret.delay % 30); // round to 30ms
                             }
                         }
-                        if (SkillFactory.getDelay(d) != null) { //this should return true always
+                        if (SkillFactory.getDelay(d) != null) { // this should return true always
                             ret.animation = new ArrayList<>();
                             ret.animation.add(SkillFactory.getDelay(d));
                             if (!action) {
@@ -196,77 +198,77 @@ public class Skill {
                     case 5211001: // Pirate octopus summon
                     case 5211002:
                     case 5220002: // wrath of the octopi
-                    case 5001005: //dash
+                    case 5001005: // dash
                     case 15001003:
-                    case 5211006: //homing beacon
-                    case 5220011: //bullseye
-                    case 5110001: //energy charge
+                    case 5211006: // homing beacon
+                    case 5220011: // bullseye
+                    case 5110001: // energy charge
                     case 15100004:
-                    case 5121009: //speed infusion
+                    case 5121009: // speed infusion
                     case 15111005:
 
-                    case 22121001: //element reset
-                    case 22131001: //magic shield
-                    case 22131002: //엘리맨탈리셋
-                    case 22141002: //magic booster
-                    case 2311006: //magic booster
-                    case 22151002: //killer wing
-                    case 22151003: //magic resist
-                    case 22161002: //imprint
-                    case 22171000: //maple warrior
-                    case 22171004: //hero will
-                    case 5721002: //hero will
-                    case 22181000: //onyx blessing
+                    case 22121001: // element reset
+                    case 22131001: // magic shield
+                    case 22131002: // 엘리맨탈리셋
+                    case 22141002: // magic booster
+                    case 2311006: // magic booster
+                    case 22151002: // killer wing
+                    case 22151003: // magic resist
+                    case 22161002: // imprint
+                    case 22171000: // maple warrior
+                    case 22171004: // hero will
+                    case 5721002: // hero will
+                    case 22181000: // onyx blessing
                     case 22181004:
                     case 22161004:
-                    case 22181003: //soul stone
-                        //case 22121000:
-                        //case 22141003:
-                        //case 22151001:
-                        //case 22161002:
-                    case 4331003: //owl spirit
-                    case 15101006: //spark
-                    case 15111006: //spark
-                    case 4321000: //tornado spin
-                    case 1320009: //beholder's buff.. passive
+                    case 22181003: // soul stone
+                        // case 22121000:
+                        // case 22141003:
+                        // case 22151001:
+                        // case 22161002:
+                    case 4331003: // owl spirit
+                    case 15101006: // spark
+                    case 15111006: // spark
+                    case 4321000: // tornado spin
+                    case 1320009: // beholder's buff.. passive
                     case 35120000:
-                    case 35001002: //TEMP. mech
+                    case 35001002: // TEMP. mech
                     case 9001004: // hide
                     case 4341002:
 
-                    case 32001003: //dark aura
+                    case 32001003: // dark aura
                     case 32120000:
-                    case 32111012: //blue aura
+                    case 32111012: // blue aura
                     case 32110000:
-                    case 32101003: //yellow aura
+                    case 32101003: // yellow aura
                     case 32120001:
-                    case 35101007: //perfect armor
-                    case 35121006: //satellite safety
-                    case 35001001: //flame
+                    case 35101007: // perfect armor
+                    case 35121006: // satellite safety
+                    case 35001001: // flame
                     case 35101009:
-                    case 35121005: //missile
+                    case 35121005: // missile
                     case 35121013:
-                    case 35111004: //siege
-                    case 33111003: //puppet ?
+                    case 35111004: // siege
+                    case 33111003: // puppet ?
                     case 1211009:
                     case 1111007:
-                    case 11111008://魔防消除
-                    case 51111005: //Mihile's magic crash
-                    case 1311007: //magic,armor,atk crash
-                    case 32121003: //twister
+                    case 11111008:// 魔防消除
+                    case 51111005: // Mihile's magic crash
+                    case 1311007: // magic,armor,atk crash
+                    case 32121003: // twister
                     case 5111007:
                     case 5211007:
-                    case 15111011://dice
+                    case 15111011:// dice
                     case 5311005:
                     case 5320007:
                     case 5720005:
-                    case 35111013: //dice
-                    case 5711011: //dice
+                    case 35111013: // dice
+                    case 5711011: // dice
                     case 32111006:
                     case 5120011:
                     case 5220012:
                     case 1220013:
-                    case 33101006: //jaguar oshi
+                    case 33101006: // jaguar oshi
                     case 32110007:
                     case 32110008:
                     case 32110009:
@@ -305,10 +307,10 @@ public class Skill {
             }
         }
         ret.chargeskill = data.getChildByPath("keydown") != null;
-        //some skills have old system, some new
+        // some skills have old system, some new
         final MapleData level = data.getChildByPath("common");
         if (level != null) {
-            ret.maxLevel = MapleDataTool.getInt("maxLevel", level, 1); //10 just a failsafe, shouldn't actually happens
+            ret.maxLevel = MapleDataTool.getInt("maxLevel", level, 1); // 10 just a failsafe, shouldn't actually happens
             ret.trueMax = ret.maxLevel + (ret.combatOrders ? 2 : 0);
             for (int i = 1; i <= ret.trueMax; i++) {
                 ret.effects.add(MapleStatEffect.loadSkillEffectFromData(level, id, isBuff, i, "x"));
@@ -316,7 +318,8 @@ public class Skill {
 
         } else {
             for (final MapleData leve : data.getChildByPath("level")) {
-                ret.effects.add(MapleStatEffect.loadSkillEffectFromData(leve, id, isBuff, Byte.parseByte(leve.getName()), null));
+                ret.effects.add(MapleStatEffect.loadSkillEffectFromData(leve, id, isBuff,
+                        Byte.parseByte(leve.getName()), null));
             }
             ret.maxLevel = ret.effects.size();
             ret.trueMax = ret.effects.size();
@@ -331,7 +334,8 @@ public class Skill {
         final MapleData reqDataRoot = data.getChildByPath("req");
         if (reqDataRoot != null) {
             reqDataRoot.getChildren().forEach(reqData -> {
-                ret.requiredSkill.add(new Pair<>(Integer.parseInt(reqData.getName()), (byte) MapleDataTool.getInt(reqData, 1)));
+                ret.requiredSkill
+                        .add(new Pair<>(Integer.parseInt(reqData.getName()), (byte) MapleDataTool.getInt(reqData, 1)));
             });
         }
         ret.animationTime = 0;
@@ -345,7 +349,7 @@ public class Skill {
 
     public MapleStatEffect getEffect(final int level) {
         if (effects.size() < level) {
-            if (effects.size() > 0) { //incAllskill
+            if (effects.size() > 0) { // incAllskill
                 return effects.get(effects.size() - 1);
             }
             return null;
@@ -360,7 +364,7 @@ public class Skill {
             return getEffect(level);
         }
         if (pvpEffects.size() < level) {
-            if (pvpEffects.size() > 0) { //incAllskill
+            if (pvpEffects.size() > 0) { // incAllskill
                 return pvpEffects.get(pvpEffects.size() - 1);
             }
             return null;
@@ -421,21 +425,21 @@ public class Skill {
         int jid = job;
         int skillForJob = id / 10000;
         if (skillForJob == 2001) {
-            return GameConstants.isEvan(job); //special exception for beginner -.-
+            return GameConstants.isEvan(job); // special exception for beginner -.-
         } else if (skillForJob == 0) {
-            return GameConstants.isAdventurer(job); //special exception for beginner
+            return GameConstants.isAdventurer(job); // special exception for beginner
         } else if (skillForJob == 1000) {
-            return GameConstants.isKOC(job); //special exception for beginner
+            return GameConstants.isKOC(job); // special exception for beginner
         } else if (skillForJob == 2000) {
-            return GameConstants.isAran(job); //special exception for beginner
+            return GameConstants.isAran(job); // special exception for beginner
         } else if (skillForJob == 3000) {
-            return GameConstants.isResist(job); //special exception for beginner
+            return GameConstants.isResist(job); // special exception for beginner
         } else if (skillForJob == 1) {
-            return GameConstants.isCannon(job); //special exception for beginner
+            return GameConstants.isCannon(job); // special exception for beginner
         } else if (skillForJob == 3001) {
-            return GameConstants.isDemon(job); //special exception for beginner
+            return GameConstants.isDemon(job); // special exception for beginner
         } else if (skillForJob == 2002) {
-            return GameConstants.isMercedes(job); //special exception for beginner
+            return GameConstants.isMercedes(job); // special exception for beginner
         } else if (jid / 100 != skillForJob / 100) { // wrong job
             return false;
         } else if (jid / 1000 != skillForJob / 1000) { // wrong job
@@ -458,7 +462,7 @@ public class Skill {
             return false;
         } else if ((jid / 10) % 10 == 0 && (skillForJob / 10) % 10 > (jid / 10) % 10) { // wrong 2nd job
             return false;
-        } else if ((skillForJob / 10) % 10 != 0 && (skillForJob / 10) % 10 != (jid / 10) % 10) { //wrong 2nd job
+        } else if ((skillForJob / 10) % 10 != 0 && (skillForJob / 10) % 10 != (jid / 10) % 10) { // wrong 2nd job
             return false;
         } else if (skillForJob % 10 > jid % 10) { // wrong 3rd/4th job
             return false;
@@ -471,31 +475,33 @@ public class Skill {
     }
 
     public boolean isFourthJob() {
-		switch (id) { // I guess imma make an sql table to store these, so that we could max them all out.
-			case 3220010:
-			case 3120011:
-			case 33120010:
-			case 32120009:
-			case 5321006:
-			case 21120011:
-			case 22181004:
-			case 4340010:
-			case 22111001:
-			case 22140000:
-			case 22141002:
-				return true;
-		}			
-        //resurrection has master level while ult.strafe does not.. wtf, impossible to tell from WZ
-        if ((id / 10000) == 2312) { //all 10 skills.
+        switch (id) { // I guess imma make an sql table to store these, so that we could max them all
+                      // out.
+            case 3220010:
+            case 3120011:
+            case 33120010:
+            case 32120009:
+            case 5321006:
+            case 21120011:
+            case 22181004:
+            case 4340010:
+            case 22111001:
+            case 22140000:
+            case 22141002:
+                return true;
+        }
+        // resurrection has master level while ult.strafe does not.. wtf, impossible to
+        // tell from WZ
+        if ((id / 10000) == 2312) { // all 10 skills.
             return true;
         }
         if ((getMaxLevel() <= 15 && !invisible && getMasterLevel() <= 0)) {
             return false;
         }
-        if (id / 10000 >= 2212 && id / 10000 < 3000) { //evan skill
+        if (id / 10000 >= 2212 && id / 10000 < 3000) { // evan skill
             return ((id / 10000) % 10) >= 7;
         }
-        if (id / 10000 >= 430 && id / 10000 <= 434) { //db skill
+        if (id / 10000 >= 430 && id / 10000 <= 434) { // db skill
             return ((id / 10000) % 10) == 4 || getMasterLevel() > 0;
         }
         return ((id / 10000) % 10) == 2 && id < 90000000 && !isBeginnerSkill();
@@ -544,6 +550,13 @@ public class Skill {
 
     public boolean isSpecialSkill() {
         int jobId = id / 10000;
-        return jobId == 900 || jobId == 800 || jobId == 9000 || jobId == 9200 || jobId == 9201 || jobId == 9202 || jobId == 9203 || jobId == 9204;
+        return jobId == 900
+                || jobId == 800
+                || jobId == 9000
+                || jobId == 9200
+                || jobId == 9201
+                || jobId == 9202
+                || jobId == 9203
+                || jobId == 9204;
     }
 }

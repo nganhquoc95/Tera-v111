@@ -36,7 +36,6 @@ import server.Timer;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-
 public class PlayerStorage {
 
     private final ReentrantReadWriteLock mutex = new ReentrantReadWriteLock();
@@ -48,9 +47,8 @@ public class PlayerStorage {
     private final Map<Integer, CharacterTransfer> PendingCharacter = new HashMap<Integer, CharacterTransfer>();
     private int channel;
 
-
     public PlayerStorage(int channel) {
-	this.channel = channel;
+        this.channel = channel;
         // Prune once every 15 minutes
         Timer.PingTimer.getInstance().register(new PersistingTask(), 60000);
     }
@@ -72,13 +70,13 @@ public class PlayerStorage {
         } finally {
             wL.unlock();
         }
-	World.Find.register(chr.getId(), chr.getName(), channel);
+        World.Find.register(chr.getId(), chr.getName(), channel);
     }
 
     public final void registerPendingPlayer(final CharacterTransfer chr, final int playerid) {
         wL2.lock();
         try {
-            PendingCharacter.put(playerid, chr);//new Pair(System.currentTimeMillis(), chr));
+            PendingCharacter.put(playerid, chr);// new Pair(System.currentTimeMillis(), chr));
         } finally {
             wL2.unlock();
         }
@@ -107,7 +105,7 @@ public class PlayerStorage {
     }
 
     public final int pendingCharacterSize() {
-	return PendingCharacter.size();
+        return PendingCharacter.size();
     }
 
     public final void deregisterPendingPlayer(final int charid) {
@@ -161,7 +159,9 @@ public class PlayerStorage {
                 chr = itr.next();
 
                 if (chr.getCheatTracker().getPoints() > 0) {
-                    cheaters.add(new CheaterData(chr.getCheatTracker().getPoints(), MapleCharacterUtil.makeMapleReadable(chr.getName()) + " (" + chr.getCheatTracker().getPoints() + ") " + chr.getCheatTracker().getSummary()));
+                    cheaters.add(new CheaterData(chr.getCheatTracker().getPoints(),
+                            MapleCharacterUtil.makeMapleReadable(chr.getName()) + " ("
+                                    + chr.getCheatTracker().getPoints() + ") " + chr.getCheatTracker().getSummary()));
                 }
             }
         } finally {
@@ -181,7 +181,9 @@ public class PlayerStorage {
                 chr = itr.next();
 
                 if (chr.getReportPoints() > 0) {
-                    cheaters.add(new CheaterData(chr.getReportPoints(), MapleCharacterUtil.makeMapleReadable(chr.getName()) + " (" + chr.getReportPoints() + ") " + chr.getReportSummary()));
+                    cheaters.add(
+                            new CheaterData(chr.getReportPoints(), MapleCharacterUtil.makeMapleReadable(chr.getName())
+                                    + " (" + chr.getReportPoints() + ") " + chr.getReportSummary()));
                 }
             }
         } finally {
@@ -205,7 +207,7 @@ public class PlayerStorage {
                 if (!chr.isGM() || !checkGM) {
                     chr.getClient().disconnect(false, false, true);
                     chr.getClient().getSession().close();
-		    World.Find.forceDeregister(chr.getId(), chr.getName());
+                    World.Find.forceDeregister(chr.getId(), chr.getName());
                     itr.remove();
                 }
             }

@@ -39,9 +39,9 @@ public class MTSCart implements Serializable {
 
     private static final long serialVersionUID = 231541893513373578L;
     private int characterId, tab = 1, type = 0, page = 0;
-    //tab; 1 = buy now, 2 = wanted, 3 = auction, 4 = cart
-    //type = inventorytype; 0 = anything
-    //page = whatever
+    // tab; 1 = buy now, 2 = wanted, 3 = auction, 4 = cart
+    // type = inventorytype; 0 = anything
+    // page = whatever
     private List<Item> transfer = new ArrayList<Item>();
     private List<Integer> cart = new ArrayList<Integer>();
     private List<Integer> notYetSold = new ArrayList<Integer>(10);
@@ -119,7 +119,8 @@ public class MTSCart implements Serializable {
         List<Pair<Item, MapleInventoryType>> itemsWithType = new ArrayList<Pair<Item, MapleInventoryType>>();
 
         for (Item item : getInventory()) {
-            itemsWithType.add(new Pair<Item, MapleInventoryType>(item, GameConstants.getInventoryType(item.getItemId())));
+            itemsWithType
+                    .add(new Pair<Item, MapleInventoryType>(item, GameConstants.getInventoryType(item.getItemId())));
         }
 
         ItemLoader.MTS_TRANSFER.saveItems(itemsWithType, characterId);
@@ -139,11 +140,12 @@ public class MTSCart implements Serializable {
             ps.executeUpdate();
         }
         ps.close();
-        //notYetSold shouldnt be saved here
+        // notYetSold shouldnt be saved here
     }
 
     public void loadCart() throws SQLException {
-        final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM mts_cart WHERE characterid = ?");
+        final PreparedStatement ps = DatabaseConnection.getConnection()
+                .prepareStatement("SELECT * FROM mts_cart WHERE characterid = ?");
         ps.setInt(1, characterId);
         final ResultSet rs = ps.executeQuery();
         int iId;
@@ -160,7 +162,8 @@ public class MTSCart implements Serializable {
     }
 
     public void loadNotYetSold() throws SQLException {
-        final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM mts_items WHERE characterid = ?");
+        final PreparedStatement ps = DatabaseConnection.getConnection()
+                .prepareStatement("SELECT * FROM mts_items WHERE characterid = ?");
         ps.setInt(1, characterId);
         final ResultSet rs = ps.executeQuery();
         int pId;
@@ -175,9 +178,9 @@ public class MTSCart implements Serializable {
     }
 
     public void changeInfo(final int tab, final int type, final int page) {
-	if (tab != this.tab || type != this.type) { //changed
-	    refreshCurrentView(tab, type);
-	}
+        if (tab != this.tab || type != this.type) { // changed
+            refreshCurrentView(tab, type);
+        }
         this.tab = tab;
         this.type = type;
         this.page = page;
@@ -196,45 +199,44 @@ public class MTSCart implements Serializable {
     }
 
     public List<Integer> getCurrentViewPage() {
-	final List<Integer> ret = new ArrayList<Integer>();
-	final int size = currentViewingItems.size() / 16 + (currentViewingItems.size() % 16 > 0 ? 1 : 0);
-	if (page > size) {
-	    page = 0;
-	}
-	for (int i = page * 16; i < page * 16 + 16; i++) {
-	    if (currentViewingItems.size() > i) {
-		ret.add(currentViewingItems.get(i));
-	    } else {
-		break;
-	    }
-	}
-	return ret;
+        final List<Integer> ret = new ArrayList<Integer>();
+        final int size = currentViewingItems.size() / 16 + (currentViewingItems.size() % 16 > 0 ? 1 : 0);
+        if (page > size) {
+            page = 0;
+        }
+        for (int i = page * 16; i < page * 16 + 16; i++) {
+            if (currentViewingItems.size() > i) {
+                ret.add(currentViewingItems.get(i));
+            } else {
+                break;
+            }
+        }
+        return ret;
     }
 
     public List<Integer> getCurrentView() {
-	return currentViewingItems;
+        return currentViewingItems;
     }
 
-
     public void refreshCurrentView() {
-	refreshCurrentView(tab, type);
+        refreshCurrentView(tab, type);
     }
 
     public void refreshCurrentView(final int newTab, final int newType) {
-	currentViewingItems.clear();
-	if (newTab == 1) {
-	    currentViewingItems = MTSStorage.getInstance().getBuyNow(newType);
-	} else if (newTab == 4) {
-	    for (int i : cart) {
-		if (newType == 0 || (GameConstants.getInventoryType(i).getType() == newType)) {
-		    currentViewingItems.add(i);
-		}
-	    }
-	}
+        currentViewingItems.clear();
+        if (newTab == 1) {
+            currentViewingItems = MTSStorage.getInstance().getBuyNow(newType);
+        } else if (newTab == 4) {
+            for (int i : cart) {
+                if (newType == 0 || (GameConstants.getInventoryType(i).getType() == newType)) {
+                    currentViewingItems.add(i);
+                }
+            }
+        }
     }
 
     public void changeCurrentView(List<Integer> items) {
-	currentViewingItems.clear();
-	currentViewingItems = items;
+        currentViewingItems.clear();
+        currentViewingItems = items;
     }
 }
