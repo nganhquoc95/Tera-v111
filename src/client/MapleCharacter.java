@@ -4233,10 +4233,6 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
         }
         final Map<MapleStat, Integer> statup = new EnumMap<>(MapleStat.class);
 
-        statup.put(MapleStat.MAXHP, maxhp);
-        statup.put(MapleStat.MAXMP, maxmp);
-        statup.put(MapleStat.HP, maxhp);
-        statup.put(MapleStat.MP, maxmp);
         statup.put(MapleStat.EXP, exp);
         statup.put(MapleStat.LEVEL, (int) level);
 
@@ -4259,10 +4255,23 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
         }
 
         statup.put(MapleStat.AVAILABLEAP, (int) remainingAp);
+        // Update base HP/MP first.
         stats.setInfo(maxhp, maxmp, maxhp, maxmp);
+        // Recalculate local stats so equipment/skill/buff bonuses are applied.
+        stats.recalcLocalStats(this);
+        // Make sure current HP/MP are actually full after recalculation.
+        final int currentMaxHp = stats.getCurrentMaxHp();
+        final int currentMaxMp = stats.getCurrentMaxMp(job);
+        stats.setHp(currentMaxHp, this);
+        stats.setMp(currentMaxMp, this);
+        // Send the actual values to the client.
+        statup.put(MapleStat.MAXHP, maxhp);
+        statup.put(MapleStat.MAXMP, maxmp);
+        statup.put(MapleStat.HP, currentMaxHp);
+        statup.put(MapleStat.MP, currentMaxMp);
+
         client.getSession().write(CWvsContext.updatePlayerStats(statup, this));
         map.broadcastMessage(this, EffectPacket.showForeignEffect(getId(), 0), false);
-        stats.recalcLocalStats(this);
         silentPartyUpdate();
         guildUpdate();
         familyUpdate();
