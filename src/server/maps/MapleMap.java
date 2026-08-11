@@ -2376,8 +2376,11 @@ public final class MapleMap {
         if (sqd == null) {
             return;
         }
-        final int mode = (mapid == 280030000 ? 1
-                : (mapid == 280030001 ? 2 : (mapid == 240060200 || mapid == 240060201 ? 3 : 0)));
+        final int mode = (mapid == 280030000
+                ? 1
+                : (mapid == 280030001
+                        ? 2
+                        : (mapid == 240060200 || mapid == 240060201 ? 3 : 0)));
         // chaos_horntail message for horntail too because it looks nicer
         final EventManager em = getEMByMap();
         if (sqd != null && em != null && getCharactersSize() > 0) {
@@ -2436,8 +2439,8 @@ public final class MapleMap {
                                 chr.getClient().getSession().write(packet);
                                 return chr;
                             }).forEachOrdered(chr -> {
-                                chr.changeMap(returnMapz, returnMapz.getPortal(0)); // hopefully event will still take
-                                                                                    // care of everything once warp out
+                                // hopefully event will still take care of everything once warp out
+                                chr.changeMap(returnMapz, returnMapz.getPortal(0));
                             });
                             checkStates("");
                             resetFully();
@@ -2463,8 +2466,8 @@ public final class MapleMap {
                             chr.getClient().getSession().write(packet);
                             return chr;
                         }).forEachOrdered(chr -> {
-                            chr.changeMap(returnMapz, returnMapz.getPortal(0)); // hopefully event will still take care
-                                                                                // of everything once warp out
+                            // hopefully event will still take care of everything once warp out
+                            chr.changeMap(returnMapz, returnMapz.getPortal(0));
                         });
                         checkStates("");
                         resetFully();

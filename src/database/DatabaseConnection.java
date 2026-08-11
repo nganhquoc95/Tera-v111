@@ -52,7 +52,8 @@ public class DatabaseConnection {
 
     public DatabaseConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // touch the mysql driver
+            // touch the mysql driver
+            Class.forName(ServerProperties.getProperty("database.driver", "com.mysql.cj.jdbc.Driver"));
         } catch (ClassNotFoundException e) {
             System.out.println("[SEVERE] SQL Driver Not Found. Consider death by clams.");
             System.err.println(e);
