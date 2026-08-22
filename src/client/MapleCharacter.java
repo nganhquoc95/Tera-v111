@@ -2284,10 +2284,10 @@ public class MapleCharacter extends AnimatedMapleMapObject implements Serializab
                 // hacky...
                 map.broadcastMessage(this, CField.spawnPlayerMapobject(this), false);
 
-                // pets.stream().filter(pet -> (pet.getSummoned())).forEachOrdered(pet -> {
-                // map.broadcastMessage(this, PetPacket.showPet(this, pet, false, false),
-                // false);
-                // });
+                pets.stream().filter(pet -> (pet.getSummoned())).forEachOrdered(pet -> {
+                    map.broadcastMessage(this, PetPacket.showPet(this, pet, false, false),
+                    false);
+                });
                 for (final WeakReference<MapleCharacter> chr : clones) {
                     if (chr.get() != null) {
                         map.broadcastMessage(chr.get(), CField.spawnPlayerMapobject(chr.get()), false);

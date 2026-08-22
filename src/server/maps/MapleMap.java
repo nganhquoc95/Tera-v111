@@ -2066,12 +2066,7 @@ public final class MapleMap {
             }
             sendObjectPlacement(chr);
 
-            // chr.getClient().getSession().write(packet);
-            for (MapleCharacter other : characters) {
-                if (other != chr) {
-                    other.sendSpawnData(chr.getClient());
-                }
-            }
+            chr.getClient().getSession().write(packet);
 
             if (!onUserEnter.equals("")) {
                 MapScriptMethods.startScript_User(chr.getClient(), onUserEnter);
@@ -2088,9 +2083,8 @@ public final class MapleMap {
                     chr.getClient().getSession().write(CField.getCaptureFlags(this));
             }
         }
-        chr.getPets().stream().filter(pet -> (pet.getSummoned())).forEachOrdered(pet -> {
-            broadcastMessage(chr, PetPacket.showPet(chr, pet, false, false), true);
-        });
+
+        chr.spawnSavedPets();
         if (!chr.isClone()) {
             chr.updatePetAuto();
         }
