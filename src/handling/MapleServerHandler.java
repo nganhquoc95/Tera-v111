@@ -51,6 +51,7 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import server.Randomizer;
 import tools.MapleAESOFB;
+import tools.packet.CWvsContext;
 import tools.packet.LoginPacket;
 import tools.data.ByteArrayByteStream;
 import tools.data.LittleEndianAccessor;
@@ -855,9 +856,11 @@ public class MapleServerHandler extends ChannelInboundHandlerAdapter implements 
                 c.getSession().write(MTSCSPacket.useAlienSocket(false));
                 break;
             case VICIOUS_HAMMER:
-                slea.skip(4); // 3F 00 00 00
-                slea.skip(4); // all 0
+                if (slea.available() > 0) {
+                    slea.skip((int) slea.available());
+                }
                 c.getSession().write(MTSCSPacket.ViciousHammer(false, 0));
+                c.getSession().write(CWvsContext.enableActions());
                 break;
             case USE_NEBULITE_FUSION:
                 InventoryHandler.UseNebuliteFusion(slea, c);

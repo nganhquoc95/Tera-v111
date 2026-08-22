@@ -942,26 +942,31 @@ public class InventoryHandlerAction {
     }
 
     public boolean ViciousHammer() {
-        boolean used = false;
-        // Vicious Hammer
-        slea.readInt(); // Inventory type, Hammered eq is always EQ.
-        final Equip item = (Equip) c.getPlayer().getInventory(MapleInventoryType.EQUIP).getItem((byte) slea.readInt());
-        // another int here, D3 49 DC 00
-        if (item != null) {
-            if (GameConstants.canHammer(item.getItemId())
-                    && MapleItemInformationProvider.getInstance().getSlots(item.getItemId()) > 0
-                    && item.getViciousHammer() < 2) {
-                item.setViciousHammer((byte) (item.getViciousHammer() + 1));
-                item.setUpgradeSlots((byte) (item.getUpgradeSlots() + 1));
-                c.getPlayer().forceReAddItem(item, MapleInventoryType.EQUIP);
-                c.getSession().write(MTSCSPacket.ViciousHammer(true, (byte) item.getViciousHammer()));
-                used = true;
-            } else {
-                c.getPlayer().dropMessage(5, "You may not use it on this item.");
-                c.getSession().write(MTSCSPacket.ViciousHammer(true, (byte) 0));
-            }
+        final int inventoryType = slea.readInt();
+        final short slot = (short) slea.readInt();
+        final Equip item = inventoryType == MapleInventoryType.EQUIP.getType()
+                ? (Equip) c.getPlayer().getInventory(MapleInventoryType.EQUIP).getItem(slot)
+                : null;
+
+        if (item == null) {
+            c.getPlayer().dropMessage(5, "You may not use it on this item.");
+            c.getSession().write(MTSCSPacket.ViciousHammer(false, 0));
+            return false;
         }
-        return used;
+
+        if (!GameConstants.canHammer(item.getItemId())
+                || MapleItemInformationProvider.getInstance().getSlots(item.getItemId()) <= 0
+                || item.getViciousHammer() >= 2) {
+            c.getPlayer().dropMessage(5, "You may not use it on this item.");
+            c.getSession().write(MTSCSPacket.ViciousHammer(false, 0));
+            return false;
+        }
+
+        item.setViciousHammer((byte) (item.getViciousHammer() + 1));
+        item.setUpgradeSlots((byte) (item.getUpgradeSlots() + 1));
+        c.getPlayer().forceReAddItem(item, MapleInventoryType.EQUIP);
+        c.getSession().write(MTSCSPacket.ViciousHammer(true, item.getViciousHammer()));
+        return true;
     }
 
     public boolean VegaSpell() {

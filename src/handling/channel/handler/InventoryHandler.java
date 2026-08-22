@@ -6,7 +6,6 @@ Jan Christian Meyer <vimes@odinms.de>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License version 3
-as published by the Free Software Foundation. You may not use, modify
 or distribute this program under any other version of the
 GNU Affero General Public License.
 
@@ -19,7 +18,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package handling.channel.handler;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.*;
@@ -237,10 +235,8 @@ public class InventoryHandler {
                     chr.setNextConsume(time + (chr.getMap().getConsumeItemCoolTime() * 1000));
                 }
             }
-
-        } else {
-            c.getSession().write(CWvsContext.enableActions());
         }
+        c.getSession().write(CWvsContext.enableActions());
     }
 
     public static final boolean UseRewardItem(final byte slot, final int itemId, final MapleClient c, final MapleCharacter chr) {
@@ -483,6 +479,7 @@ public class InventoryHandler {
         if (alienSocket == null || alienSocketId != alienSocket.getItemId() || toMount == null
                 || c.getPlayer().hasBlockedInventory() || !(toMount instanceof Equip)) {
             c.getSession().write(InventoryPacket.getInventoryFull());
+            c.getSession().write(MTSCSPacket.useAlienSocket(false));
             return;
         }
         // Can only use once-> 2nd and 3rd must use NPC.
@@ -495,7 +492,7 @@ public class InventoryHandler {
                     false);
             c.getPlayer().forceReAddItem(toMount, MapleInventoryType.EQUIP);
         }
-        c.getSession().write(MTSCSPacket.useAlienSocket(true));
+        c.getSession().write(MTSCSPacket.useAlienSocket(false));
     }
 
     public static final void UseNebulite(final LittleEndianAccessor slea, final MapleClient c) {
@@ -1724,6 +1721,32 @@ public class InventoryHandler {
         }
     }
 
+    public static final void UseViciousHammer(final LittleEndianAccessor slea, final MapleClient c) {
+        if (c.getPlayer() == null || c.getPlayer().getMap() == null || c.getPlayer().inPVP()) {
+            c.getSession().write(MTSCSPacket.ViciousHammer(false, 0));
+            c.getSession().write(CWvsContext.enableActions());
+            return;
+        }
+
+        c.getPlayer().updateTick(slea.readInt());
+        final byte slot = (byte) slea.readInt();
+        final int itemId = slea.readInt();
+        final MapleInventoryType invType = GameConstants.getInventoryType(itemId);
+        final Item hammer = c.getPlayer().getInventory(invType).getItem(slot);
+        if (hammer == null || hammer.getItemId() != itemId || hammer.getQuantity() < 1
+                || (itemId != 2470000 && itemId != 5570000) || c.getPlayer().hasBlockedInventory()) {
+            c.getSession().write(MTSCSPacket.ViciousHammer(false, 0));
+            c.getSession().write(CWvsContext.enableActions());
+            return;
+        }
+
+        action = new InventoryHandlerAction(slea, c, itemId);
+        final boolean used = action.ViciousHammer();
+        if (used) {
+            MapleInventoryManipulator.removeFromSlot(c, invType, slot, (short) 1, false);
+        }
+    }
+
     public static final void Pickup_Player(final LittleEndianAccessor slea, MapleClient c, final MapleCharacter chr) {
         if (c.getPlayer().hasBlockedInventory()) { // hack
             return;
@@ -1800,10 +1823,12 @@ public class InventoryHandler {
                     chr.gainMeso(mesos, true);
                 }
                 removeItem(chr, mapitem, ob);
+                c.getSession().write(CWvsContext.enableActions());
             } else if (ItemId.isNxCard(mapitem.getItemId())) {
                 int nxGain = mapitem.getItemId() == ItemId.NX_CARD_100 ? 100 : 250;
                 c.getPlayer().modifyCSPoints(1, nxGain, true);
                 removeItem(chr, mapitem, ob);
+                c.getSession().write(CWvsContext.enableActions());
             } else {
                 if (MapleItemInformationProvider.getInstance().isPickupBlocked(mapitem.getItemId())) {
                     c.getSession().write(CWvsContext.enableActions());
@@ -1815,6 +1840,7 @@ public class InventoryHandler {
                     c.getSession().write(CWvsContext.enableActions());
                 } else if (useItem(c, mapitem.getItemId())) {
                     removeItem(c.getPlayer(), mapitem, ob);
+                    c.getSession().write(CWvsContext.enableActions());
                     // another hack
                     if (mapitem.getItemId() / 10000 == 291) {
                         c.getPlayer().getMap().broadcastMessage(CField.getCapturePosition(c.getPlayer().getMap()));
@@ -1828,6 +1854,7 @@ public class InventoryHandler {
                     MapleInventoryManipulator.addFromDrop(c, mapitem.getItem(), true,
                             mapitem.getDropper() instanceof MapleMonster);
                     removeItem(chr, mapitem, ob);
+                        c.getSession().write(CWvsContext.enableActions());
                 } else {
                     c.getSession().write(InventoryPacket.getInventoryFull());
                     c.getSession().write(InventoryPacket.getShowInventoryFull());
@@ -1907,16 +1934,19 @@ public class InventoryHandler {
                     chr.gainMeso(mapitem.getMeso(), true);
                 }
                 removeItem_Pet(chr, mapitem, petz);
+                c.getSession().write(CWvsContext.enableActions());
             } else if (ItemId.isNxCard(mapitem.getItemId())) {
                 int nxGain = mapitem.getItemId() == ItemId.NX_CARD_100 ? 100 : 250;
                 c.getPlayer().modifyCSPoints(1, nxGain, true);
                 removeItem_Pet(chr, mapitem, petz);
+                c.getSession().write(CWvsContext.enableActions());
             } else {
                 if (MapleItemInformationProvider.getInstance().isPickupBlocked(mapitem.getItemId())
                         || mapitem.getItemId() / 10000 == 291) {
                     c.getSession().write(CWvsContext.enableActions());
                 } else if (useItem(c, mapitem.getItemId())) {
                     removeItem_Pet(chr, mapitem, petz);
+                    c.getSession().write(CWvsContext.enableActions());
                 } else if (MapleInventoryManipulator.checkSpace(c, mapitem.getItemId(), mapitem.getItem().getQuantity(),
                         mapitem.getItem().getOwner())) {
                     if (mapitem.getItem().getQuantity() >= 50 && mapitem.getItemId() == 2340000) {
@@ -1925,6 +1955,9 @@ public class InventoryHandler {
                     MapleInventoryManipulator.addFromDrop(c, mapitem.getItem(), true,
                             mapitem.getDropper() instanceof MapleMonster);
                     removeItem_Pet(chr, mapitem, petz);
+                    c.getSession().write(CWvsContext.enableActions());
+                } else {
+                    c.getSession().write(CWvsContext.enableActions());
                 }
             }
         } finally {
