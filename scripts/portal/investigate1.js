@@ -1,12 +1,13 @@
 /*
-	名字:	菇菇王國
-	地圖:	菇菇森林深處
-	描述:	106020300
+Name:	Mushroom Kingdom
+Map:	Deep in the Mushroom Forest
+Description:	106020300
 */
-
 function enter(pi) {
-	if (pi.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2314)).getStatus() == 1 && pi.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2314)).getCustomData() != 1) {
+	var quest = pi.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2314));
+	var customData = quest.getCustomData();
+	if (quest.getStatus() == 1 && (customData == null || parseInt(customData, 10) < 1)) {
 		pi.openNpc(1300014);
-		}
-		return false;
+	}
+	return false;
 }

@@ -5,8 +5,12 @@
 */
 
 function enter(pi) {
-	if (pi.getPlayer().getQuestNAdd(Packages.server.quest.MapleQuest.getInstance(2322)).getCustomData() == 0) {
-		pi.openNpc(1300014);
+	if (pi.isQuestActive(2322)) {
+		var quest = pi.getQuestNoRecord(2322);
+		var customData = quest.getCustomData();
+		if (customData == null || parseInt(customData, 10) < 1) {
+			pi.openNpc(1300014, "1300014");
 		}
-		return false;
+	}
+	return false;
 }

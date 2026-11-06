@@ -6,10 +6,12 @@
 
 function start() {
 	if (im.getPlayer().getMap().getId() != 106020500) {
-		im.getClient().getSession().write(Packages.tools.packet.CWvsContext.serverNotice(6, "Thorn removal agent cannot be used before reaching the edge of the city wall."));
+		im.getClient().getSession().write(
+			Packages.tools.packet.CWvsContext.serverNotice(6,
+				"Thorn removal agent cannot be used before reaching the edge of the city wall."));
 		im.dispose();
 		return;
-		}
-		im.dispose();
-		im.openNpc(1300011);
+	}
+	im.dispose();
+	im.openNpc(1300011);
 }

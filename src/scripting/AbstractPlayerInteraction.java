@@ -936,6 +936,11 @@ public abstract class AbstractPlayerInteraction {
         NPCScriptManager.getInstance().start(getClient(), id, script);
     }
 
+    public final void startQuestScript(final int npcId, final int questId) {
+        getClient().removeClickedNPC();
+        NPCScriptManager.getInstance().startQuest(getClient(), npcId, questId);
+    }
+
     public void npcTalk(int npcid, String message) {
         id = npcid;
         c.removeClickedNPC();

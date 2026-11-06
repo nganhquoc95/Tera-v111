@@ -95,7 +95,7 @@ public class NPCScriptManager extends AbstractScriptManager {
                 scriptengine.put("cm", cm);
 
                 c.getPlayer().setConversation(1);
-		c.setClickedNPC();
+		        c.setClickedNPC();
                 //System.out.println("NPCID started: " + npc);
                 try {
                     iv.invokeFunction("start"); // Temporary until I've removed all of start
@@ -157,7 +157,7 @@ public class NPCScriptManager extends AbstractScriptManager {
                 scriptengine.put("qm", cm);
 
                 c.getPlayer().setConversation(1);
-		c.setClickedNPC();
+		        c.setClickedNPC();
                 //System.out.println("NPCID started: " + npc + " startquest " + quest);
                 iv.invokeFunction("start", (byte) 1, (byte) 0, 0); // start it off as something
             }
@@ -181,7 +181,7 @@ public class NPCScriptManager extends AbstractScriptManager {
             if (cm.pendingDisposal) {
                 dispose(c);
             } else {
-		c.setClickedNPC();
+		        c.setClickedNPC();
                 cm.getIv().invokeFunction("start", mode, type, selection);
             }
         } catch (Exception e) {
@@ -212,7 +212,7 @@ public class NPCScriptManager extends AbstractScriptManager {
                 scriptengine.put("qm", cm);
 
                 c.getPlayer().setConversation(1);
-		c.setClickedNPC();
+		        c.setClickedNPC();
                 //System.out.println("NPCID started: " + npc + " endquest " + quest);
                 iv.invokeFunction("end", (byte) 1, (byte) 0, 0); // start it off as something
             }
@@ -298,7 +298,7 @@ public class NPCScriptManager extends AbstractScriptManager {
                 c.getPlayer().dropMessage(5, "[You have created a connection with: Item Script" + item + "connection");
             }
             if (!cms.containsKey(c) && c.canClickNPC()) {
-                final Invocable iv = getInvocable("item/" + item + ".js", c, true);
+                final Invocable iv = getInvocable("item/" + item + ".js", c);
                 if (iv == null) {
                     System.out.println("New scripted item : "  + item + "\r\n");
                     dispose(c);
